@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 13:45:13 by agruet            #+#    #+#             */
-/*   Updated: 2024/11/15 12:50:09 by agruet           ###   ########.fr       */
+/*   Created: 2024/11/18 11:34:26 by agruet            #+#    #+#             */
+/*   Updated: 2025/03/30 00:40:31 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+void	ft_putstr_fd(char *s, int fd)
 {
-	size_t	i;
-	size_t	lsize;
-
-	i = 0;
-	lsize = ft_strlen(little);
-	if (lsize == 0)
-		return ((char *)big);
-	while (big[i] && i + lsize - 1 < len)
-	{
-		if (ft_strncmp(big + i, little, lsize) == 0)
-			return ((char *)big + i);
-		i++;
-	}
-	return (NULL);
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
 }

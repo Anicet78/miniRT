@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_lstprint.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 11:34:26 by agruet            #+#    #+#             */
-/*   Updated: 2024/11/20 17:17:46 by agruet           ###   ########.fr       */
+/*   Created: 2025/02/28 13:42:53 by agruet            #+#    #+#             */
+/*   Updated: 2025/03/05 15:16:45 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_lstprint(t_list *lst)
 {
 	int	i;
 
-	if (!s)
-		return ;
 	i = 0;
-	while (s[i])
-		ft_putchar_fd(s[i++], fd);
+	while (lst)
+	{
+		ft_printf("%d: %s\n", i, lst->content);
+		lst = lst->next;
+		i++;
+	}
 }

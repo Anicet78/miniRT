@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isprint.c                                       :+:      :+:    :+:   */
+/*   ft_dlst_top.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 11:05:57 by agruet            #+#    #+#             */
-/*   Updated: 2024/11/13 16:07:50 by agruet           ###   ########.fr       */
+/*   Created: 2025/02/28 12:23:09 by agruet            #+#    #+#             */
+/*   Updated: 2025/03/04 14:53:12 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isprint(int c)
+void	ft_dlst_top(t_dlist **lst)
 {
-	if (c >= ' ' && c <= '~')
-		return (16384);
-	return (0);
+	if (!lst)
+		return ;
+	while (*lst && (*lst)->prev)
+		*lst = (*lst)->prev;
 }

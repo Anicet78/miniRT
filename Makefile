@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -g3 #-Wall -Werror -Wextra
+CFLAGS		= -ggdb#-Wall -Werror -Wextra
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -11,35 +11,34 @@ OBJ_DIR		= objs/
 CFLAGS		+= -I$(INCLUDES)
 
 SRC			= main.c
+
 OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
 
 NAME		= miniRT
 
 all: $(NAME)
 
-# bonus: $(BONUS_NAME)
-
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
-
-# $(BONUS_NAME): $(LIBFT) $(BONUS_OBJ)
-# 	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBFT) -o $(BONUS_NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	@printf "                          \r\e[1;35mMiniRT Compiled\e[0m\n"
 
 $(LIBFT):
-	make -sC $(LIBFT_DIR)
+	@make -sC $(LIBFT_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@mkdir -p $(dir $@)
+	@printf "\e[1;35mCompiling %s\e[0m" $(notdir $<)
+	@printf "                                            \r"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJ_DIR)
+	@printf "\e[1;36mCleaning files\e[0m\n"
+	@rm -rf $(OBJ_DIR)
 	@make clean -sC $(LIBFT_DIR)
 
 fclean: clean
-	rm -rf $(NAME)
-#	rm -rf $(NAME) $(BONUS_NAME)
-	make fclean -sC libft
+	@rm -rf $(NAME)
+	@make fclean -sC $(LIBFT_DIR)
 
 re: fclean all
 

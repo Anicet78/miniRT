@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:44:05 by agruet            #+#    #+#             */
-/*   Updated: 2024/11/15 11:34:21 by agruet           ###   ########.fr       */
+/*   Updated: 2025/02/26 13:51:36 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strdup(const char *s)
 	new = malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (!new)
 		return (NULL);
-	while (s[i])
+	while (s && s[i])
 	{
 		new[i] = s[i];
 		i++;

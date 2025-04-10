@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:46:58 by agruet            #+#    #+#             */
-/*   Updated: 2024/12/18 12:04:12 by agruet           ###   ########.fr       */
+/*   Updated: 2025/02/26 15:19:10 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ char	*get_next_line(int fd)
 	static char	buffer[BUFFER_SIZE];
 	static int	r_val;
 
+	if (fd < 0)
+		return ((end = (r_val = 0)), NULL);
 	if (end == 0 || end >= r_val)
 		r_val = read_file(fd, buffer, &end);
 	if (r_val == 0 || r_val == -1)

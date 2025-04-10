@@ -1,38 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_dlstfirst.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 12:48:40 by agruet            #+#    #+#             */
-/*   Updated: 2024/11/14 11:31:51 by agruet           ###   ########.fr       */
+/*   Created: 2024/11/18 15:40:33 by agruet            #+#    #+#             */
+/*   Updated: 2025/03/10 12:09:30 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+t_dlist	*ft_dlstfirst(t_dlist *lst)
 {
-	int	i;
-	int	sign;
-	int	result;
-
-	i = 0;
-	result = 0;
-	sign = 1;
-	while (nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13))
-		i++;
-	if (nptr[i] == '+' || nptr[i] == '-')
-	{
-		if (nptr[i] == '-')
-			sign = -1;
-		i++;
-	}
-	while (ft_isdigit(nptr[i]))
-	{
-		result = result * 10 + (nptr[i] - '0');
-		i++;
-	}
-	return (result * sign);
+	if (!lst)
+		return (NULL);
+	while (lst && lst->prev)
+		lst = lst->prev;
+	return (lst);
 }
