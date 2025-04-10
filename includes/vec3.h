@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:38:50 by tgallet           #+#    #+#             */
-/*   Updated: 2025/04/08 19:53:33 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/04/10 18:04:06 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ t_vec	vadd(t_vec a, t_vec b);
 double	magn(t_vec a);
 t_vec	norm(t_vec a);
 t_vec	vsub(t_vec a, t_vec b);
+t_vec	vdiv(t_vec a, double scalar);
 
 #endif

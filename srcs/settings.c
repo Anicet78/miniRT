@@ -1,44 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3op.c                                           :+:      :+:    :+:   */
+/*   settings.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/04/08 19:50:09 by tgallet          ###   ########.fr       */
+/*   Created: 2025/04/09 18:31:15 by tgallet           #+#    #+#             */
+/*   Updated: 2025/04/10 17:37:25 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
 
-double	dot(t_vec a, t_vec b)
+t_display	init_display(double fov, t_point cam)
 {
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
+	t_display	ret;
 
-t_vec	vmul(t_vec a, double scalar)
-{
-	a.x *= scalar;
-	a.y *= scalar;
-	a.z *= scalar;
-	return (a);
-}
-
-t_vec	vadd(t_vec a, t_vec b);
-{
-	a.x += b.x;
-	a.y += b.y;
-	a.z += b.z;
-	return (a);
-}
-
-double	magn(t_vec a)
-{
-	return (sqrt(dot(a, a)));
-}
-
-t_vec	norm(t_vec a)
-{
-	return (vmul(a, 1/magn(a)));
+	fov *= PI / 180;
+	ret.width = WIDTH;
+	ret.height = (int) (WIDTH / ASPECT_RATIO);
+	ret.vp_width = 2 * tan(fov / 2);
+	ret.vp_height = ret.vp_width * (ret.height / ret.width);
+	ret.camera = cam;
+	return (ret);
 }
