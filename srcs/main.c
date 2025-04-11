@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/11 12:07:02 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/11 13:15:46 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	main(void)
 {
-	void	*mlx;
+	t_mlx	mlx;
 
-	mlx = mlx_init();
-	ft_printf("Salut Tristan\n");
+	mlx_start(&mlx, 1920, 1080);
+	mlx_loop(mlx.mlx);
 }

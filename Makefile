@@ -15,7 +15,13 @@ CFLAGS		+= -I$(INCLUDES)
 
 LIBS		= -Lmlx -lmlx -lXext -lX11 -lm
 
-SRC			= main.c
+SRC			=	main.c			\
+				mlx.c			\
+				print_utils.c	\
+				settings.c		\
+				vec3op.c		\
+				vec3op2.c
+
 OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
 
 NAME		= miniRT

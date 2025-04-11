@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vec3op.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/04/09 18:26:29 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/04/11 12:36:18 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minirt.h"
+#include "../includes/miniRT.h"
 
 double	dot(t_vec a, t_vec b)
 {

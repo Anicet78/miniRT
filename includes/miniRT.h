@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/11 12:28:29 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/11 15:13:15 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,26 @@ typedef struct s_display
 	t_point	camera;
 }	t_display;
 
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*mlx_win;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}	t_mlx;
+
+// mlx
+void	mlx_start(t_mlx *mlx, int width, int height);
+void	kill_mlx(t_mlx *data, int exit_code);
+
+// tristan
 void		print_color(unsigned int col);
 t_display	init_display(double fov, t_point cam);
+
 
 #endif

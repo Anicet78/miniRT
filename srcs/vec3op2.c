@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vec3op2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/04/10 18:03:58 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/04/11 12:36:20 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minirt.h"
+#include "../includes/miniRT.h"
 
 t_vec	vsub(t_vec a, t_vec b)
 {
