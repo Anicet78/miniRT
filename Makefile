@@ -48,6 +48,8 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@printf "                                            \r"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+bonus: $(NAME)
+
 clean:
 	@printf "\e[1;36mCleaning files\e[0m\n"
 	@rm -rf $(OBJ_DIR)

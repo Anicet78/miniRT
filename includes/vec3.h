@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec3.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:38:50 by tgallet           #+#    #+#             */
-/*   Updated: 2025/04/10 18:04:06 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/04/11 15:38:03 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef struct s_icolor
 	unsigned char	alpha;
 }	t_icolor;
 
-typedef t_vec t_point;
-typedef t_vec t_color;
+typedef t_vec	t_point;
+typedef t_vec	t_color;
 
 double	dot(t_vec a, t_vec b);
 t_vec	vmul(t_vec a, double scalar);
