@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/11 12:07:02 by agruet           ###   ########.fr       */
+/*   Created: 2025/04/09 17:49:08 by tgallet           #+#    #+#             */
+/*   Updated: 2025/04/10 17:38:52 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/miniRT.h"
+#include "../includes/minirt.h"
 
-int	main(void)
+void	print_color(uint32_t col)
 {
-	void	*mlx;
-
-	mlx = mlx_init();
-	ft_printf("Salut Tristan\n");
+	col &= ~(0xFF << 24);
+	printf("red:	%d\n", col >> 16);
+	printf("green:	%d\n", (col >> 8) & 0xFF);
+	printf("blue:	%d\n", (col) & 0xFF);
 }

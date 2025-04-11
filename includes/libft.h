@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/10 18:13:11 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/11 12:27:51 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <string.h>
 # include <unistd.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <stdarg.h>
 # include <limits.h>
