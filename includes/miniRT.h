@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/11 15:37:19 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/11 17:31:24 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,6 @@ typedef struct s_display
 	t_point	camera;
 }	t_display;
 
-typedef struct s_miniRT
-{
-
-}	t_miniRT;
-
 typedef struct s_mlx
 {
 	void	*mlx;
@@ -62,6 +57,11 @@ typedef struct s_mlx
 	int		width;
 	int		height;
 }	t_mlx;
+
+typedef struct s_miniRT
+{
+	t_mlx	*mlx;
+}	t_miniRT;
 
 // mlx
 void		mlx_start(t_mlx *mlx, int width, int height);
