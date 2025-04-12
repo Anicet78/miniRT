@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/11 12:27:51 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/12 23:23:16 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <limits.h>
+# include <stddef.h>
+# include <stdint.h>
 # include <termios.h>
 # include <signal.h>
 # include <stdbool.h>
@@ -212,6 +214,33 @@ void	ft_addmap(t_map **map, t_map *new);
 void	ft_mapclear(t_map **map);
 void	map_remove_node(t_map **map, t_map *node);
 size_t	ft_mapsize(t_map *map);
+
+// arena
+# define CHUNK_SIZE 1024
+
+typedef struct s_chunk	t_chunk;
+
+struct s_chunk
+{
+	t_chunk		*next;
+	size_t		count;
+	size_t		capacity;
+	uintptr_t	data[];
+};
+
+typedef struct s_arena
+{
+	t_chunk	*begin;
+	t_chunk	*end;
+	int		freed;
+}	t_arena;
+
+t_arena	*arena_init(void);
+t_chunk	*region_create(size_t capacity);
+void	*arena_regions_free(t_arena *arena);
+void	*arena_alloc(size_t size, t_arena *arena);
+void	*arena_calloc(t_arena *arena, size_t size);
+void	reset_arena(t_arena **arena);
 
 // readline
 typedef enum rl_quit_reason

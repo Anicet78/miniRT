@@ -36,11 +36,11 @@ $(LIBFT):
 	@make -sC $(LIBFT_DIR)
 
 $(MLX):
-	@printf "\r\e[1;36mCloning MinilibX\e[0m"
+	@printf "\r\e[1;31mCloning MinilibX\e[0m"
 	@git clone https://github.com/42Paris/minilibx-linux.git $(MLX_DIR) 2>/dev/null
-	@printf "\r\e[1;36mCompiling MinilibX\e[0m"
+	@printf "\r\e[1;31mCompiling MinilibX\e[0m"
 	@make -sC $(MLX_DIR) > /dev/null 2>&1
-	@printf "\r\e[1;36mMinilibX Compiled\e[0m \b\n"
+	@printf "\r\e[1;31mMinilibX Compiled\e[0m \b\n"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@)

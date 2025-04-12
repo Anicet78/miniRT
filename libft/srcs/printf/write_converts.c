@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:30:11 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/10 17:39:10 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/12 23:30:16 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,16 @@ void	write_str(t_printf *ft_print, char *str)
 void	write_uint(t_printf *ft_print, unsigned int nb, char *base, int b_len)
 {
 	unsigned int	divisor;
-	int				count;
 	int				calc_size;
 
 	calc_size = calc_uint_size(ft_print, nb, b_len);
 	if (nb == 0)
 		ft_print->flags &= ~ALTERNATIVE_FORM;
-	if (apply_numeric_flag(ft_print, calc_size, base, nb < 0) == -1)
+	if (apply_numeric_flag(ft_print, calc_size, base, false) == -1)
 		return ;
 	divisor = 1;
 	while (nb / divisor >= (unsigned int)b_len)
 		divisor *= b_len;
-	count = 0;
 	while (divisor > 0)
 	{
 		if (ft_print->flags & PRECISION && ft_print->precision <= 0 && nb == 0)
@@ -113,7 +111,7 @@ void	write_ptr(t_printf *ft_print, unsigned long long ptr)
 
 	ft_print->flags |= ALTERNATIVE_FORM;
 	calc_size = calc_long_size(ft_print, ptr);
-	if (apply_numeric_flag(ft_print, calc_size, NULL, ptr < 0) == -1)
+	if (apply_numeric_flag(ft_print, calc_size, NULL, false) == -1)
 		return ;
 	if (!ptr)
 	{
