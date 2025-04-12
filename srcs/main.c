@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/11 17:30:59 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/13 01:36:01 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,15 @@ int	open_file(int ac, char **av)
 
 int	main(int ac, char **av)
 {
-	t_mlx	mlx;
-	int		fd;
+	t_mlx		mlx;
+	t_elem_lst	elements;
+	int			fd;
 
 	fd = open_file(ac, av);
-	// TODO: map file to chained list
+	if (!new_elem_list(&elements))
+		return (close(fd), EXIT_FAILURE);
+	// TODO: map file to the elem list and set elem count to 0 to get elems
+	clear_arena(&elements.arena);
 	close(fd);
 	mlx_start(&mlx, 1920, 1080);
 	mlx_loop(mlx.mlx);

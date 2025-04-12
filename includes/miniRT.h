@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/11 17:31:24 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/13 00:03:08 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "vec3.h"
+# include "elements.h"
 # include "../mlx/mlx.h"
 # include <math.h>
 # include <stdint.h>

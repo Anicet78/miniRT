@@ -16,6 +16,7 @@ CFLAGS		+= -I$(INCLUDES)
 LIBS		= -Lmlx -lmlx -lXext -lX11 -lm
 
 SRC			=	main.c			\
+				elem_lst.c		\
 				mlx.c			\
 				print_utils.c	\
 				settings.c		\

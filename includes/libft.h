@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/12 23:23:16 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/13 00:22:51 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,9 @@ t_chunk	*region_create(size_t capacity);
 void	*arena_regions_free(t_arena *arena);
 void	*arena_alloc(size_t size, t_arena *arena);
 void	*arena_calloc(t_arena *arena, size_t size);
+void	*arena_realloc(t_arena *arena, void *old_ptr,
+			size_t size, size_t old_size);
+void	clear_arena(t_arena **arena);
 void	reset_arena(t_arena **arena);
 
 // readline
