@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:14:44 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 00:22:17 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/13 15:59:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,3 @@ void	reset_arena(t_arena **arena)
 	free(*arena);
 	*arena = arena_init();
 }
-

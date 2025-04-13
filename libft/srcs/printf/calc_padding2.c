@@ -1,44 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calc_padding.c                                     :+:      :+:    :+:   */
+/*   calc_padding2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:32:38 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 20:37:30 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/13 20:36:21 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	calc_str_size(t_printf *ft_print, char *str)
+int	calc_ulong_size(t_printf *ft_print, unsigned long nb, int base_len)
 {
-	int		size;
-	size_t	len;
-
-	size = 0;
-	len = ft_strlen(str);
-	if (str && ft_print->flags & PRECISION && ft_print->precision < (int)len)
-		size = ft_print->precision;
-	else if (str)
-		size = ft_strlen(str);
-	else if (!str && ft_print->flags & PRECISION && ft_print->precision < 6)
-		size = 0;
-	else if (!str)
-		size = 6;
-	return (ft_print->padding - size);
-}
-
-int	calc_uint_size(t_printf *ft_print, unsigned int nb, int base_len)
-{
-	int				size;
-	int				precision;
-	unsigned int	divisor;
+	long			size;
+	long			precision;
+	unsigned long	divisor;
 
 	size = 1;
 	divisor = 1;
-	while (nb / divisor >= (unsigned int)base_len)
+	while (nb / divisor >= (unsigned long)base_len)
 	{
 		size++;
 		divisor *= base_len;
@@ -56,19 +38,19 @@ int	calc_uint_size(t_printf *ft_print, unsigned int nb, int base_len)
 	return (size);
 }
 
-int	calc_int_size(t_printf *ft_print, int n, int base_len)
+int	calc_long_size(t_printf *ft_print, long n, int base_len)
 {
-	int				size;
-	int				precision;
-	unsigned int	nb;
-	unsigned int	divisor;
+	long			size;
+	long			precision;
+	unsigned long	nb;
+	unsigned long	divisor;
 
 	size = 1;
 	nb = n;
 	if (n < 0)
 		nb = -n;
 	divisor = 1;
-	while (nb / divisor >= (unsigned int)base_len && size++)
+	while (nb / divisor >= (unsigned long)base_len && size++)
 		divisor *= base_len;
 	precision = ft_print->precision;
 	if (precision != 0)
@@ -81,27 +63,5 @@ int	calc_int_size(t_printf *ft_print, int n, int base_len)
 	if (n < 0 || ft_print->flags & SPACE_POSITIVE
 		|| ft_print->flags & SHOW_SIGN)
 		size++;
-	return (size);
-}
-
-int	calc_llong_size(t_printf *ft_print, unsigned long long ptr)
-{
-	int		size;
-	size_t	divisor;
-
-	ft_print->precision = 0;
-	if (!ptr)
-	{
-		ft_print->flags &= ~ALTERNATIVE_FORM;
-		return (5);
-	}
-	divisor = 1;
-	size = 1;
-	while (ptr / divisor >= 16)
-	{
-		size++;
-		divisor *= 16;
-	}
-	size += 2;
 	return (size);
 }

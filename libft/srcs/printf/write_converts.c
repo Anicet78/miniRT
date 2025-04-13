@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 12:30:11 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/12 23:30:16 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/13 20:37:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	write_ptr(t_printf *ft_print, unsigned long long ptr)
 	int		calc_size;
 
 	ft_print->flags |= ALTERNATIVE_FORM;
-	calc_size = calc_long_size(ft_print, ptr);
+	calc_size = calc_llong_size(ft_print, ptr);
 	if (apply_numeric_flag(ft_print, calc_size, NULL, false) == -1)
 		return ;
 	if (!ptr)

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 00:22:51 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/13 20:38:55 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,15 @@ int		ft_min(int a, int b);
 
 typedef enum printf_flags
 {
-	INVALID = -1,
+	INVALID_FLAG = -1,
 	NO_FLAGS = 0,
 	LEFT_JUSTIFY = 1 << 0,
 	PAD_ZEROS = 1 << 1,
 	PRECISION = 1 << 2,
 	ALTERNATIVE_FORM = 1 << 3,
 	SHOW_SIGN = 1 << 4,
-	SPACE_POSITIVE = 1 << 5
+	SPACE_POSITIVE = 1 << 5,
+	LONG_NUMBER = 1 << 6
 }	t_pflags;
 
 typedef struct s_printf
@@ -148,10 +149,14 @@ void	write_str(t_printf *ft_print, char *str);
 void	write_ptr(t_printf *ft_print, unsigned long long ptr);
 void	write_int(t_printf *ft_print, int n, char *base, int base_len);
 void	write_uint(t_printf *ft_print, unsigned int nb, char *base, int b_len);
+void	write_lint(t_printf *ft_print, long n, char *base, int base_len);
+void	write_luint(t_printf *ft_print, unsigned long nb, char *base, int b_len);
 int		calc_str_size(t_printf *ft_print, char *str);
-int		calc_uint_size(t_printf *ft_print, unsigned int nb, int base_len);
 int		calc_int_size(t_printf *ft_print, int n, int base_len);
-int		calc_long_size(t_printf *ft_print, unsigned long long ptr);
+int		calc_uint_size(t_printf *ft_print, unsigned int nb, int base_len);
+int		calc_long_size(t_printf *ft_print, long nb, int base_len);
+int		calc_ulong_size(t_printf *ft_print, unsigned long nb, int base_len);
+int		calc_llong_size(t_printf *ft_print, unsigned long long ptr);
 int		apply_numeric_flag(t_printf *ft_print, int len,
 			char *base, bool is_neg);
 int		write_padding(t_printf *ft_print, int padding, int c);
@@ -216,7 +221,7 @@ void	map_remove_node(t_map **map, t_map *node);
 size_t	ft_mapsize(t_map *map);
 
 // arena
-# define CHUNK_SIZE 1024
+# define CHUNK_SIZE 4096
 
 typedef struct s_chunk	t_chunk;
 
@@ -244,6 +249,9 @@ void	*arena_realloc(t_arena *arena, void *old_ptr,
 			size_t size, size_t old_size);
 void	clear_arena(t_arena **arena);
 void	reset_arena(t_arena **arena);
+
+// memory
+void	*ft_print_memory(void *addr, size_t size);
 
 // readline
 typedef enum rl_quit_reason

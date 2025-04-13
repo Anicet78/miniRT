@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:50:05 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/10 17:39:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/13 21:06:58 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ static t_pflags	get_flag(char c)
 		return (SHOW_SIGN);
 	if (c == ' ')
 		return (SPACE_POSITIVE);
-	return (INVALID);
+	if (c == 'l')
+		return (LONG_NUMBER);
+	return (INVALID_FLAG);
 }
 
 static int	add_precision(t_printf *ft_print, char *str, size_t *current)
@@ -76,7 +78,7 @@ int	parse_flags(t_printf *ft_print, char *str, size_t current)
 	if (!str[current])
 		return (0);
 	current_flag = get_flag(str[current]);
-	while (current_flag != INVALID)
+	while (current_flag != INVALID_FLAG)
 	{
 		if (current_flag == PRECISION && add_precision(ft_print, str, &current))
 			break ;
@@ -87,6 +89,8 @@ int	parse_flags(t_printf *ft_print, char *str, size_t current)
 	add_padding(ft_print, str, &current);
 	if (!(ft_print->flags & PRECISION))
 		add_precision(ft_print, str, &current);
+	if (str[current] == 'l' && !(ft_print->flags & LONG_NUMBER) && ++current)
+		ft_print->flags |= LONG_NUMBER;
 	if (!str[current] || !ft_strchr(AVAILABLE_PRINTF_CONVERT, str[current]))
 		return (0);
 	ft_print->current = current;

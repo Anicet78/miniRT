@@ -80,15 +80,18 @@ SRC			=	libc/ft_atoi.c					\
 				data/lst/ft_lstremove_node.c	\
 				data/lst/ft_lstsize.c			\
 				data/lst/ft_lstvoid_content.c	\
+				data/memory/print_memory.c		\
 				data/maps/ft_maps.c				\
 				data/maps/ft_maps2.c			\
 				printf/buffer.c					\
 				printf/calc_padding.c			\
+				printf/calc_padding2.c			\
 				printf/convertion.c				\
 				printf/ft_fprintf.c				\
 				printf/ft_printf.c				\
 				printf/parse_flags.c			\
 				printf/write_converts.c			\
+				printf/write_converts2.c		\
 				printf/write_flags.c			\
 				readfile/get_next_line.c		\
 				maths/ft_max.c					\
