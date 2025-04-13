@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 18:20:05 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/13 21:45:06 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_elem_lst	*new_elem_list(t_elem_lst *elements)
 
 t_elem_type	get_elem_type(void *elem)
 {
-	return (*(t_elem_type*)elem);
+	return (*(t_elem_type *)elem);
 }
 
 size_t	get_elem_size(void *elem)
