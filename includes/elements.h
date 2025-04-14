@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 19:14:42 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/14 17:02:30 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ELEMENTS_H
 
 # include "miniRT.h"
+# include <float.h>
 
 typedef struct s_elem_lst
 {
@@ -103,5 +104,18 @@ t_plane		*add_plane(t_elem_lst *elements, t_point pos, t_vec axis,
 				uint32_t color);
 t_cylinder	*add_cylinder(t_elem_lst *elements, t_point pos, t_vec axis,
 				float diameter, float height, uint32_t color);
+
+// parsing
+bool		read_RTfile(int fd, t_elem_lst *elements);
+uint32_t	get_color(char *str);
+bool		is_color(char *str);
+bool		is_pos(char *str);
+t_point		get_pos(char *str);
+bool		parse_ambient(t_elem_lst *elements, char **line);
+bool		parse_camera(t_elem_lst *elements, char **line);
+bool		parse_light(t_elem_lst *elements, char **line);
+bool		parse_plane(t_elem_lst *elements, char **line);
+bool		parse_sphere(t_elem_lst *elements, char **line);
+bool		parse_cylinder(t_elem_lst *elements, char **line);
 
 #endif

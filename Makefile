@@ -15,14 +15,18 @@ CFLAGS		+= -I$(INCLUDES)
 
 LIBS		= -Lmlx -lmlx -lXext -lX11 -lm
 
-SRC			=	main.c						\
-				elements/elem_lst.c			\
-				elements/add_elements.c		\
-				elements/add_elements2.c	\
-				mlx.c						\
-				print_utils.c				\
-				settings.c					\
-				vec3op.c					\
+SRC			=	main.c							\
+				elements/elem_lst.c				\
+				elements/add_elements.c			\
+				elements/add_elements2.c		\
+				parse_file/parse_elements.c		\
+				parse_file/parse_elements2.c	\
+				parse_file/parse_file.c			\
+				utils/color.c					\
+				mlx.c							\
+				print_utils.c					\
+				settings.c						\
+				vec3op.c						\
 				vec3op2.c
 
 OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
@@ -33,7 +37,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(LIBS) -o $(NAME)
-	@printf "                          \r\e[1;35mMiniRT Compiled\e[0m\n"
+	@printf "                           \r\e[1;35mMiniRT Compiled\e[0m\n"
 
 $(LIBFT):
 	@make -sC $(LIBFT_DIR)

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 00:03:08 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:12:16 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,8 @@ void		kill_mlx(t_mlx *data, int exit_code);
 // tristan
 void		print_color(unsigned int col);
 t_display	init_display(double fov, t_point cam);
+
+// utils
+uint32_t	rgb_to_hex(uint8_t r, uint8_t g, uint8_t b);
 
 #endif

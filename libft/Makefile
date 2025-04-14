@@ -8,7 +8,8 @@ OBJ_DIR		= objs/
 
 CFLAGS		+= -I../$(INLCUDES)
 
-SRC			=	libc/ft_atoi.c					\
+SRC			=	libc/ft_atof.c					\
+				libc/ft_atoi.c					\
 				libc/ft_atol.c					\
 				libc/ft_bzero.c					\
 				libc/ft_calloc.c				\

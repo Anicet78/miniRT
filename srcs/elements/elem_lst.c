@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 21:45:06 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/14 17:08:43 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void	*get_next_elem(t_elem_lst *elements)
 	elements->count += elem_size;
 	return (elem);
 }
-
-// TODO: Build elem function (1 for each element type)
 
 t_elem_lst	*add_element(t_elem_lst *elements, void *new_elem, size_t size)
 {

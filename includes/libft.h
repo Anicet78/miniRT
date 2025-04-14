@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 20:38:55 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/14 12:51:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ char	*ft_strlstr(const char *big, const char *little, size_t len);
 int		ft_strstr_tab(char **tab, char *str);
 int		ft_atoi(const char *nptr);
 long	ft_atol(const char *nptr);
+double	ft_atof(char *str);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_realloc(void *old_ptr, size_t size, size_t old_size);
 char	*ft_strdup(const char *s);

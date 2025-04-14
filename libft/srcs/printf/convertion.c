@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:04:27 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 20:28:19 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/14 16:01:39 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	other_conversions(t_printf *ft_print, char *str, va_list ap)
 	if (str[ft_print->current] == 'u')
 	{
 		if (ft_print->flags & LONG_NUMBER)
-			write_uint(ft_print, va_arg(ap, unsigned long), BASE_10, 10);
+			write_luint(ft_print, va_arg(ap, unsigned long), BASE_10, 10);
 		else
-			write_luint(ft_print, va_arg(ap, unsigned int), BASE_10, 10);
+			write_uint(ft_print, va_arg(ap, unsigned int), BASE_10, 10);
 	}
 	else if (str[ft_print->current] == 'x')
 	{
@@ -38,9 +38,9 @@ void	other_conversions(t_printf *ft_print, char *str, va_list ap)
 	else if (str[ft_print->current] == 'X')
 	{
 		if (ft_print->flags & LONG_NUMBER)
-			write_uint(ft_print, va_arg(ap, unsigned long), BASE_16U, 16);
+			write_luint(ft_print, va_arg(ap, unsigned long), BASE_16U, 16);
 		else
-			write_luint(ft_print, va_arg(ap, unsigned int), BASE_16U, 16);
+			write_uint(ft_print, va_arg(ap, unsigned int), BASE_16U, 16);
 	}
 	else
 		write_to_buff(ft_print, "%", 1);

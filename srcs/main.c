@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 21:07:23 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/14 15:44:16 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ int	main(int ac, char **av)
 	fd = open_file(ac, av);
 	if (!new_elem_list(&elements))
 		return (close(fd), EXIT_FAILURE);
-	add_ambient_lighting(&elements, 12.0, 50);
 	elements.count = 0;
+	read_RTfile(fd, &elements);
+	// rgb_to_hex(15, 60, 133);
 	// mlx_start(&mlx, 1920, 1080);
 	clear_arena(&elements.arena);
 	close(fd);
