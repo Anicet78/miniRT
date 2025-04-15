@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 15:32:38 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 20:37:30 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/15 11:45:18 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	calc_int_size(t_printf *ft_print, int n, int base_len)
 	ft_print->precision -= size;
 	if (size < precision)
 		size = precision;
-	if (n < 0 || ft_print->flags & SPACE_POSITIVE
-		|| ft_print->flags & SHOW_SIGN)
+	if (n < 0 && (ft_print->flags & SPACE_POSITIVE
+			|| ft_print->flags & SHOW_SIGN))
 		size++;
 	return (size);
 }

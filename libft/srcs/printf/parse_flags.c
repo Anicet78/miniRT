@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 11:50:05 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 21:06:58 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/15 14:31:10 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,15 @@ static void	add_padding(t_printf *ft_print, char *str, size_t *current)
 
 static void	sanitize_input(t_printf *ft_print, char c)
 {
-	if (ft_print->flags & LEFT_JUSTIFY || ft_print->flags & PRECISION)
+	if (c != 'f' && ft_print->flags & PRECISION)
 		ft_print->flags &= ~PAD_ZEROS;
-	if (c != 'x' && c != 'X')
+	if (ft_print->flags & LEFT_JUSTIFY)
+		ft_print->flags &= ~PAD_ZEROS;
+	if (c != 'x' && c != 'X' && c != 'f')
 		ft_print->flags &= ~ALTERNATIVE_FORM;
-	if (c != 'd' && c != 'i')
+	if (c != 'd' && c != 'i' && c != 'f')
 		ft_print->flags &= ~SPACE_POSITIVE;
-	if (c != 'd' && c != 'i')
+	if (c != 'd' && c != 'i' && c != 'f')
 		ft_print->flags &= ~SHOW_SIGN;
 }
 

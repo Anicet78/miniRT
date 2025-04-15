@@ -19,6 +19,8 @@ SRC			=	main.c							\
 				elements/elem_lst.c				\
 				elements/add_elements.c			\
 				elements/add_elements2.c		\
+				parse_file/check_params.c		\
+				parse_file/libc_remaster.c		\
 				parse_file/parse_elements.c		\
 				parse_file/parse_elements2.c	\
 				parse_file/parse_file.c			\

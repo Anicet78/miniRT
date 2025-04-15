@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/14 12:51:38 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/15 11:50:39 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int		ft_min(int a, int b);
 
 // printf
 # define PRINTF_BUFF_SIZE 1024
-# define AVAILABLE_PRINTF_CONVERT "cspdiuxX%"
+# define AVAILABLE_PRINTF_CONVERT "cspdiuxXf%"
 
 typedef enum printf_flags
 {
@@ -150,14 +150,16 @@ void	write_str(t_printf *ft_print, char *str);
 void	write_ptr(t_printf *ft_print, unsigned long long ptr);
 void	write_int(t_printf *ft_print, int n, char *base, int base_len);
 void	write_uint(t_printf *ft_print, unsigned int nb, char *base, int b_len);
-void	write_lint(t_printf *ft_print, long n, char *base, int base_len);
-void	write_luint(t_printf *ft_print, unsigned long nb, char *base, int b_len);
+void	write_long(t_printf *ft_print, long n, char *base, int base_len);
+void	write_ulong(t_printf *ft_print, unsigned long nb, char *base, int len);
+void	write_double(t_printf *ft_print, double n);
 int		calc_str_size(t_printf *ft_print, char *str);
 int		calc_int_size(t_printf *ft_print, int n, int base_len);
 int		calc_uint_size(t_printf *ft_print, unsigned int nb, int base_len);
 int		calc_long_size(t_printf *ft_print, long nb, int base_len);
 int		calc_ulong_size(t_printf *ft_print, unsigned long nb, int base_len);
 int		calc_llong_size(t_printf *ft_print, unsigned long long ptr);
+int		calc_double_size(t_printf *ft_print, double n, int precision, bool dot);
 int		apply_numeric_flag(t_printf *ft_print, int len,
 			char *base, bool is_neg);
 int		write_padding(t_printf *ft_print, int padding, int c);

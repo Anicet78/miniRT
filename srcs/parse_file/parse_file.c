@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/14 12:34:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/15 17:04:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ bool	parse_elements(t_elem_lst *elements, char **line)
 	return (false);
 }
 
-bool	read_RTfile(int fd, t_elem_lst *elements)
+bool	read_rtfile(int fd, t_elem_lst *elements)
 {
 	char	*line;
 	char	**split;

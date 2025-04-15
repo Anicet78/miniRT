@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/13 15:54:06 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/15 15:09:03 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_camera	*add_camera(t_elem_lst *elements, t_point pos, t_vec axis,
 	cam.type = CAMERA;
 	cam.fov = fov;
 	cam.pos = pos;
-	cam.pos = axis;
+	cam.axis = axis;
 	if (!add_element(elements, &cam, sizeof(t_camera)))
 		return (NULL);
 	return ((t_camera *)1);

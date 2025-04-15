@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/14 15:44:16 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/15 17:04:48 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,21 @@ int	main(int ac, char **av)
 	if (!new_elem_list(&elements))
 		return (close(fd), EXIT_FAILURE);
 	elements.count = 0;
-	read_RTfile(fd, &elements);
-	// rgb_to_hex(15, 60, 133);
-	// mlx_start(&mlx, 1920, 1080);
-	clear_arena(&elements.arena);
+	if (read_rtfile(fd, &elements) == false)
+	{
+		ft_printf("\e[1;31mParsing Error !\n");
+		return (EXIT_FAILURE);
+	}
+	else
+	{
+		ft_printf("\e[1;32mParsing Success !\n");
+		return (EXIT_FAILURE);
+	}
 	close(fd);
-	// mlx_loop(mlx.mlx);
+	mlx_start(&mlx, 1920, 1080);
+	// add elems to list
+	clear_arena(&elements.arena);
+	ft_printf("wwwwwwwwww\n");
+	mlx_loop(mlx.mlx);
 	return (EXIT_FAILURE);
 }
