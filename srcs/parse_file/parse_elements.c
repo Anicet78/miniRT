@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 11:59:43 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:44:08 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ bool	parse_ambient(t_elem_lst *elements, char **line, int nb)
 
 bool	parse_camera(t_elem_lst *elements, char **line, int nb)
 {
-	t_point	pos;
-	t_vec	axis;
-	int64_t	fov;
+	t_point		pos;
+	t_vec		axis;
+	int64_t		fov;
 	static int	amount;
 
 	if (amount++ > 0)

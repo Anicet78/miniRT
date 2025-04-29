@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 11:31:15 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/29 17:10:04 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define PI 3.14159265358979323846264338
 # define WIDTH 500
 # define ASPECT_RATIO 1
+
+# define ESC_K 65307
 
 typedef struct s_ray
 {
@@ -61,12 +63,13 @@ typedef struct s_mlx
 
 typedef struct s_miniRT
 {
-	t_mlx	*mlx;
+	t_mlx		mlx;
+	t_elem_lst	elements;
 }	t_miniRT;
 
 // mlx
-void		mlx_start(t_mlx *mlx, int width, int height);
-void		kill_mlx(t_mlx *data, int exit_code);
+void		mlx_start(t_miniRT *minirt, int width, int height);
+void		kill_mlx(t_miniRT *minirt, int exit_code);
 
 // tristan
 void		print_color(unsigned int col);

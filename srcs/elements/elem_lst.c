@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 12:08:55 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:44:19 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 t_elem_lst	*new_elem_list(t_elem_lst *elements)
 {
-
-	elements->capacity = CHUNK_SIZE / 2;
+	elements->capacity = CHUNK_SIZE * 90 / 100;
 	elements->arena = arena_init();
 	if (!elements->arena)
 		return (NULL);

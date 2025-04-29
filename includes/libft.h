@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/28 16:12:31 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/29 17:15:09 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <dirent.h>
+# include <errno.h>
 
 // Bases
 # define BASE_10 "0123456789"

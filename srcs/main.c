@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 12:17:02 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/29 17:14:19 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ int	open_file(int ac, char **av)
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 	{
-		ft_fprintf(2, "\e[1;31mError\n");
-		perror(av[1]);
-		ft_fprintf(2, "\e[0m");
+		print_err(strerror(errno), 0);
 		exit(EXIT_FAILURE);
 	}
 	return (fd);
@@ -39,27 +37,26 @@ int	open_file(int ac, char **av)
 
 int	main(int ac, char **av)
 {
-	t_mlx		mlx;
-	t_elem_lst	elements;
+	t_miniRT	minirt;
 	int			fd;
 	void		*elem;
+	bool		map_file;
 
 	fd = open_file(ac, av);
-	if (!new_elem_list(&elements))
+	if (!new_elem_list(&minirt.elements))
 		return (close(fd), EXIT_FAILURE);
-	elements.count = 0;
-	if (read_rtfile(fd, &elements) == false)
-		return (clear_arena(&elements.arena), EXIT_FAILURE);
-	else
+		minirt.elements.count = 0;
+	map_file = read_rtfile(fd, &minirt.elements);
+	close(fd);
+	if (!map_file)
+		return (clear_arena(&minirt.elements.arena), EXIT_FAILURE);
+	/* else
 	{
 		ft_printf("\e[1;32mParsing Success !\e[0m\n");
-		clear_arena(&elements.arena);
+		clear_arena(&miniRT.elements.arena);
 		return (EXIT_FAILURE);
-	}
-	close(fd);
-	mlx_start(&mlx, 1920, 1080);
-	clear_arena(&elements.arena);
-	ft_printf("wwwwwwwwww\n");
-	mlx_loop(mlx.mlx);
+	} */
+	mlx_start(&minirt, 1920, 1080);
+	mlx_loop(minirt.mlx.mlx);
 	return (EXIT_FAILURE);
 }
