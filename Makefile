@@ -24,6 +24,7 @@ SRC			=	main.c							\
 				parse_file/parse_elements.c		\
 				parse_file/parse_elements2.c	\
 				parse_file/parse_file.c			\
+				utils/err_message.c				\
 				utils/color.c					\
 				mlx.c							\
 				print_utils.c					\

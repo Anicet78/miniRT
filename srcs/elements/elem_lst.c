@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/14 17:08:43 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/29 12:08:55 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 t_elem_lst	*new_elem_list(t_elem_lst *elements)
 {
+
+	elements->capacity = CHUNK_SIZE / 2;
 	elements->arena = arena_init();
 	if (!elements->arena)
 		return (NULL);
-	elements->capacity = 1024;
 	elements->count = 0;
 	elements->elem_lst = arena_calloc(elements->arena, elements->capacity);
 	if (!elements->elem_lst)
@@ -69,10 +70,8 @@ t_elem_lst	*add_element(t_elem_lst *elements, void *new_elem, size_t size)
 {
 	if (elements->count + size > elements->capacity)
 	{
-		elements->elem_lst = arena_realloc(elements->arena, elements->elem_lst,
-				elements->capacity * 2, elements->capacity);
-		if (!elements->elem_lst)
-			return (NULL);
+		print_err("Memory allocation failed: chunk size too small", 0);
+		return (clear_arena(&elements->arena), NULL);
 	}
 	ft_memcpy(elements->elem_lst + elements->count, new_elem, size);
 	elements->count += size;

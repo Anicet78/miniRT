@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/15 17:04:48 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/29 11:47:42 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,14 @@ bool		read_rtfile(int fd, t_elem_lst *elements);
 uint32_t	get_color(char *str);
 bool		is_color(char *str);
 bool		is_vec(char *str);
+bool		is_normalize_vec(char *str);
 t_point		get_vec(char *str);
-bool		parse_ambient(t_elem_lst *elements, char **line);
-bool		parse_camera(t_elem_lst *elements, char **line);
-bool		parse_light(t_elem_lst *elements, char **line);
-bool		parse_sphere(t_elem_lst *elements, char **line);
-bool		parse_plane(t_elem_lst *elements, char **line);
-bool		parse_cylinder(t_elem_lst *elements, char **line);
+bool		parse_ambient(t_elem_lst *elements, char **line, int nb);
+bool		parse_camera(t_elem_lst *elements, char **line, int nb);
+bool		parse_light(t_elem_lst *elements, char **line, int nb);
+bool		parse_sphere(t_elem_lst *elements, char **line, int nb);
+bool		parse_plane(t_elem_lst *elements, char **line, int nb);
+bool		parse_cylinder(t_elem_lst *elements, char **line, int nb);
 double		ft_atof_parse(char *str);
 
 #endif

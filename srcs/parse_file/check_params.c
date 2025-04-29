@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:38:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/15 16:50:20 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/29 11:47:30 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,28 @@
 bool	is_color(char *str)
 {
 	int		i;
+	int		j;
 	int64_t	nb;
 
 	i = 0;
 	nb = ft_atol(str);
 	while (ft_isdigit(str[i]) && i < 3)
 		i++;
-	if (str[i] != ',' || nb < 0 || nb > 255)
+	if (str[i] != ',' || nb < 0 || nb > 255 || i == 0)
 		return (false);
 	i++;
+	j = i;
 	nb = ft_atol(str + i);
-	while (ft_isdigit(str[i]) && i < 7)
+	while (ft_isdigit(str[i]) && i - j < 3)
 		i++;
-	if (str[i] != ',' || nb < 0 || nb > 255)
+	if (str[i] != ',' || nb < 0 || nb > 255 || i - j == 0)
 		return (false);
 	i++;
+	j = i;
 	nb = ft_atol(str + i);
 	while (ft_isdigit(str[i]) && i < 11)
 		i++;
-	if (nb < 0 || nb > 255 || (str[i] != '\n' && str[i]))
+	if (i - j == 0 || nb < 0 || nb > 255 || (str[i] != '\n' && str[i]))
 		return (false);
 	return (true);
 }
@@ -82,6 +85,32 @@ bool	is_vec(char *str)
 	while (ft_isdigit(str[i]) || str[i] == '-' || str[i] == '.')
 		i++;
 	if (nb < INT_MIN || nb > INT_MAX || (str[i] != '\n' && str[i]))
+		return (false);
+	return (true);
+}
+
+bool	is_normalize_vec(char *str)
+{
+	int		i;
+	double	nb;
+
+	i = 0;
+	nb = ft_atof_parse(str);
+	while (ft_isdigit(str[i]) || str[i] == '-' || str[i] == '.')
+		i++;
+	if (str[i] != ',' || nb < -1 || nb > 1)
+		return (false);
+	i++;
+	nb = ft_atof_parse(str + i);
+	while (ft_isdigit(str[i]) || str[i] == '-' || str[i] == '.')
+		i++;
+	if (str[i] != ',' || nb < -1 || nb > 1)
+		return (false);
+	i++;
+	nb = ft_atof_parse(str + i);
+	while (ft_isdigit(str[i]) || str[i] == '-' || str[i] == '.')
+		i++;
+	if (nb < -1 || nb > 1 || (str[i] != '\n' && str[i]))
 		return (false);
 	return (true);
 }

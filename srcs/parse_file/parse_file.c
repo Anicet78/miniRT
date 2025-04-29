@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/15 17:04:40 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/29 12:06:06 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,46 +41,45 @@ char	**ft_arena_split(char const *s, char c, t_arena *arena)
 	return (tab);
 }
 
-bool	parse_elements(t_elem_lst *elements, char **line)
+bool	parse_elements(t_elem_lst *elements, char **line, int nb)
 {
-	static int	ambient = 0;
-	static int	camera = 0;
-	static int	light = 0;
-
-	if (ft_strcmp(line[0], "A") == 0 && ambient++ == 0)
-		return (parse_ambient(elements, line));
-	else if (ft_strcmp(line[0], "C") == 0 && camera++ == 0)
-		return (parse_camera(elements, line));
-	else if (ft_strcmp(line[0], "L") == 0 && light++ == 0)
-		return (parse_light(elements, line));
+	if (ft_strcmp(line[0], "A") == 0)
+		return (parse_ambient(elements, line, nb));
+	else if (ft_strcmp(line[0], "C") == 0)
+		return (parse_camera(elements, line, nb));
+	else if (ft_strcmp(line[0], "L") == 0)
+		return (parse_light(elements, line, nb));
 	else if (ft_strcmp(line[0], "pl") == 0)
-		return (parse_plane(elements, line));
+		return (parse_plane(elements, line, nb));
 	else if (ft_strcmp(line[0], "sp") == 0)
-		return (parse_sphere(elements, line));
+		return (parse_sphere(elements, line, nb));
 	else if (ft_strcmp(line[0], "cy") == 0)
-		return (parse_cylinder(elements, line));
-	return (false);
+		return (parse_cylinder(elements, line, nb));
+	return (print_err("Unknown identifier", nb));
 }
 
 bool	read_rtfile(int fd, t_elem_lst *elements)
 {
 	char	*line;
 	char	**split;
+	int		i;
 
+	i = 1;
 	line = get_next_line(fd);
 	if (!line)
-		return (false);
+		return (print_err("Empty file", 1));
 	while (line)
 	{
 		split = ft_arena_split(line, ' ', elements->arena);
 		free(line);
 		if (!split)
-			return (false);
-		if (split[0])
+			return (print_err("Memory allocation failed", 0));
+		if (split[0] && split[0][0] && split[0][0] != '\n')
 		{
-			if (parse_elements(elements, split) == false)
+			if (parse_elements(elements, split, i) == false)
 				return (false);
 		}
+		i++;
 		line = get_next_line(fd);
 	}
 	return (true);
