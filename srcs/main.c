@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/30 14:38:37 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/30 16:16:25 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static void	iterate(t_elem_lst *elements)
 			print_cylinder(elem);
 		elem = get_next_elem(elements);
 	}
+	clear_arena(&elements->arena);
 }
 
 int	main(int ac, char **av)
