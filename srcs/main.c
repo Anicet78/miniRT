@@ -6,13 +6,13 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 17:14:19 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/30 14:38:37 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-int	open_file(int ac, char **av)
+static int	open_file(int ac, char **av)
 {
 	int	fd;
 
@@ -33,6 +33,32 @@ int	open_file(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 	return (fd);
+}
+
+static void	iterate(t_elem_lst *elements)
+{
+	void	*elem;
+	int		type;
+
+	elements->count = 0;
+	elem = get_next_elem(elements);
+	while (elem)
+	{
+		type = get_elem_type(elem);
+		if (type == AMBIENT_LIGHTING)
+			print_ambient(elem);
+		else if (type == CAMERA)
+			print_cam(elem);
+		else if (type == LIGHT)
+			print_light(elem);
+		else if (type == SPHERE)
+			print_sphere(elem);
+		else if (type == PLANE)
+			print_plane(elem);
+		else if (type == CYLINDER)
+			print_cylinder(elem);
+		elem = get_next_elem(elements);
+	}
 }
 
 int	main(int ac, char **av)
@@ -57,6 +83,7 @@ int	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	} */
 	mlx_start(&minirt, 1920, 1080);
+	iterate(&minirt.elements);
 	mlx_loop(minirt.mlx.mlx);
 	return (EXIT_FAILURE);
 }

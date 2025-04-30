@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 11:47:42 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/30 11:35:22 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_elem_lst
 typedef enum elem_type
 {
 	INVALID_ELEM,
-	AMBIANT_LIGHTING,
+	AMBIENT_LIGHTING,
 	CAMERA,
 	LIGHT,
 	SPHERE,

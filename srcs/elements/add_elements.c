@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/15 15:09:03 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/30 11:35:22 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_ambient	*add_ambient_lighting(t_elem_lst *elements, float ratio,
 {
 	t_ambient	al;
 
-	al.type = AMBIANT_LIGHTING;
+	al.type = AMBIENT_LIGHTING;
 	al.ratio = ratio;
 	al.color = color;
 	if (!add_element(elements, &al, sizeof(t_ambient)))

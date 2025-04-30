@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 17:10:04 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/30 14:37:15 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,14 @@ void		kill_mlx(t_miniRT *minirt, int exit_code);
 // tristan
 void		print_color(unsigned int col);
 t_display	init_display(double fov, t_point cam);
+
+// tests
+void	print_ambient(t_ambient *ambient);
+void	print_cam(t_camera *camera);
+void	print_light(t_light *light);
+void	print_sphere(t_sphere *sphere);
+void	print_plane(t_plane *plane);
+void	print_cylinder(t_cylinder *cylinder);
 
 // utils
 uint32_t	rgb_to_hex(uint8_t r, uint8_t g, uint8_t b);

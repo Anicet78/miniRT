@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:38:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 11:47:30 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/30 14:49:46 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,19 +121,19 @@ t_point	get_vec(char *str)
 	int			i;
 
 	i = 0;
-	point.x = ft_atof(str);
+	point.x = ft_atof_parse(str);
 	if (str[i] == '-')
 		i++;
 	while (ft_isdigit(str[i]) || str[i] == '-' || str[i] == '.')
 		i++;
 	i++;
-	point.y = ft_atof(str + i);
+	point.y = ft_atof_parse(str + i);
 	if (str[i] == '-')
 		i++;
 	while (ft_isdigit(str[i]) || str[i] == '-' || str[i] == '.')
 		i++;
 	i++;
-	point.z = ft_atof(str + i);
+	point.z = ft_atof_parse(str + i);
 	if (str[i] == '-')
 		i++;
 	while (ft_isdigit(str[i]) || str[i] == '-' || str[i] == '.')

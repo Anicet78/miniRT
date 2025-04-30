@@ -26,6 +26,7 @@ SRC			=	main.c							\
 				parse_file/parse_file.c			\
 				utils/err_message.c				\
 				utils/color.c					\
+				utils/print_tests.c				\
 				mlx.c							\
 				print_utils.c					\
 				settings.c						\

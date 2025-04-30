@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 16:44:19 by agruet           ###   ########.fr       */
+/*   Updated: 2025/04/30 11:35:22 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ size_t	get_elem_size(void *elem)
 	t_elem_type	type;
 
 	type = get_elem_type(elem);
-	if (type == AMBIANT_LIGHTING)
+	if (type == AMBIENT_LIGHTING)
 		return (sizeof(t_ambient));
 	if (type == CAMERA)
 		return (sizeof(t_camera));
