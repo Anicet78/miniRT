@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 15:44:34 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 15:54:42 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/06 18:58:12 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 
 t_color	ray_color(t_ray *ray)
 {
-	return ((t_color){0, 0 ,0});
+	double a = (ray->dir.y + 1.1);
+	return (vadd(vmul((t_color){1.0, 1.0, 1.0}, 1.0 - a),
+			vmul((t_color){1.0, 0.1, 0.2}, a)));
 }

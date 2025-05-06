@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 17:19:04 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/06 18:51:54 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	iterate(t_elem_lst *elements)
 	clear_arena(&elements->arena);
 }
 
-void	test_display(t_display *display)
+void	test_display(t_display *display, t_mlx *mlx)
 {
 	const float	focal_lenght = 1.0;
 	const t_vec	camera_center = {0, 0, 0};
@@ -82,15 +82,15 @@ void	test_display(t_display *display)
 		while (i < display->width)
 		{
 			t_vec	pixel_center = vadd(vadd(pixel00_loc, vmul(pixel_delta_u, i)), vmul(pixel_delta_v, j));
-            t_vec	ray_direction = vsub(pixel_center, camera_center);
-            t_ray	r = {camera_center, ray_direction};
-
-            t_color pixel_color = ray_color(&r);
-            print_color(vec_to_intcol(pixel_color));
+			t_vec	ray_direction = vsub(pixel_center, camera_center);
+			t_ray	r = {camera_center, ray_direction};
+			t_color pixel_color = ray_color(&r);
+			put_pixel_to_img(mlx, i, j, vec_to_intcol(pixel_color));
 			i++;
 		}
 		j++;
 	}
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img, 0, 0);
 }
 
 int	main(int ac, char **av)
@@ -114,8 +114,8 @@ int	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	} */
 	display = init_display(minirt.elements.cam.fov, minirt.elements.cam.pos);
-	test_display(&display);
 	mlx_start(&minirt, display.width, display.height);
+	test_display(&display, &minirt.mlx);
 	iterate(&minirt.elements);
 	mlx_loop(minirt.mlx.mlx);
 	return (EXIT_FAILURE);

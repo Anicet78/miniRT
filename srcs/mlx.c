@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 15:34:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/06 18:13:42 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ int	key_hook(int keycode, t_miniRT *minirt)
 	if (keycode == ESC_K)
 		kill_mlx(minirt, EXIT_SUCCESS);
 	return (0);
+}
+
+void	put_pixel_to_img(t_mlx *img, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
 void	mlx_start(t_miniRT *minirt, int width, int height)

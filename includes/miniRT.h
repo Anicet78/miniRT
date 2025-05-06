@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 16:18:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/06 18:07:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_miniRT
 // mlx
 void		mlx_start(t_miniRT *minirt, int width, int height);
 void		kill_mlx(t_miniRT *minirt, int exit_code);
+void		put_pixel_to_img(t_mlx *img, int x, int y, int color);
 
 // tristan
 void		print_color(unsigned int col);
