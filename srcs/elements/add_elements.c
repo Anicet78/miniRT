@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/30 11:35:22 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/06 13:47:59 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,10 @@ t_ambient	*add_ambient_lighting(t_elem_lst *elements, float ratio,
 t_camera	*add_camera(t_elem_lst *elements, t_point pos, t_vec axis,
 	uint32_t fov)
 {
-	t_camera	cam;
-
-	cam.type = CAMERA;
-	cam.fov = fov;
-	cam.pos = pos;
-	cam.axis = axis;
-	if (!add_element(elements, &cam, sizeof(t_camera)))
-		return (NULL);
+	elements->cam.pos = pos;
+	elements->cam.axis = axis;
+	elements->cam.fov = fov;
+	elements->cam.declared = true;
 	return ((t_camera *)1);
 }
 

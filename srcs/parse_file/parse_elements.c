@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/30 14:50:22 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/06 14:31:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	parse_camera(t_elem_lst *elements, char **line, int nb)
 	pos = get_vec(line[1]);
 	axis = get_vec(line[2]);
 	fov = ft_atol(line[3]);
-	if (fov < 0 || fov > 128)
+	if (fov < 0 || fov > 180)
 		return (print_err("Invalid FOV in `camera`", nb));
 	return (add_camera(elements, pos, axis, fov));
 }

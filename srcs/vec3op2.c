@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/04/11 12:36:20 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/06 16:56:15 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@ t_vec	vdiv(t_vec a, double scalar)
 	a.x /= scalar;
 	a.y /= scalar;
 	a.z /= scalar;
+	return (a);
+}
+
+t_vec	vaddd(t_vec a, double scalar)
+{
+	a.x += scalar;
+	a.y += scalar;
+	a.z += scalar;
+	return (a);
+}
+
+t_vec	vmulv(t_vec a, t_vec b)
+{
+	a.x *= -b.x;
+	a.y *= -b.y;
+	a.z *= -b.z;
 	return (a);
 }
 

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/30 11:35:22 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/06 16:19:15 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 
 # include "miniRT.h"
 # include <float.h>
-
-typedef struct s_elem_lst
-{
-	t_arena		*arena;
-	size_t		capacity;
-	size_t		count;
-	uintptr_t	*elem_lst;
-}	t_elem_lst;
 
 typedef enum elem_type
 {
@@ -44,10 +36,10 @@ typedef struct s_ambient
 
 typedef struct s_camera
 {
-	t_elem_type	type;
-	uint32_t	fov;
 	t_point		pos;
 	t_vec		axis;
+	uint32_t	fov;
+	bool		declared;
 }	t_camera;
 
 typedef struct s_light
@@ -83,6 +75,15 @@ typedef struct s_cylinder
 	float		diameter;
 	float		height;
 }	t_cylinder;
+
+typedef struct s_elem_lst
+{
+	t_arena		*arena;
+	size_t		capacity;
+	size_t		count;
+	t_camera	cam;
+	uintptr_t	*elem_lst; // mettre en char[] pour le foutre dans la stack ?
+}	t_elem_lst;
 
 // element list
 t_elem_lst	*new_elem_list(t_elem_lst *elements);

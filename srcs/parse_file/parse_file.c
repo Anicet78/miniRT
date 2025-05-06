@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 16:20:09 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/06 14:09:16 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,8 @@ bool	read_rtfile(int fd, t_elem_lst *elements)
 	int		i;
 
 	i = 1;
+	elements->cam.declared = false;
 	line = get_next_line(fd);
-	if (!line)
-		return (print_err("Empty file", 1));
 	while (line)
 	{
 		split = ft_arena_split(line, ' ', elements->arena);
@@ -82,5 +81,7 @@ bool	read_rtfile(int fd, t_elem_lst *elements)
 		i++;
 		line = get_next_line(fd);
 	}
+	if (elements->cam.declared == false)
+		return (print_err("Camera missing", 0));
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/30 11:35:22 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/06 13:43:32 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ size_t	get_elem_size(void *elem)
 	type = get_elem_type(elem);
 	if (type == AMBIENT_LIGHTING)
 		return (sizeof(t_ambient));
-	if (type == CAMERA)
-		return (sizeof(t_camera));
 	if (type == LIGHT)
 		return (sizeof(t_light));
 	if (type == SPHERE)

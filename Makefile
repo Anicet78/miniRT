@@ -27,6 +27,7 @@ SRC			=	main.c							\
 				utils/err_message.c				\
 				utils/color.c					\
 				utils/print_tests.c				\
+				ray.c							\
 				mlx.c							\
 				print_utils.c					\
 				settings.c						\

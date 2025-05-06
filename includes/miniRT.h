@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/30 14:37:15 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/06 16:18:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # include <fcntl.h>
 
 # define PI 3.14159265358979323846264338
-# define WIDTH 500
-# define ASPECT_RATIO 1
+# define WIDTH 1920
+# define ASPECT_RATIO (16.0 / 9.0)
 
 # define ESC_K 65307
 
@@ -75,13 +75,16 @@ void		kill_mlx(t_miniRT *minirt, int exit_code);
 void		print_color(unsigned int col);
 t_display	init_display(double fov, t_point cam);
 
+// anicet
+t_color		ray_color(t_ray *ray);
+
 // tests
-void	print_ambient(t_ambient *ambient);
-void	print_cam(t_camera *camera);
-void	print_light(t_light *light);
-void	print_sphere(t_sphere *sphere);
-void	print_plane(t_plane *plane);
-void	print_cylinder(t_cylinder *cylinder);
+void		print_ambient(t_ambient *ambient);
+void		print_cam(t_camera *camera);
+void		print_light(t_light *light);
+void		print_sphere(t_sphere *sphere);
+void		print_plane(t_plane *plane);
+void		print_cylinder(t_cylinder *cylinder);
 
 // utils
 uint32_t	rgb_to_hex(uint8_t r, uint8_t g, uint8_t b);
