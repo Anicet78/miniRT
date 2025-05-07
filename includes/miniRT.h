@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 18:07:38 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/07 16:31:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_display
 	int		height;
 	double	vp_width;
 	double	vp_height;
+	double	focal_len;
 	t_point	camera;
 }	t_display;
 

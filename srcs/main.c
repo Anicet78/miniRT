@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/07 11:17:36 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/07 16:53:47 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,21 @@ static void	iterate(t_elem_lst *elements)
 
 void	test_display(t_display *display, t_mlx *mlx)
 {
-	const float	focal_lenght = 1.0;
-	const t_vec	camera_center = {0, 0, 0};
-	const t_vec	viewport_u = (t_vec){display->vp_width, 0, 0};
-	const t_vec	viewport_v = (t_vec){0, -display->vp_height, 0};
-	const t_vec	pixel_delta_u = vdiv(viewport_u, display->width);
-	const t_vec	pixel_delta_v = vdiv(viewport_v, display->height);
-	const t_vec	viewport_upper_left = vsub(vsub(camera_center,
-				(t_vec){0, 0, focal_lenght}), vsub(vdiv(viewport_u, 2),
-				vdiv(viewport_v, 2)));
-	const t_vec	pixel00_loc = vmulv(vaddd(viewport_upper_left, 0.5),
-			vadd(pixel_delta_u, pixel_delta_v));
+	const double	focal_lenght = display->focal_len;
+	const t_vec		camera_center = display->camera;
+	const t_vec		viewport_u = (t_vec){display->vp_width, 0, 0};
+	const t_vec		viewport_v = (t_vec){0, -display->vp_height, 0};
+	const t_vec		pixel_delta_u = vdiv(viewport_u, display->width);
+	const t_vec		pixel_delta_v = vdiv(viewport_v, display->height);
+	const t_vec		viewport_upper_left = vsub(vsub(camera_center,
+					(t_vec){0, 0, focal_lenght}), vsub(vdiv(viewport_u, 2),
+					vdiv(viewport_v, 2)));
+	const t_vec		pixel00_loc = vadd(vmul(viewport_upper_left, 0.5),
+				vadd(pixel_delta_u, pixel_delta_v));
 	int			j = 0;
 	int			i;
 
+	printf("z: %3f\n", camera_center.z);
 	while (j < display->height)
 	{
 		i = 0;
@@ -114,10 +115,11 @@ int	main(int ac, char **av)
 		clear_arena(&miniRT.elements.arena);
 		return (EXIT_FAILURE);
 	} */
+	print_cam(&minirt.elements.cam);
 	display = init_display(minirt.elements.cam.fov, minirt.elements.cam.pos);
 	mlx_start(&minirt, display.width, display.height);
 	test_display(&display, &minirt.mlx);
-	iterate(&minirt.elements);
+	// iterate(&minirt.elements);
 	mlx_loop(minirt.mlx.mlx);
 	return (EXIT_FAILURE);
 }
