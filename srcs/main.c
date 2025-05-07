@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 18:51:54 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/07 11:17:36 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	test_display(t_display *display, t_mlx *mlx)
 		i = 0;
 		while (i < display->width)
 		{
-			t_vec	pixel_center = vadd(vadd(pixel00_loc, vmul(pixel_delta_u, i)), vmul(pixel_delta_v, j));
+			t_vec	pixel_center = vadd(vadd(pixel00_loc,
+				vmul(pixel_delta_u, i)), vmul(pixel_delta_v, j));
 			t_vec	ray_direction = vsub(pixel_center, camera_center);
 			t_ray	r = {camera_center, ray_direction};
 			t_color pixel_color = ray_color(&r);
