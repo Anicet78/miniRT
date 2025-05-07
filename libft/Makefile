@@ -98,16 +98,6 @@ SRC			=	libc/ft_atof.c					\
 				maths/ft_max.c					\
 				maths/ft_min.c					\
 				maths/q_rsqrt.c					\
-				readline/ac_utils.c				\
-				readline/auto_complete.c		\
-				readline/ft_readline.c			\
-				readline/history.c				\
-				readline/keys.c					\
-				readline/keys2.c				\
-				readline/keys3.c				\
-				readline/rl_signals.c			\
-				readline/rl_utils.c				\
-				readline/terminal.c				\
 				signals/signals.c
 
 OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))

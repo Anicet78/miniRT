@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 17:15:09 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/07 14:51:20 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,11 +318,6 @@ void	init_auto_complete(t_rline *line);
 int		expand_current(int key, t_rline *line, t_readline *params);
 void	rl_init_signals(void);
 void	rl_reset_signals(void);
-
-// signals
-void	init_sighandler(struct sigaction *sa, void (*action)(int));
-void	init_sigaction(struct sigaction *sa,
-			void (*action)(int, siginfo_t *, void *));
 
 // readfile
 # ifndef BUFFER_SIZE

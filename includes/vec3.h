@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec3.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:38:50 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/06 17:13:14 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/07 16:02:58 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ double		magn(t_vec a);
 t_vec		norm(t_vec a);
 t_vec		vsub(t_vec a, t_vec b);
 t_vec		vdiv(t_vec a, double scalar);
-t_vec		vaddd(t_vec a, double scalar);
+t_vec		vtrans(t_vec a, double scalar);
 t_vec		vmulv(t_vec a, t_vec b);
 uint32_t	vec_to_intcol(t_color a);
 

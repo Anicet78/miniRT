@@ -32,6 +32,7 @@ SRC			=	main.c							\
 				print_utils.c					\
 				settings.c						\
 				vec3op.c						\
+				display.c						\
 				vec3op2.c
 
 OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))

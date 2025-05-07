@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 18:07:38 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/07 16:13:57 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_display
 	int		height;
 	double	vp_width;
 	double	vp_height;
+	double	focal_len;
 	t_point	camera;
 }	t_display;
 
@@ -75,6 +76,7 @@ void		put_pixel_to_img(t_mlx *img, int x, int y, int color);
 // tristan
 void		print_color(unsigned int col);
 t_display	init_display(double fov, t_point cam);
+void		test_display(t_display display, t_mlx *mlx, t_elem_lst *elements);
 
 // anicet
 t_color		ray_color(t_ray *ray);

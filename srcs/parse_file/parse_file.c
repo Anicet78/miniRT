@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 14:09:16 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/07 15:10:57 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 char	**ft_arena_split(char const *s, char c, t_arena *arena)
 {
-	char	**tab;
-	int		words;
-	int		i;
-	int		j;
-	int		k;
+	char			**tab;
+	const int		words = count_words(s, c);
+	int				i;
+	int				j;
+	int				k;
 
-	words = count_words(s, c);
 	tab = arena_calloc(arena, (words + 1) * sizeof(char *));
 	if (!tab || !s)
 		return (NULL);
