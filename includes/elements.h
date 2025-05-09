@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 16:19:15 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/09 12:45:44 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "miniRT.h"
 # include <float.h>
+
+# define ELEM_LST_SIZE (CHUNK_SIZE * 90 / 100)
 
 typedef enum elem_type
 {
@@ -29,7 +31,7 @@ typedef enum elem_type
 
 typedef struct s_ambient
 {
-	t_elem_type	type;
+	uint8_t		type;
 	float		ratio;
 	uint32_t	color;
 }	t_ambient;
@@ -44,7 +46,7 @@ typedef struct s_camera
 
 typedef struct s_light
 {
-	t_elem_type	type;
+	uint8_t		type;
 	float		ratio;
 	t_point		pos;
 	uint32_t	color;
@@ -52,7 +54,7 @@ typedef struct s_light
 
 typedef struct s_sphere
 {
-	t_elem_type	type;
+	uint8_t		type;
 	float		diameter;
 	t_point		pos;
 	uint32_t	color;
@@ -60,7 +62,7 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	t_elem_type	type;
+	uint8_t		type;
 	uint32_t	color;
 	t_point		pos;
 	t_vec		axis;
@@ -68,7 +70,7 @@ typedef struct s_plane
 
 typedef struct s_cylinder
 {
-	t_elem_type	type;
+	uint8_t		type;
 	uint32_t	color;
 	t_point		pos;
 	t_vec		axis;
@@ -78,17 +80,14 @@ typedef struct s_cylinder
 
 typedef struct s_elem_lst
 {
-	t_arena		*arena;
-	size_t		capacity;
 	size_t		count;
 	t_camera	cam;
-	uintptr_t	*elem_lst; // mettre en char[] pour le foutre dans la stack ?
+	uintptr_t	*elem_lst;
 }	t_elem_lst;
 
 // element list
-t_elem_lst	*new_elem_list(t_elem_lst *elements);
 t_elem_lst	*add_element(t_elem_lst *elements, void *new_elem, size_t size);
-t_elem_type	get_elem_type(void *elem);
+uint8_t		get_elem_type(void *elem);
 size_t		get_elem_size(void *elem);
 void		*get_next_elem(t_elem_lst *elements);
 
@@ -106,7 +105,7 @@ t_plane		*add_plane(t_elem_lst *elements, t_point pos, t_vec axis,
 t_cylinder	*add_cylinder(t_elem_lst *elements, t_cylinder *cylinder);
 
 // parsing
-bool		read_rtfile(int fd, t_elem_lst *elements);
+bool		read_rtfile(int fd, t_elem_lst *elements, t_arena *arena);
 uint32_t	get_color(char *str);
 bool		is_color(char *str);
 bool		is_vec(char *str);

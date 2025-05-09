@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/07 16:31:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/09 13:52:22 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,11 @@ typedef struct s_miniRT
 {
 	t_mlx		mlx;
 	t_elem_lst	elements;
+	t_arena		*arena;
 }	t_miniRT;
+
+// init
+t_elem_lst	*init_elem_list(t_miniRT *minirt);
 
 // mlx
 void		mlx_start(t_miniRT *minirt, int width, int height);

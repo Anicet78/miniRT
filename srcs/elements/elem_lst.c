@@ -6,33 +6,33 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 13:43:32 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/09 12:45:27 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-t_elem_lst	*new_elem_list(t_elem_lst *elements)
+t_elem_lst	*init_elem_list(t_miniRT *minirt)
 {
-	elements->capacity = CHUNK_SIZE * 90 / 100;
-	elements->arena = arena_init();
-	if (!elements->arena)
+	minirt->arena = arena_init();
+	if (!minirt->arena)
 		return (NULL);
-	elements->count = 0;
-	elements->elem_lst = arena_calloc(elements->arena, elements->capacity);
-	if (!elements->elem_lst)
+	minirt->elements.count = 0;
+	minirt->elements.elem_lst = arena_calloc(minirt->arena, ELEM_LST_SIZE);
+	if (!minirt->elements.elem_lst)
 		return (NULL);
-	return (elements);
+	return (&minirt->elements);
+
 }
 
-t_elem_type	get_elem_type(void *elem)
+uint8_t	get_elem_type(void *elem)
 {
-	return (*(t_elem_type *)elem);
+	return (*(uint8_t *)elem);
 }
 
 size_t	get_elem_size(void *elem)
 {
-	t_elem_type	type;
+	uint8_t	type;
 
 	type = get_elem_type(elem);
 	if (type == AMBIENT_LIGHTING)
@@ -53,7 +53,7 @@ void	*get_next_elem(t_elem_lst *elements)
 	void	*elem;
 	size_t	elem_size;
 
-	if (elements->count >= elements->capacity)
+	if (elements->count >= ELEM_LST_SIZE)
 		return (NULL);
 	elem = elements->elem_lst + elements->count;
 	elem_size = get_elem_size(elem);
@@ -65,10 +65,10 @@ void	*get_next_elem(t_elem_lst *elements)
 
 t_elem_lst	*add_element(t_elem_lst *elements, void *new_elem, size_t size)
 {
-	if (elements->count + size > elements->capacity)
+	if (elements->count + size > ELEM_LST_SIZE)
 	{
 		print_err("Memory allocation failed: chunk size too small", 0);
-		return (clear_arena(&elements->arena), NULL);
+		return (NULL);
 	}
 	ft_memcpy(elements->elem_lst + elements->count, new_elem, size);
 	elements->count += size;

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 18:13:42 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/09 13:47:43 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	put_pixel_to_img(t_mlx *img, int x, int y, int color)
 {
 	char	*dst;
 
+	if (x < 0 || x > img->width || y < 0 || y > img->height)
+		return ;
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
@@ -63,8 +65,8 @@ void	mlx_start(t_miniRT *minirt, int width, int height)
 
 void	kill_mlx(t_miniRT *minirt, int exit_code)
 {
-	if (minirt->elements.arena)
-		clear_arena(&minirt->elements.arena);
+	if (minirt->arena)
+		clear_arena(&minirt->arena);
 	if (minirt->mlx.img)
 		mlx_destroy_image(minirt->mlx.mlx, minirt->mlx.img);
 	if (minirt->mlx.mlx_win)

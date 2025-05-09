@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 14:09:16 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/08 11:07:21 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool	parse_elements(t_elem_lst *elements, char **line, int nb)
 	return (print_err("Unknown identifier", nb));
 }
 
-bool	read_rtfile(int fd, t_elem_lst *elements)
+bool	read_rtfile(int fd, t_elem_lst *elements, t_arena *arena)
 {
 	char	*line;
 	char	**split;
@@ -69,7 +69,7 @@ bool	read_rtfile(int fd, t_elem_lst *elements)
 	line = get_next_line(fd);
 	while (line)
 	{
-		split = ft_arena_split(line, ' ', elements->arena);
+		split = ft_arena_split(line, ' ', arena);
 		free(line);
 		if (!split)
 			return (print_err("Memory allocation failed", 0));
