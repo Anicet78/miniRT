@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/07 16:07:32 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/10 16:05:54 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ t_vec	vtrans(t_vec a, double scalar)
 	a.z += scalar;
 	return (a);
 }
-
-
 
 // xyz becomes rgb
 uint32_t	vec_to_intcol(t_color a)
