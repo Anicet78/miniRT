@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/09 12:45:44 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/10 11:31:34 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "miniRT.h"
 # include <float.h>
 
-# define ELEM_LST_SIZE (CHUNK_SIZE * 90 / 100)
+# define ELEM_LST_SIZE (CHUNK_SIZE * 50 / 100)
 
 typedef enum elem_type
 {

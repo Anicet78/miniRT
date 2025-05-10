@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/09 13:52:22 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/10 16:39:19 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "vec3.h"
 # include "elements.h"
+# include "threads.h"
 # include "../mlx/mlx.h"
 # include <math.h>
 # include <stdint.h>
@@ -67,6 +68,9 @@ typedef struct s_miniRT
 	t_mlx		mlx;
 	t_elem_lst	elements;
 	t_arena		*arena;
+	t_queue		*queue;
+	pthread_t	*threads;
+	uint8_t		thread_amount;
 }	t_miniRT;
 
 // init

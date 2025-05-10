@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/09 14:07:54 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/10 16:34:57 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	test_display(t_display *display, t_mlx *mlx)
 	int			j = 0;
 	int			i;
 
-	// printf("z: %3f\n", camera_center.z);
 	while (j < display->height)
 	{
 		i = 0;
@@ -113,7 +112,12 @@ int	main(int ac, char **av)
 	display = init_display(minirt.elements.cam.fov, minirt.elements.cam.pos);
 	mlx_start(&minirt, display.width, display.height);
 	test_display(&display, &minirt.mlx);
+	test_display(&display, &minirt.mlx);
+	test_display(&display, &minirt.mlx);
+	// init_threads(&minirt);
+	init_queue(&minirt);
 	// iterate(&minirt.elements, &minirt.arena);
+	kill_mlx(&minirt, 1);
 	mlx_loop(minirt.mlx.mlx);
 	return (EXIT_FAILURE);
 }

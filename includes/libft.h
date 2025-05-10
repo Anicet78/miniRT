@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 17:15:09 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/10 11:05:56 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ void	map_remove_node(t_map **map, t_map *node);
 size_t	ft_mapsize(t_map *map);
 
 // arena
-# define CHUNK_SIZE 65536
+# define CHUNK_SIZE 4194304
 
 typedef struct s_chunk	t_chunk;
 
