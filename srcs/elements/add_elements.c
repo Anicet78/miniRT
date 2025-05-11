@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_elements.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 13:47:59 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/10 16:22:57 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_camera	*add_camera(t_elem_lst *elements, t_point pos, t_vec axis,
 	uint32_t fov)
 {
 	elements->cam.pos = pos;
-	elements->cam.axis = axis;
+	elements->cam.dir = axis;
 	elements->cam.fov = fov;
 	elements->cam.declared = true;
 	return ((t_camera *)1);

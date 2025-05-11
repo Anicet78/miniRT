@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/10 16:05:21 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/11 02:43:46 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,23 @@
 
 # define ESC_K 65307
 
+typedef struct s_display
+{
+	int			width;
+	int			height;
+	double		vp_width;
+	double		vp_height;
+	float		focal_len;
+	t_vec		vp_u;
+	t_vec		vp_v;
+	t_vec		pix_du;
+	t_vec		pix_dv;
+	t_point		vp_upleft;
+	t_point		pixel00;
+	uint32_t	i;
+	uint32_t	j;
+}	t_dis;
+
 typedef struct s_ray
 {
 	t_point	p;
@@ -38,16 +55,6 @@ typedef struct s_circle
 	t_point	p;
 	double	rad;
 }	t_circle;
-
-typedef struct s_display
-{
-	int		width;
-	int		height;
-	double	vp_width;
-	double	vp_height;
-	double	focal_len;
-	t_point	camera;
-}	t_display;
 
 typedef struct s_mlx
 {
@@ -75,11 +82,14 @@ void		put_pixel_to_img(t_mlx *img, int x, int y, int color);
 
 // tristan
 void		print_color(unsigned int col);
-t_display	init_display(double fov, t_point cam);
-void		test_display(t_display display, t_mlx *mlx, t_elem_lst *elements);
-
+int			min(int a, int b);
+int			max(int a, int b);
+double		mind(double a, double b);
+double		maxd(double a, double b);
+t_dis		init_display(t_camera *cam);
+void		display(t_miniRT *mlx, t_dis *dis);
 // anicet
-t_color		ray_color(t_ray *ray);
+// t_color		ray_color(t_ray *ray);
 
 // tests
 void		print_ambient(t_ambient *ambient);

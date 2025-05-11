@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_tests.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:52:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 13:48:52 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/10 16:22:57 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_cam(t_camera *camera)
 {
 	ft_printf("%d | %.2f,%.2f,%.2f | %.2f,%.2f,%.2f | %d\n", CAMERA,
 		camera->pos.x, camera->pos.y, camera->pos.z,
-		camera->axis.x, camera->axis.y, camera->axis.z, camera->fov);
+		camera->dir.x, camera->dir.y, camera->dir.z, camera->fov);
 }
 
 void	print_light(t_light *light)

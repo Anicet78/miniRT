@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 16:19:15 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/11 03:58:30 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ELEMENTS_H
 
 # include "miniRT.h"
+# include "vec3.h"
 # include <float.h>
 
 typedef enum elem_type
@@ -37,8 +38,8 @@ typedef struct s_ambient
 typedef struct s_camera
 {
 	t_point		pos;
-	t_vec		axis;
-	uint32_t	fov;
+	t_vec		dir;
+	double		fov;
 	bool		declared;
 }	t_camera;
 

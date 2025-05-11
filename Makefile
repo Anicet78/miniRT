@@ -27,10 +27,11 @@ SRC			=	main.c							\
 				utils/err_message.c				\
 				utils/color.c					\
 				utils/print_tests.c				\
+				utils/minmax.c					\
+				utils/vec_utils.c				\
 				ray.c							\
 				mlx.c							\
 				print_utils.c					\
-				settings.c						\
 				vec3op.c						\
 				display.c						\
 				vec3op2.c

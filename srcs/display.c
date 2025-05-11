@@ -6,53 +6,80 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/07 16:29:08 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/11 04:29:50 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-bool	hit_sphere(t_point center, double radius, t_ray r)
+// bool	hit_sphere(t_point center, double radius, t_ray r)
+// {
+// 	return (false);
+// }
+
+t_dis	init_display(t_camera *cam)
 {
-	t_vec	oc;
+	t_dis	ret;
 
-	oc = vsub(center, r.p);
-	
-}
-
-void	test_display(t_display display, t_mlx *mlx, t_elem_lst *elements)
-{
-	const float	focal_lenght = display.focal_len;
-	const t_vec	camera_center = elements->cam.pos;
-	const t_vec	viewport_u = (t_vec){display.vp_width, 0, 0};
-	const t_vec	viewport_v = (t_vec){0, -display.vp_height, 0};
-	const t_vec	pixel_delta_u = vdiv(viewport_u, display.width);
-	const t_vec	pixel_delta_v = vdiv(viewport_v, display.height);
-	const t_vec	viewport_upper_left = vsub(vsub(camera_center,
-				(t_vec){0, 0, focal_lenght}), vsub(vdiv(viewport_u, 2),
-				vdiv(viewport_v, 2)));
-	const t_vec	pixel00_loc = vadd(vmul(viewport_upper_left, 0.5),
-			vadd(pixel_delta_u, pixel_delta_v));
-	int			j = 0;
-	int			i;
-
-	while (j < display.height)
+	cam->fov = mind(cam->fov, 179.9999999);
+	cam->fov *= PI / 180;
+	ret.width = WIDTH;
+	ret.height = max((int)(WIDTH * (1 / ASPECT_RATIO)), 1);
+	ret.focal_len = 1.0;
+	ret.vp_width = 2 * tan(cam->fov / 2);
+	ret.vp_height = ret.vp_width * ((double)ret.height / (double)ret.width);
+	if (fabs(dot(cam->dir, up_v())) == 1.0)
+		ret.vp_u = norm(cross_prod(cam->dir, right_v()));
+	else
 	{
-		i = 0;
-		while (i < display.width)
-		{
-			t_vec	pixel_center = vadd(vadd(pixel00_loc,
-				vmul(pixel_delta_u, i)), vmul(pixel_delta_v, j));
-			t_vec	ray_direction = vsub(pixel_center, camera_center);
-			t_ray	r = {camera_center, ray_direction};
-			t_color pixel_color = ray_color(&r);
-			put_pixel_to_img(mlx, i, j, vec_to_intcol(pixel_color));
-			i++;
-		}
-		j++;
+		ret.vp_u = cross_prod(cam->dir, up_v());
+		ret.vp_u = norm(ret.vp_u);
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img, 0, 0);
+	ret.vp_v = norm(cross_prod(ret.vp_u, cam->dir));
+	ret.pix_du = vdiv(ret.vp_u, (double)ret.width);
+	ret.pix_dv = vdiv(ret.vp_v, (double)ret.height);
+	ret.vp_upleft = vsub(cam->pos, vsub(cam->dir,
+		vsub(vdiv(ret.vp_u, 2), vdiv(ret.vp_v, 2))));
+	ret.pixel00 = vadd(ret.vp_upleft, vmul(vadd(ret.pix_du, ret.pix_dv), 0.5));
+	return (ret);
 }
 
+uint32_t	funfunfun(t_ray r)
+{
+	double	a;
+	// double	b;
+	t_color	bleue;
+	// t_color	rouge;
 
+	bleue = (t_color){.x = 0, .y = 0, .z = 1};
+	// rouge = (t_color){.x = 1, .y = 0, .z = 0};
+	a = 0.5 * (r.dir.y + 1);
+
+	return (vec_to_intcol(
+		vadd(vmul(bleue, a), vmul((t_color){.x = 1, .y = 1, .z = 1}, (1 - a)))
+	));
+}
+
+void	display(t_miniRT *rt, t_dis *d)
+{
+	t_ray	r;
+	t_point	world_pix;
+
+	d->j = 0;
+	while (d->j < d->height)
+	{
+		d->i = 0;
+		while (d->i < d->width)
+		{
+			world_pix = vadd(d->pixel00,
+					vadd(vmul(d->pix_du, d->i), vmul(d->pix_dv, d->j)));
+			r.dir = norm(vsub(world_pix, d->pixel00));
+			r.p = rt->elements.cam.pos;
+			put_pixel_to_img(&(rt->mlx), d->i, d->j, funfunfun(r));
+			d->i += 1;
+		}
+		d->j += 1;
+	}
+	write(1, "finished\n", 10);
+}
 

@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/10 16:05:54 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/11 04:26:05 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,14 @@ uint32_t	vec_to_intcol(t_color a)
 	col |= (uint32_t)(a.y * 255.999) << 8;
 	col |= (uint32_t)(a.z * 255.999);
 	return (col);
+}
+
+t_vec	cross_prod(t_vec a, t_vec b)
+{
+	t_vec	c;
+
+	c.x = a.y * b.z - a.z * b.y;
+	c.y = a.z * b.x - a.x * b.z;
+	c.z = a.x * b.y - a.y * b.x;
+	return (c);
 }

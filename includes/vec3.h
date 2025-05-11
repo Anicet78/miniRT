@@ -6,14 +6,14 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:38:50 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/07 16:02:58 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/11 03:59:27 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VEC3_H
 # define VEC3_H
 
-#include "miniRT.h"
+# include <stdint.h>
 
 typedef struct s_vec
 {
@@ -43,5 +43,8 @@ t_vec		vdiv(t_vec a, double scalar);
 t_vec		vtrans(t_vec a, double scalar);
 t_vec		vmulv(t_vec a, t_vec b);
 uint32_t	vec_to_intcol(t_color a);
+t_vec		cross_prod(t_vec a, t_vec b);
+t_vec		up_v();
+t_vec		right_v();
 
 #endif
