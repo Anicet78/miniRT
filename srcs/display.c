@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/12 01:58:45 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/12 03:28:49 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ t_dis	init_display(t_camera *cam)
 	else
 	{
 		ret.vp_u = cross_prod(cam->dir, up_v());
-		ret.vp_u = norm(ret.vp_u);
+		ret.vp_u = vmul(norm(ret.vp_u), ret.vp_width);
 	}
-	ret.vp_v = norm(cross_prod(ret.vp_u, cam->dir));
+	ret.vp_v = vmul(norm(cross_prod(ret.vp_u, cam->dir)), ret.vp_height);
 	ret.pix_du = vdiv(ret.vp_u, (double)ret.width);
 	ret.pix_dv = vdiv(ret.vp_v, (double)ret.height);
 	ret.vp_upleft = vadd(cam->pos, cam->dir);
@@ -73,7 +73,7 @@ void	display(t_miniRT *rt, t_dis *d)
 		{
 			world_pix = vadd(d->pixel00,
 					vadd(vmul(d->pix_du, d->i), vmul(d->pix_dv, d->j)));
-			r.dir = norm(vsub(world_pix, d->pixel00));
+			r.dir = norm(vsub(world_pix, rt->elements.cam.pos));
 			r.p = rt->elements.cam.pos;
 			put_pixel_to_img(&(rt->mlx), d->i, d->j, funfunfun(r));
 			d->i += 1;
