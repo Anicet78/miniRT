@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/11 04:29:50 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/12 01:58:45 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_dis	init_display(t_camera *cam)
 	ret.vp_v = norm(cross_prod(ret.vp_u, cam->dir));
 	ret.pix_du = vdiv(ret.vp_u, (double)ret.width);
 	ret.pix_dv = vdiv(ret.vp_v, (double)ret.height);
-	ret.vp_upleft = vsub(cam->pos, vsub(cam->dir,
-		vsub(vdiv(ret.vp_u, 2), vdiv(ret.vp_v, 2))));
+	ret.vp_upleft = vadd(cam->pos, cam->dir);
+	ret.vp_upleft = vsub(ret.vp_upleft, vadd(vmul(ret.vp_u, 0.5), vmul(ret.vp_v, 0.5)));
 	ret.pixel00 = vadd(ret.vp_upleft, vmul(vadd(ret.pix_du, ret.pix_dv), 0.5));
 	return (ret);
 }
@@ -56,7 +56,7 @@ uint32_t	funfunfun(t_ray r)
 	a = 0.5 * (r.dir.y + 1);
 
 	return (vec_to_intcol(
-		vadd(vmul(bleue, a), vmul((t_color){.x = 1, .y = 1, .z = 1}, (1 - a)))
+		vadd(vmul((t_color){.x = 1, .y = 0, .z = 0}, (1 - a)), vmul(bleue, a))
 	));
 }
 
