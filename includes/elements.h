@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 17:02:06 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:28:31 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define ELEMENTS_H
 
 # include "miniRT.h"
-# include "vec3.h"
 # include <float.h>
 
 # define ELEM_LST_SIZE (CHUNK_SIZE * 50 / 100)
@@ -65,14 +64,14 @@ typedef struct s_sphere
 	uint8_t		type;
 	float		radius;
 	t_point		pos;
-	t_material	*mat;
+	t_material	mat;
 	// uint32_t	color;
 }	t_sphere;
 
 typedef struct s_plane
 {
 	uint8_t		type;
-	t_material	*mat;
+	t_material	mat;
 	// uint32_t	color;
 	t_point		pos;
 	t_vec		normal;
@@ -81,7 +80,7 @@ typedef struct s_plane
 typedef struct s_cylinder
 {
 	uint8_t		type;
-	t_material	*mat;
+	t_material	mat;
 	// uint32_t	color;
 	t_point		pos;
 	t_vec		axis;

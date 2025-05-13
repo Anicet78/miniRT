@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:57:56 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/13 13:25:51 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/13 17:29:11 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit)
 	hit->t = t;
 	hit->p = vadd(r->p, vmul(r->dir, hit->t));
 	hit->normal = norm(vsub(hit->p, sphere->pos));
-	hit->mat = sphere->mat;
+	hit->mat = &sphere->mat;
 	hit->front = (dot(r->dir, hit->normal) < 0);
 	hit->u = atan2(hit->normal.z, hit->normal.x) / (2 * PI);
 	hit->v = atan2(hit->normal.y, sqrt(hit->normal.x * hit->normal.x
@@ -52,7 +52,7 @@ bool	hit_plane(t_plane *plane, t_ray *r, t_hit *hit)
 	hit->u = fmod(hit->p.x - plane->pos.x, 4);
 	hit->v = fmod(hit->p.y - plane->pos.y, 4);
 	hit->front = (denom < 0);
-	hit->mat = plane->mat;
+	hit->mat = &plane->mat;
 	hit->normal = plane->normal;
 	return (true);
 }
@@ -80,8 +80,6 @@ bool	hit_cylinder(t_cylinder *c, t_ray *r, t_hit *hit)
 		hit->normal = vmul(hit->normal, -1);
 	hit->u = atan2(hit->normal.z, hit->normal.x) / (2 * PI);
 	hit->v = dot(vsub(hit->p, c->pos), c->axis) / c->height;
-	hit->mat = c->mat;
+	hit->mat = &c->mat;
 	return (true);
 }
-
-

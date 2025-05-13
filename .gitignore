@@ -1,0 +1,16 @@
+# VSCode
+.vscode
+
+# Objects
+objs
+
+# Libft
+libft/libft.a
+
+# MinilibX
+mlx
+
+# Exec file
+miniRT
+
+*out*
