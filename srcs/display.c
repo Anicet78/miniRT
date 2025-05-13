@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/13 18:03:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:31:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_display	init_display(t_camera *cam)
 	return (ret);
 }
 
-void	render_display(t_miniRT *rt, t_display *d)
+void	render_display(t_rt *rt, t_display *d)
 {
 	t_ray	r;
 	t_point	world_pix;

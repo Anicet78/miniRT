@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 18:02:45 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:31:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_miniRT
 	t_queue		queue;
 	pthread_t	*threads;
 	uint8_t		thread_amount;
-}	t_miniRT;
+}	t_rt;
 
 typedef struct s_hit
 {
@@ -92,11 +92,11 @@ typedef struct s_hit
 }	t_hit;
 
 // init
-t_elem_lst	*init_elem_list(t_miniRT *minirt);
+t_elem_lst	*init_elem_list(t_rt *minirt);
 
 // mlx
-void		mlx_start(t_miniRT *minirt, int width, int height);
-void		kill_mlx(t_miniRT *minirt, int exit_code);
+void		mlx_start(t_rt *minirt, int width, int height);
+void		kill_mlx(t_rt *minirt, int exit_code);
 void		put_pixel_to_img(t_mlx *img, int x, int y, int color);
 
 // tristan
@@ -106,7 +106,7 @@ int			max(int a, int b);
 double		mind(double a, double b);
 double		maxd(double a, double b);
 t_display	init_display(t_camera *cam);
-void		render_display(t_miniRT *rt, t_display *d);
+void		render_display(t_rt *rt, t_display *d);
 // anicet
 // t_color		ray_color(t_ray *ray);
 

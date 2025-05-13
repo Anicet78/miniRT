@@ -6,19 +6,19 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 16:40:23 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 19:21:04 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-int	destroy_hook(t_miniRT *minirt)
+int	destroy_hook(t_rt *minirt)
 {
 	kill_mlx(minirt, EXIT_SUCCESS);
 	return (0);
 }
 
-int	key_hook(int keycode, t_miniRT *minirt)
+int	key_hook(int keycode, t_rt *minirt)
 {
 	if (keycode == ESC_K)
 		kill_mlx(minirt, EXIT_SUCCESS);
@@ -35,7 +35,7 @@ void	put_pixel_to_img(t_mlx *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	mlx_start(t_miniRT *minirt, int width, int height)
+void	mlx_start(t_rt *minirt, int width, int height)
 {
 	t_mlx	*mlx;
 
@@ -63,12 +63,13 @@ void	mlx_start(t_miniRT *minirt, int width, int height)
 	mlx_hook(mlx->mlx_win, 2, 1L << 0, &key_hook, mlx);
 }
 
-void	kill_mlx(t_miniRT *minirt, int exit_code)
+void	kill_mlx(t_rt *minirt, int exit_code)
 {
 	int	i;
 
 	i = 0;
 	pthread_mutex_unlock(&minirt->queue.lock);
+	pthread_cond_broadcast(&minirt->queue.cond);
 	while (i < minirt->thread_amount)
 		pthread_join(minirt->threads[i++], NULL);
 	if (minirt->arena)

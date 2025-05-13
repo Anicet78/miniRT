@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:09:34 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 16:12:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:31:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ void	set_ready(t_queue *queue)
 {
 	pthread_mutex_lock(&queue->lock);
 	queue->ready++;
-	// ft_printf("%d\n", queue->ready);
 	if (queue->ready >= queue->size)
-	{
 		pthread_cond_signal(&queue->cond);
-	}
 	pthread_mutex_unlock(&queue->lock);
 }
 
@@ -46,7 +43,7 @@ static void	fill_block(t_block *block, uint32_t px_start[2], int32_t width,
 	block->height = ft_min(BLOCK_SIZE, height - px_start[1]);
 }
 
-bool	init_queue(t_miniRT *minirt)
+bool	init_queue(t_rt *minirt)
 {
 	const size_t	count_x = (minirt->mlx.width + BLOCK_SIZE - 1) / BLOCK_SIZE;
 	const size_t	count_y = (minirt->mlx.height + BLOCK_SIZE - 1) / BLOCK_SIZE;

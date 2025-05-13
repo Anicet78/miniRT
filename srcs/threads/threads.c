@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 18:13:08 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 19:22:24 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	print_pixels(t_block block, t_mlx *img, t_display *d, t_elem_lst *el
 			r.dir = norm(vsub(world_pix, elements->cam.pos));
 			r.p = elements->cam.pos;
 			put_pixel_to_img(img, x, y, ray_to_color(&r, elements));
-			// put_pixel_to_img(img, x, y, 0x0);
 			x++;
 		}
 		y++;
@@ -49,7 +48,17 @@ void	*start_routine(void *param)
 	{
 		block_ptr = get_next_block(params->queue);
 		if (!block_ptr)
-			return (NULL);
+		{
+			pthread_mutex_lock(&params->queue->lock);
+			pthread_cond_wait(&params->queue->cond, &params->queue->lock);
+			if (params->queue->counter >= params->queue->size)
+			{
+				pthread_mutex_unlock(&params->queue->lock);
+				return (NULL);
+			}
+			pthread_mutex_unlock(&params->queue->lock);
+			continue ;
+		}
 		print_pixels(*block_ptr, params->img, params->display, params->elements);
 		set_ready(params->queue);
 	}
@@ -68,7 +77,7 @@ static bool	init_mutex(t_queue *queue)
 	return (true);
 }
 
-bool	init_threads(t_miniRT *minirt, t_display *display)
+bool	init_threads(t_rt *minirt, t_display *display)
 {
 	t_params	*params;
 
@@ -95,7 +104,7 @@ bool	init_threads(t_miniRT *minirt, t_display *display)
 	return (true);
 }
 
-bool	render_thread(t_miniRT *minirt)
+bool	render_thread(t_rt *minirt)
 {
 	pthread_cond_wait(&minirt->queue.cond, &minirt->queue.lock);
 	if (minirt->queue.ready < minirt->queue.size)

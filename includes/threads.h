@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:47:21 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 18:00:58 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:31:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define BLOCK_SIZE 32
 
 typedef struct s_mlx		t_mlx;
-typedef struct s_miniRT		t_miniRT;
+typedef struct s_miniRT		t_rt;
 typedef struct s_display	t_display;
 
 typedef struct s_block
@@ -51,11 +51,11 @@ typedef struct s_params
 }	t_params;
 
 // threads
-bool	init_threads(t_miniRT *minirt, t_display *display);
-bool	render_thread(t_miniRT *minirt);
+bool	init_threads(t_rt *minirt, t_display *display);
+bool	render_thread(t_rt *minirt);
 
 // queue
-bool	init_queue(t_miniRT *minirt);
+bool	init_queue(t_rt *minirt);
 t_block	*get_next_block(t_queue *queue);
 void	set_ready(t_queue *queue);
 

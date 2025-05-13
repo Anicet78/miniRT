@@ -6,13 +6,13 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/09 12:45:27 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:31:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-t_elem_lst	*init_elem_list(t_miniRT *minirt)
+t_elem_lst	*init_elem_list(t_rt *minirt)
 {
 	minirt->arena = arena_init();
 	if (!minirt->arena)
@@ -22,7 +22,6 @@ t_elem_lst	*init_elem_list(t_miniRT *minirt)
 	if (!minirt->elements.elem_lst)
 		return (NULL);
 	return (&minirt->elements);
-
 }
 
 uint8_t	get_elem_type(void *elem)

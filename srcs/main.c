@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 18:14:40 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 19:19:56 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	iterate(t_elem_lst *elements, t_arena **arena)
 
 int	main(int ac, char **av)
 {
-	t_miniRT	minirt;
+	t_rt	minirt;
 	t_display	display;
 	int			fd;
 	bool		map_file;
@@ -79,9 +79,17 @@ int	main(int ac, char **av)
 	init_queue(&minirt);
 	init_threads(&minirt, &display);
 	// render_display(&minirt, &display);
+	// render_display(&minirt, &display);
+	// render_display(&minirt, &display);
+	// render_display(&minirt, &display);
+	// render_display(&minirt, &display);
 	render_thread(&minirt);
+	// render_thread(&minirt);
+	// render_thread(&minirt);
+	// render_thread(&minirt);
+	// render_thread(&minirt);
 	// iterate(&minirt.elements, &minirt.arena);
-	kill_mlx(&minirt, 1);
+	// kill_mlx(&minirt, 1);
 	mlx_loop(minirt.mlx.mlx);
 	return (EXIT_FAILURE);
 }
