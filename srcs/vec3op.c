@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec3op.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/13 17:00:58 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:36:44 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ double	magn(t_vec a)
 
 t_vec	norm(t_vec a)
 {
-	return (vmul(a, q_rsqrt(dot(a, a))));
+	return (vmul(a, 1 / magn(a)));
+	// return (vmul(a, q_rsqrt(dot(a, a))));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 17:00:38 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:49:56 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ bool	read_rtfile(int fd, t_elem_lst *elements, t_arena *arena)
 	}
 	if (elements->cam.declared == false)
 		return (print_err("Camera missing", 0));
+	elements->count = 0;
 	return (true);
 }

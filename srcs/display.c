@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/13 18:03:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:42:38 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_display	init_display(t_camera *cam)
 		ret.vp_u = cross_prod(cam->dir, up_v());
 		ret.vp_u = vmul(norm(ret.vp_u), ret.vp_width);
 	}
-	ret.vp_v = vmul(norm(cross_prod(ret.vp_u, cam->dir)), ret.vp_height);
+	ret.vp_v = vmul(norm(cross_prod(cam->dir, ret.vp_u)), ret.vp_height);
 	ret.pix_du = vdiv(ret.vp_u, (double)ret.width);
 	ret.pix_dv = vdiv(ret.vp_v, (double)ret.height);
 	ret.vp_upleft = vadd(cam->pos, cam->dir);

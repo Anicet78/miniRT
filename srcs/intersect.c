@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:57:56 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/13 17:29:11 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 19:21:37 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,11 @@ bool	hit_cylinder(t_cylinder *c, t_ray *r, t_hit *hit)
 	const double	c_val = dot(oc, oc) - pow(dot(oc, c->axis), 2) - pow(c->radius, 2);
 	const double	delta = b * b - 4 * a * c_val;
 	double			t;
+	const double 	height_check = dot(vsub(hit->p, c->pos), c->axis);
 
+
+	if (height_check < 0 || height_check > c->height)
+		return (false);
 	if (delta < 0)
 		return (false);
 	t = (-b - sqrt(delta)) / (2 * a);
