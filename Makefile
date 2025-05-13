@@ -29,11 +29,14 @@ SRC			=	main.c							\
 				utils/err_message.c				\
 				utils/color.c					\
 				utils/print_tests.c				\
-				ray.c							\
+				utils/minmax.c					\
+				utils/vec_utils.c				\
+				intersect.c						\
+				closest_hit.c					\
 				mlx.c							\
 				print_utils.c					\
-				settings.c						\
 				vec3op.c						\
+				display.c						\
 				vec3op2.c
 
 OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))

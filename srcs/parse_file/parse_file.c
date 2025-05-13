@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/08 11:07:21 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:00:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 char	**ft_arena_split(char const *s, char c, t_arena *arena)
 {
-	char	**tab;
-	int		words;
-	int		i;
-	int		j;
-	int		k;
+	char			**tab;
+	const int		words = count_words(s, c);
+	int				i;
+	int				j;
+	int				k;
 
-	words = count_words(s, c);
 	tab = arena_calloc(arena, (words + 1) * sizeof(char *));
 	if (!tab || !s)
 		return (NULL);

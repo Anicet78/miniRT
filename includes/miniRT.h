@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 11:53:38 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:03:12 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,23 @@
 
 # define ESC_K 65307
 
+typedef struct s_display
+{
+	int			width;
+	int			height;
+	double		vp_width;
+	double		vp_height;
+	float		focal_len;
+	t_vec		vp_u;
+	t_vec		vp_v;
+	t_vec		pix_du;
+	t_vec		pix_dv;
+	t_point		vp_upleft;
+	t_point		pixel00;
+	uint32_t	i;
+	uint32_t	j;
+}	t_dis;
+
 typedef struct s_ray
 {
 	t_point	p;
@@ -39,16 +56,6 @@ typedef struct s_circle
 	t_point	p;
 	double	rad;
 }	t_circle;
-
-typedef struct s_display
-{
-	int		width;
-	int		height;
-	double	vp_width;
-	double	vp_height;
-	double	focal_len;
-	t_point	camera;
-}	t_display;
 
 typedef struct s_mlx
 {
@@ -73,6 +80,17 @@ typedef struct s_miniRT
 	uint8_t		thread_amount;
 }	t_miniRT;
 
+typedef struct s_hit
+{
+	t_point		p;
+	t_vec		normal;
+	double		t;
+	t_material	*mat;
+	float		u;
+	float		v;
+	bool		front;
+}	t_hit;
+
 // init
 t_elem_lst	*init_elem_list(t_miniRT *minirt);
 
@@ -83,10 +101,14 @@ void		put_pixel_to_img(t_mlx *img, int x, int y, int color);
 
 // tristan
 void		print_color(unsigned int col);
-t_display	init_display(double fov, t_point cam);
-
+int			min(int a, int b);
+int			max(int a, int b);
+double		mind(double a, double b);
+double		maxd(double a, double b);
+t_dis		init_display(t_camera *cam);
+void		display(t_miniRT *mlx, t_dis *dis);
 // anicet
-t_color		ray_color(t_ray *ray);
+// t_color		ray_color(t_ray *ray);
 
 // tests
 void		print_ambient(t_ambient *ambient);
@@ -99,5 +121,13 @@ void		print_cylinder(t_cylinder *cylinder);
 // utils
 uint32_t	rgb_to_hex(uint8_t r, uint8_t g, uint8_t b);
 int			print_err(char *msg, int line);
+
+// intersects
+
+bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit);
+bool	hit_plane(t_plane *plane, t_ray *r, t_hit *hit);
+bool	hit_cylinder(t_cylinder *c, t_ray *r, t_hit *hit);
+bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit);
+int32_t	ray_to_color(t_ray *r, t_elem_lst *elems);
 
 #endif

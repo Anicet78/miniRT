@@ -1,47 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3op2.c                                          :+:      :+:    :+:   */
+/*   minmax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/13 13:14:05 by tgallet          ###   ########.fr       */
+/*   Created: 2025/05/10 16:46:03 by tgallet           #+#    #+#             */
+/*   Updated: 2025/05/10 16:54:21 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/miniRT.h"
-
-t_vec	vsub(t_vec a, t_vec b)
+int	min(int a, int b)
 {
-	a.x += -b.x;
-	a.y += -b.y;
-	a.z += -b.z;
+	if (b < a)
+		return (b);
 	return (a);
 }
 
-t_vec	vdiv(t_vec a, double scalar)
+int	max(int a, int b)
 {
-	a.x /= scalar;
-	a.y /= scalar;
-	a.z /= scalar;
+	if (b > a)
+		return (b);
 	return (a);
 }
 
-t_vec	vtrans(t_vec a, double scalar)
+double	mind(double a, double b)
 {
-	a.x += scalar;
-	a.y += scalar;
-	a.z += scalar;
+	if (b < a)
+		return (b);
 	return (a);
 }
 
-t_vec	cross_prod(t_vec a, t_vec b)
+double	maxd(double a, double b)
 {
-	t_vec	c;
-
-	c.x = a.y * b.z - a.z * b.y;
-	c.y = a.z * b.x - a.x * b.z;
-	c.z = a.x * b.y - a.y * b.x;
-	return (c);
+	if (b > a)
+		return (b);
+	return (a);
 }

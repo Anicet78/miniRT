@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_elements.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/06 13:47:59 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 04:50:47 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_camera	*add_camera(t_elem_lst *elements, t_point pos, t_vec axis,
 	uint32_t fov)
 {
 	elements->cam.pos = pos;
-	elements->cam.axis = axis;
+	elements->cam.dir = axis;
 	elements->cam.fov = fov;
 	elements->cam.declared = true;
 	return ((t_camera *)1);
@@ -55,9 +55,9 @@ t_sphere	*add_sphere(t_elem_lst *elements, t_point pos, float diameter,
 	t_sphere	sp;
 
 	sp.type = SPHERE;
-	sp.diameter = diameter;
+	sp.radius = diameter / 2;
 	sp.pos = pos;
-	sp.color = color;
+	sp.mat.color = color;
 	if (!add_element(elements, &sp, sizeof(t_sphere)))
 		return (NULL);
 	return ((t_sphere *)1);
@@ -69,9 +69,9 @@ t_plane	*add_plane(t_elem_lst *elements, t_point pos, t_vec axis,
 	t_plane	pl;
 
 	pl.type = PLANE;
-	pl.color = color;
+	pl.mat.color = color;
 	pl.pos = pos;
-	pl.axis = axis;
+	pl.normal = axis;
 	if (!add_element(elements, &pl, sizeof(t_plane)))
 		return (NULL);
 	return ((t_plane *)1);

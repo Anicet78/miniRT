@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 13:46:34 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:02:06 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ELEMENTS_H
 
 # include "miniRT.h"
+# include "vec3.h"
 # include <float.h>
 
 # define ELEM_LST_SIZE (CHUNK_SIZE * 50 / 100)
@@ -29,6 +30,13 @@ typedef enum elem_type
 	CYLINDER
 }	t_elem_type;
 
+typedef struct s_material
+{
+	uint32_t	color;
+	void		*texture;
+	void		*bump;
+}	t_material;
+
 typedef struct s_ambient
 {
 	uint8_t		type;
@@ -39,8 +47,8 @@ typedef struct s_ambient
 typedef struct s_camera
 {
 	t_point		pos;
-	t_vec		axis;
-	uint32_t	fov;
+	t_vec		dir;
+	double		fov;
 	bool		declared;
 }	t_camera;
 
@@ -55,26 +63,29 @@ typedef struct s_light
 typedef struct s_sphere
 {
 	uint8_t		type;
-	float		diameter;
+	float		radius;
 	t_point		pos;
-	uint32_t	color;
+	t_material	*mat;
+	// uint32_t	color;
 }	t_sphere;
 
 typedef struct s_plane
 {
 	uint8_t		type;
-	uint32_t	color;
+	t_material	*mat;
+	// uint32_t	color;
 	t_point		pos;
-	t_vec		axis;
+	t_vec		normal;
 }	t_plane;
 
 typedef struct s_cylinder
 {
 	uint8_t		type;
-	uint32_t	color;
+	t_material	*mat;
+	// uint32_t	color;
 	t_point		pos;
 	t_vec		axis;
-	float		diameter;
+	float		radius;
 	float		height;
 }	t_cylinder;
 
