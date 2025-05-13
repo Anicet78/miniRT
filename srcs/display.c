@@ -6,27 +6,11 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/12 03:39:10 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/13 05:29:11 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
-
-bool	test_sphere(t_point center, double radius, t_ray r)
-{
-	double	a;
-	double	b;
-	double	c;
-	double	delta;
-
-	a = dot(r.dir, r.dir);
-	b = 2 * dot(r.dir, vsub(r.p, center));
-	c = dot(vsub(r.p, center), vsub(r.p, center)) - radius * radius;
-	delta = b * b - 4 * a * c;
-	if (delta < 0)
-		return (false);
-	return (true);
-}
 
 t_dis	init_display(t_camera *cam)
 {
@@ -55,22 +39,6 @@ t_dis	init_display(t_camera *cam)
 	return (ret);
 }
 
-uint32_t	funfunfun(t_ray r)
-{
-	double	a;
-	// double	b;
-	t_color	bleue;
-	// t_color	rouge;
-
-	bleue = (t_color){.x = 0, .y = 0, .z = 1};
-	// rouge = (t_color){.x = 1, .y = 0, .z = 0};
-	a = 0.5 * (r.dir.y + 1);
-
-	return (vec_to_intcol(
-		vadd(vmul((t_color){.x = 1, .y = 0, .z = 0}, (1 - a)), vmul(bleue, a))
-	));
-}
-
 void	display(t_miniRT *rt, t_dis *d)
 {
 	t_ray	r;
@@ -86,13 +54,7 @@ void	display(t_miniRT *rt, t_dis *d)
 					vadd(vmul(d->pix_du, d->i), vmul(d->pix_dv, d->j)));
 			r.dir = norm(vsub(world_pix, rt->elements.cam.pos));
 			r.p = rt->elements.cam.pos;
-			if (test_sphere(
-				(t_point){.x = 4, .y = 0, .z = 15},
-				1.0,
-				r
-			)) put_pixel_to_img(&(rt->mlx), d->i, d->j, 0x0);
-			else
-				put_pixel_to_img(&(rt->mlx), d->i, d->j, funfunfun(r));
+			// add closest hit and coloring
 			d->i += 1;
 		}
 		d->j += 1;

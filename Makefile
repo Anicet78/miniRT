@@ -29,7 +29,8 @@ SRC			=	main.c							\
 				utils/print_tests.c				\
 				utils/minmax.c					\
 				utils/vec_utils.c				\
-				ray.c							\
+				intersect.c						\
+				closest_hit.c					\
 				mlx.c							\
 				print_utils.c					\
 				vec3op.c						\

@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/11 02:43:46 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/13 05:28:32 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,17 @@ typedef struct s_miniRT
 	t_elem_lst	elements;
 }	t_miniRT;
 
+typedef struct s_hit
+{
+	t_point		p;
+	t_vec		normal;
+	double		t;
+	t_material	*mat;
+	float		u;
+	float		v;
+	bool		front;
+}	t_hit;
+
 // mlx
 void		mlx_start(t_miniRT *minirt, int width, int height);
 void		kill_mlx(t_miniRT *minirt, int exit_code);
@@ -103,4 +114,10 @@ void		print_cylinder(t_cylinder *cylinder);
 uint32_t	rgb_to_hex(uint8_t r, uint8_t g, uint8_t b);
 int			print_err(char *msg, int line);
 
+// intersects
+
+bool	hit_sphere(t_sphere *sphere, t_ray r, t_hit *hit);
+bool	hit_plane(t_plane *plane, t_ray r, t_hit *hit);
+bool	hit_cylinder(t_cylinder *c, t_ray r, t_hit *hit);
+bool	closest_hit(t_ray r, t_elem_lst *elems, t_hit *hit);
 #endif

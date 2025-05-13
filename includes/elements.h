@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/11 03:58:30 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/13 05:07:35 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ typedef enum elem_type
 	PLANE,
 	CYLINDER
 }	t_elem_type;
+
+typedef struct s_material
+{
+	uint32_t	color;
+	void		*texture;
+	void		*bump;
+}	t_material;
 
 typedef struct s_ambient
 {
@@ -54,26 +61,29 @@ typedef struct s_light
 typedef struct s_sphere
 {
 	t_elem_type	type;
-	float		diameter;
+	float		radius;
 	t_point		pos;
-	uint32_t	color;
+	t_material	*mat;
+	// uint32_t	color;
 }	t_sphere;
 
 typedef struct s_plane
 {
 	t_elem_type	type;
-	uint32_t	color;
+	t_material	*mat;
+	// uint32_t	color;
 	t_point		pos;
-	t_vec		axis;
+	t_vec		normal;
 }	t_plane;
 
 typedef struct s_cylinder
 {
 	t_elem_type	type;
-	uint32_t	color;
+	t_material	*mat;
+	// uint32_t	color;
 	t_point		pos;
 	t_vec		axis;
-	float		diameter;
+	float		radius;
 	float		height;
 }	t_cylinder;
 

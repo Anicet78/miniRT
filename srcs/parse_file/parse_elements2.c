@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/04/29 11:59:43 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 04:51:51 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ bool	parse_cylinder(t_elem_lst *elements, char **line, int nb)
 	diameter = ft_atof_parse(line[3]);
 	if (diameter < 0 || diameter > INT_MAX)
 		return (print_err("Invalid diameter in `cylinder`", nb));
-	cy.diameter = diameter;
+	cy.radius = diameter / 2;
 	height = ft_atof_parse(line[4]);
 	if (height < 0 || height > INT_MAX)
 		return (print_err("Invalid height in `cylinder`", nb));
 	cy.height = height;
 	if (is_color(line[5]) == false)
 		return (print_err("Invalid color in `cylinder`", nb));
-	cy.color = get_color(line[5]);
+	cy.mat.color = get_color(line[5]);
 	return (add_cylinder(elements, &cy));
 }

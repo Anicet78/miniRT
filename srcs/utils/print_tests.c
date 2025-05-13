@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:52:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/10 16:22:57 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/13 03:28:13 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ void	print_light(t_light *light)
 void	print_sphere(t_sphere *sphere)
 {
 	ft_printf("%d | %.2f,%.2f,%.2f | %.2f | %#x\n", sphere->type,
-		sphere->pos.x, sphere->pos.y, sphere->pos.z, sphere->diameter, sphere->color);
+		sphere->pos.x, sphere->pos.y, sphere->pos.z, sphere->radius, sphere->color);
 }
 
 void	print_plane(t_plane *plane)
 {
 	ft_printf("%d | %.2f,%.2f,%.2f | %.2f,%.2f,%.2f | %#x\n", plane->type,
 		plane->pos.x, plane->pos.y, plane->pos.z,
-		plane->axis.x, plane->axis.y, plane->axis.z, plane->color);
+		plane->normal.x, plane->normal.y, plane->normal.z, plane->color);
 }
 
 void	print_cylinder(t_cylinder *cylinder)
@@ -48,5 +48,5 @@ void	print_cylinder(t_cylinder *cylinder)
 	ft_printf("%d | %.2f,%.2f,%.2f | %.2f,%.2f,%.2f | %.2f | %.2f | %#x\n", cylinder->type,
 		cylinder->pos.x, cylinder->pos.y, cylinder->pos.z,
 		cylinder->axis.x, cylinder->axis.y, cylinder->axis.z,
-		cylinder->diameter, cylinder->height, cylinder->color);
+		cylinder->radius, cylinder->height, cylinder->color);
 }
