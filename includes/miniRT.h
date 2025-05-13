@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/10 16:39:19 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 11:53:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_miniRT
 	t_mlx		mlx;
 	t_elem_lst	elements;
 	t_arena		*arena;
-	t_queue		*queue;
+	t_queue		queue;
 	pthread_t	*threads;
 	uint8_t		thread_amount;
 }	t_miniRT;

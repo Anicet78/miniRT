@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/07 12:14:18 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 11:57:51 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@ double	magn(t_vec a)
 
 t_vec	norm(t_vec a)
 {
-	// return (vmul(a, 1/magn(a)));
 	return (vmul(a, q_rsqrt(dot(a, a))));
 }

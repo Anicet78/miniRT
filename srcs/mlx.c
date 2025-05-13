@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/09 13:47:43 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:40:23 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ void	mlx_start(t_miniRT *minirt, int width, int height)
 
 void	kill_mlx(t_miniRT *minirt, int exit_code)
 {
+	int	i;
+
+	i = 0;
+	pthread_mutex_unlock(&minirt->queue.lock);
+	while (i < minirt->thread_amount)
+		pthread_join(minirt->threads[i++], NULL);
 	if (minirt->arena)
 		clear_arena(&minirt->arena);
 	if (minirt->mlx.img)

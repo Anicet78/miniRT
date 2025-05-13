@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/10 16:34:57 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:42:08 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,14 @@ int	main(int ac, char **av)
 	// print_cam(&minirt.elements.cam);
 	display = init_display(minirt.elements.cam.fov, minirt.elements.cam.pos);
 	mlx_start(&minirt, display.width, display.height);
-	test_display(&display, &minirt.mlx);
-	test_display(&display, &minirt.mlx);
-	test_display(&display, &minirt.mlx);
-	// init_threads(&minirt);
 	init_queue(&minirt);
+	init_threads(&minirt);
+	test_display(&display, &minirt.mlx);
+	// test_display(&display, &minirt.mlx);
+	// test_display(&display, &minirt.mlx);
+	render_thread(&minirt);
 	// iterate(&minirt.elements, &minirt.arena);
-	kill_mlx(&minirt, 1);
+	// kill_mlx(&minirt, 1);
 	mlx_loop(minirt.mlx.mlx);
 	return (EXIT_FAILURE);
 }
