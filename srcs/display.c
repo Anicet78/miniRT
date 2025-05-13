@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/13 05:29:11 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/13 13:32:01 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	display(t_miniRT *rt, t_dis *d)
 					vadd(vmul(d->pix_du, d->i), vmul(d->pix_dv, d->j)));
 			r.dir = norm(vsub(world_pix, rt->elements.cam.pos));
 			r.p = rt->elements.cam.pos;
-			// add closest hit and coloring
+			put_pixel_to_img(&(rt->mlx), d->i, d->j, ray_to_color(&r, &rt->elements));
 			d->i += 1;
 		}
 		d->j += 1;

@@ -6,13 +6,39 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/13 12:57:07 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/13 13:27:59 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-bool	closest_hit(t_ray r, t_elem_lst *elems, t_hit *hit)
+int32_t	background_color(t_ray *r)
+{
+	const t_vec	ground = (t_color){0.35, 0.25, 0.15};
+	const t_vec	sky_top = (t_color){0.2, 0.5, 0.78};
+	const t_vec	sky_bot = (t_color){0.63, 0.72, 0.90};
+	float		t;
+
+	if (r->dir.y < 0)
+		return (vec_to_col(ground));
+	t = r->dir.y * r->dir.y;
+	if (t > 1)
+		t = 1.0f;
+	return (
+		vec_to_col(lerp_vec(sky_bot, sky_top, t))
+	);
+}
+
+int32_t	ray_to_color(t_ray *r, t_elem_lst *elems)
+{
+	t_hit	hit;
+
+	if (closest_hit(r, elems, &hit))
+		return (0x000000);
+	return (background_color(r));
+}
+
+bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit)
 {
 	void	*elem;
 	int		type;

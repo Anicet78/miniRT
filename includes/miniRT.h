@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 05:28:32 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/13 13:31:33 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,10 @@ int			print_err(char *msg, int line);
 
 // intersects
 
-bool	hit_sphere(t_sphere *sphere, t_ray r, t_hit *hit);
-bool	hit_plane(t_plane *plane, t_ray r, t_hit *hit);
-bool	hit_cylinder(t_cylinder *c, t_ray r, t_hit *hit);
-bool	closest_hit(t_ray r, t_elem_lst *elems, t_hit *hit);
+bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit);
+bool	hit_plane(t_plane *plane, t_ray *r, t_hit *hit);
+bool	hit_cylinder(t_cylinder *c, t_ray *r, t_hit *hit);
+bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit);
+int32_t	ray_to_color(t_ray *r, t_elem_lst *elems);
+
 #endif
