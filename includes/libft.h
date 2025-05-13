@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 17:02:26 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:13:27 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,6 +318,11 @@ void	init_auto_complete(t_rline *line);
 int		expand_current(int key, t_rline *line, t_readline *params);
 void	rl_init_signals(void);
 void	rl_reset_signals(void);
+
+// signals
+void	init_sighandler(struct sigaction *sa, void (*action)(int));
+void	init_sigaction(struct sigaction *sa,
+			void (*action)(int, siginfo_t *, void *));
 
 // readfile
 # ifndef BUFFER_SIZE
