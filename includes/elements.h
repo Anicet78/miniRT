@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 17:28:31 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:53:51 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,12 @@ typedef struct s_sphere
 	float		radius;
 	t_point		pos;
 	t_material	mat;
-	// uint32_t	color;
 }	t_sphere;
 
 typedef struct s_plane
 {
 	uint8_t		type;
 	t_material	mat;
-	// uint32_t	color;
 	t_point		pos;
 	t_vec		normal;
 }	t_plane;
@@ -81,7 +79,6 @@ typedef struct s_cylinder
 {
 	uint8_t		type;
 	t_material	mat;
-	// uint32_t	color;
 	t_point		pos;
 	t_vec		axis;
 	float		radius;

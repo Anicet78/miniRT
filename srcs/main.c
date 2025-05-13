@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 17:06:33 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:14:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	iterate(t_elem_lst *elements, t_arena **arena)
 int	main(int ac, char **av)
 {
 	t_miniRT	minirt;
-	t_dis		dis;
+	t_display	display;
 	int			fd;
 	bool		map_file;
 
@@ -74,16 +74,14 @@ int	main(int ac, char **av)
 	close(fd);
 	if (!map_file)
 		return (clear_arena(&minirt.arena), EXIT_FAILURE);
-	dis = init_display(&minirt.elements.cam);
-	mlx_start(&minirt, dis.width, dis.height);
+	display = init_display(&minirt.elements.cam);
+	mlx_start(&minirt, display.width, display.height);
 	init_queue(&minirt);
-	init_threads(&minirt);
-	display(&minirt, &dis);
-	mlx_put_image_to_window(minirt.mlx.mlx, minirt.mlx.mlx_win,
-		minirt.mlx.img, 0, 0);
+	init_threads(&minirt, &display);
+	// render_display(&minirt, &display);
 	render_thread(&minirt);
 	// iterate(&minirt.elements, &minirt.arena);
-	// kill_mlx(&minirt, 1);
+	kill_mlx(&minirt, 1);
 	mlx_loop(minirt.mlx.mlx);
 	return (EXIT_FAILURE);
 }

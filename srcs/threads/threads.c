@@ -6,28 +6,33 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 16:36:55 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:13:08 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-static void	print_pixels(t_block block, t_mlx *img)
+static void	print_pixels(t_block block, t_mlx *img, t_display *d, t_elem_lst *elements)
 {
 	uint32_t	x;
 	uint32_t	y;
-	uint32_t	width;
-	uint32_t	height;
+	t_ray		r;
+	t_point		world_pix;
 
-	width = block.width + block.x_start;
-	height = block.height + block.y_start;
+	block.width += block.x_start;
+	block.height += block.y_start;
 	y = block.y_start;
-	while (y < height)
+	while (y < block.height)
 	{
 		x = block.x_start;
-		while (x < width)
+		while (x < block.width)
 		{
-			put_pixel_to_img(img, x, y, 0x0);
+			world_pix = vadd(d->pixel00,
+					vadd(vmul(d->pix_du, x), vmul(d->pix_dv, y)));
+			r.dir = norm(vsub(world_pix, elements->cam.pos));
+			r.p = elements->cam.pos;
+			put_pixel_to_img(img, x, y, ray_to_color(&r, elements));
+			// put_pixel_to_img(img, x, y, 0x0);
 			x++;
 		}
 		y++;
@@ -45,7 +50,7 @@ void	*start_routine(void *param)
 		block_ptr = get_next_block(params->queue);
 		if (!block_ptr)
 			return (NULL);
-		print_pixels(*block_ptr, params->img);
+		print_pixels(*block_ptr, params->img, params->display, params->elements);
 		set_ready(params->queue);
 	}
 	return (NULL);
@@ -63,7 +68,7 @@ static bool	init_mutex(t_queue *queue)
 	return (true);
 }
 
-bool	init_threads(t_miniRT *minirt)
+bool	init_threads(t_miniRT *minirt, t_display *display)
 {
 	t_params	*params;
 
@@ -82,6 +87,7 @@ bool	init_threads(t_miniRT *minirt)
 		params->elements = &minirt->elements;
 		params->img = &minirt->mlx;
 		params->queue = &minirt->queue;
+		params->display = display;
 		if (pthread_create(&minirt->threads[minirt->thread_amount], NULL, &start_routine, params))
 			return (false);
 		minirt->thread_amount++;

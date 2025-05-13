@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/13 13:32:01 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/13 18:03:00 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-t_dis	init_display(t_camera *cam)
+t_display	init_display(t_camera *cam)
 {
-	t_dis	ret;
+	t_display	ret;
 
 	cam->fov = mind(cam->fov, 179.9999999);
 	cam->fov *= PI / 180;
@@ -39,7 +39,7 @@ t_dis	init_display(t_camera *cam)
 	return (ret);
 }
 
-void	display(t_miniRT *rt, t_dis *d)
+void	render_display(t_miniRT *rt, t_display *d)
 {
 	t_ray	r;
 	t_point	world_pix;
@@ -59,5 +59,6 @@ void	display(t_miniRT *rt, t_dis *d)
 		}
 		d->j += 1;
 	}
+	mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
+		rt->mlx.img, 0, 0);
 }
-

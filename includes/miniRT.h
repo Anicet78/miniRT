@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 17:03:12 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:02:45 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_display
 	t_point		pixel00;
 	uint32_t	i;
 	uint32_t	j;
-}	t_dis;
+}	t_display;
 
 typedef struct s_ray
 {
@@ -105,8 +105,8 @@ int			min(int a, int b);
 int			max(int a, int b);
 double		mind(double a, double b);
 double		maxd(double a, double b);
-t_dis		init_display(t_camera *cam);
-void		display(t_miniRT *mlx, t_dis *dis);
+t_display	init_display(t_camera *cam);
+void		render_display(t_miniRT *rt, t_display *d);
 // anicet
 // t_color		ray_color(t_ray *ray);
 

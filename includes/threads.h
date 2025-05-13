@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:47:21 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 16:37:12 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:00:58 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 # define RENDER_THREADS 20
 # define BLOCK_SIZE 32
 
-typedef struct s_mlx	t_mlx;
-typedef struct s_miniRT	t_miniRT;
+typedef struct s_mlx		t_mlx;
+typedef struct s_miniRT		t_miniRT;
+typedef struct s_display	t_display;
 
 typedef struct s_block
 {
@@ -46,10 +47,11 @@ typedef struct s_params
 	t_elem_lst	*elements;
 	t_mlx		*img;
 	t_queue		*queue;
+	t_display	*display;
 }	t_params;
 
 // threads
-bool	init_threads(t_miniRT *minirt);
+bool	init_threads(t_miniRT *minirt, t_display *display);
 bool	render_thread(t_miniRT *minirt);
 
 // queue
