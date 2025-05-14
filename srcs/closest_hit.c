@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/13 19:01:16 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/14 22:32:32 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,13 @@
 
 int32_t	background_color(t_ray *r)
 {
-	const t_vec	ground = (t_color){0.46, 0.33, 0.20};
-	const t_vec	sky_top = (t_color){0.2, 0.5, 0.78};
+	const t_vec	sky_top = (t_color){0.5, 0.65, 0.84};
 	const t_vec	sky_bot = (t_color){0.63, 0.72, 0.90};
-	float		t;
 
 	if (r->dir.y < 0)
-		return (vec_to_col(ground));
-	t = r->dir.y * r->dir.y;
-	if (t > 1)
-		t = 1.0f;
-	return (
-		vec_to_col(lerp_vec(sky_bot, sky_top, t))
-	);
+		return (vec_to_col(sky_top));
+	else
+		return (vec_to_col(sky_bot));
 }
 
 int32_t	ray_to_color(t_ray *r, t_elem_lst *elems)
