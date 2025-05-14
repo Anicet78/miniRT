@@ -6,18 +6,20 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 19:22:24 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/14 18:33:12 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-static void	print_pixels(t_block block, t_mlx *img, t_display *d, t_elem_lst *elements)
+static void	print_pixels(t_block block, t_params *p, t_mlx *mlx, t_queue *queue)
 {
-	uint32_t	x;
-	uint32_t	y;
-	t_ray		r;
-	t_point		world_pix;
+	uint32_t			x;
+	uint32_t			y;
+	t_ray				r;
+	t_point				world_pix;
+	const t_display		*d = p->display;
+	const t_elem_lst	*elements = p->elements;
 
 	block.width += block.x_start;
 	block.height += block.y_start;
@@ -31,7 +33,8 @@ static void	print_pixels(t_block block, t_mlx *img, t_display *d, t_elem_lst *el
 					vadd(vmul(d->pix_du, x), vmul(d->pix_dv, y)));
 			r.dir = norm(vsub(world_pix, elements->cam.pos));
 			r.p = elements->cam.pos;
-			put_pixel_to_img(img, x, y, ray_to_color(&r, elements));
+			put_pixel_to_img(mlx, mlx->addr[block.img_index], (uint32_t[2]){x, y},
+				ray_to_color(&r, (t_elem_lst *)elements));
 			x++;
 		}
 		y++;
@@ -46,21 +49,11 @@ void	*start_routine(void *param)
 	params = param;
 	while (true)
 	{
-		block_ptr = get_next_block(params->queue);
+		block_ptr = get_next_block(params->queue, params->mlx);
 		if (!block_ptr)
-		{
-			pthread_mutex_lock(&params->queue->lock);
-			pthread_cond_wait(&params->queue->cond, &params->queue->lock);
-			if (params->queue->counter >= params->queue->size)
-			{
-				pthread_mutex_unlock(&params->queue->lock);
-				return (NULL);
-			}
-			pthread_mutex_unlock(&params->queue->lock);
-			continue ;
-		}
-		print_pixels(*block_ptr, params->img, params->display, params->elements);
-		set_ready(params->queue);
+			return (NULL);
+		print_pixels(*block_ptr, params, params->mlx, params->queue);
+		set_ready(params->queue, block_ptr);
 	}
 	return (NULL);
 }
@@ -81,7 +74,6 @@ bool	init_threads(t_rt *minirt, t_display *display)
 {
 	t_params	*params;
 
-	minirt->thread_amount = 0;
 	if (init_mutex(&minirt->queue) == false)
 		return (false);
 	minirt->threads = arena_alloc(sizeof(pthread_t) * RENDER_THREADS, minirt->arena);
@@ -94,7 +86,7 @@ bool	init_threads(t_rt *minirt, t_display *display)
 		if (!params)
 			return (false);
 		params->elements = &minirt->elements;
-		params->img = &minirt->mlx;
+		params->mlx = &minirt->mlx;
 		params->queue = &minirt->queue;
 		params->display = display;
 		if (pthread_create(&minirt->threads[minirt->thread_amount], NULL, &start_routine, params))
@@ -104,13 +96,16 @@ bool	init_threads(t_rt *minirt, t_display *display)
 	return (true);
 }
 
-bool	render_thread(t_rt *minirt)
+bool	render_thread(t_rt *rt)
 {
-	pthread_cond_wait(&minirt->queue.cond, &minirt->queue.lock);
-	if (minirt->queue.ready < minirt->queue.size)
-		return (false);
-	mlx_put_image_to_window(minirt->mlx.mlx, minirt->mlx.mlx_win, minirt->mlx.img, 0, 0);
-	minirt->queue.ready = 0;
-	minirt->queue.counter = 0;
+	rt->queue.counter = 0;
+	rt->queue.render_index = 0;
+	while (rt->queue.print_index < rt->mlx.img_amount)
+	{
+		pthread_cond_wait(&rt->queue.cond, &rt->queue.lock);
+		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win, rt->mlx.imgs[rt->queue.print_index], 0, 0);
+		rt->queue.print_index++;
+		// sleep for fps (mlx loop at the same time ?)
+	}
 	return (true);
 }

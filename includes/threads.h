@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:47:21 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 18:31:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:36:20 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_display	t_display;
 
 typedef struct s_block
 {
+	size_t		img_index;
 	uint32_t	x_start;
 	uint32_t	y_start;
 	uint32_t	width;
@@ -37,15 +38,17 @@ typedef struct s_queue
 	t_block			*blocks;
 	pthread_mutex_t	lock;
 	pthread_cond_t	cond;
+	size_t			render_index;
+	size_t			print_index;
 	uint32_t		counter;
 	uint32_t		size;
-	uint32_t		ready;
+	uint32_t		*ready;
 }	t_queue;
 
 typedef struct s_params
 {
 	t_elem_lst	*elements;
-	t_mlx		*img;
+	t_mlx		*mlx;
 	t_queue		*queue;
 	t_display	*display;
 }	t_params;
@@ -56,7 +59,7 @@ bool	render_thread(t_rt *minirt);
 
 // queue
 bool	init_queue(t_rt *minirt);
-t_block	*get_next_block(t_queue *queue);
-void	set_ready(t_queue *queue);
+t_block	*get_next_block(t_queue *queue, t_mlx *mlx);
+void	set_ready(t_queue *queue, t_block *block);
 
 #endif

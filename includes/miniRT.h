@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 18:31:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:36:13 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ typedef struct s_mlx
 {
 	void	*mlx;
 	void	*mlx_win;
-	void	*img;
-	char	*addr;
+	void	**imgs;
+	char	**addr;
+	size_t	img_amount;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
@@ -97,7 +98,7 @@ t_elem_lst	*init_elem_list(t_rt *minirt);
 // mlx
 void		mlx_start(t_rt *minirt, int width, int height);
 void		kill_mlx(t_rt *minirt, int exit_code);
-void		put_pixel_to_img(t_mlx *img, int x, int y, int color);
+void		put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int color);
 
 // tristan
 void		print_color(unsigned int col);
@@ -107,8 +108,6 @@ double		mind(double a, double b);
 double		maxd(double a, double b);
 t_display	init_display(t_camera *cam);
 void		render_display(t_rt *rt, t_display *d);
-// anicet
-// t_color		ray_color(t_ray *ray);
 
 // tests
 void		print_ambient(t_ambient *ambient);

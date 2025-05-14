@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -ggdb -O3 -march=native#-Wall -Werror -Wextra
+CFLAGS		= -ggdb #-Wall -Werror -Wextra
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -25,7 +25,7 @@ SRC			=	main.c							\
 				parse_file/parse_elements2.c	\
 				parse_file/parse_file.c			\
 				threads/threads.c				\
-				threads/queue.c				\
+				threads/queue.c					\
 				utils/err_message.c				\
 				utils/color.c					\
 				utils/print_tests.c				\
