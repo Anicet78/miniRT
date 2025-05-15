@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/14 17:36:13 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/15 14:59:47 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int			print_err(char *msg, int line);
 bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit);
 bool	hit_plane(t_plane *plane, t_ray *r, t_hit *hit);
 bool	hit_cylinder(t_cylinder *c, t_ray *r, t_hit *hit);
-bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit);
-int32_t	ray_to_color(t_ray *r, t_elem_lst *elems);
+bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame_end);
+int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame_end);
 
 #endif

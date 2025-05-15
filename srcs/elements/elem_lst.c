@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 18:31:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/15 12:23:43 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_elem_lst	*init_elem_list(t_rt *minirt)
 	minirt->elements.count = 0;
 	minirt->elements.elem_lst = arena_calloc(minirt->arena, ELEM_LST_SIZE);
 	if (!minirt->elements.elem_lst)
-		return (NULL);
+		return (clear_arena(&minirt->arena), NULL);
 	return (&minirt->elements);
 }
 

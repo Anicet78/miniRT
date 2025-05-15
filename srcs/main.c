@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/14 18:45:44 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/15 15:12:56 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	iterate(t_elem_lst *elements, t_arena **arena)
 
 	elements->count = 0;
 	elem = get_next_elem(elements);
-	while (elem)
+	while (elem && elements->count <= elements->frames[0])
 	{
 		type = get_elem_type(elem);
 		if (type == AMBIENT_LIGHTING)
@@ -57,39 +57,29 @@ static void	iterate(t_elem_lst *elements, t_arena **arena)
 			print_cylinder(elem);
 		elem = get_next_elem(elements);
 	}
-	clear_arena(arena);
 }
 
 int	main(int ac, char **av)
 {
-	t_rt	minirt;
+	t_rt		rt;
 	t_display	display;
 	int			fd;
 	bool		map_file;
 
 	fd = open_file(ac, av);
-	if (!init_elem_list(&minirt))
+	if (!init_elem_list(&rt))
 		return (close(fd), EXIT_FAILURE);
-	map_file = read_rtfile(fd, &minirt.elements, minirt.arena);
+	map_file = read_rtfile(fd, &rt.elements, rt.arena);
 	close(fd);
 	if (!map_file)
-		return (clear_arena(&minirt.arena), EXIT_FAILURE);
-	display = init_display(&minirt.elements.cam);
-	mlx_start(&minirt, display.width, display.height);
-	// init_queue(&minirt);
-	// init_threads(&minirt, &display);
-	render_display(&minirt, &display);
-	// render_display(&minirt, &display);
-	// render_display(&minirt, &display);
-	// render_display(&minirt, &display);
-	// render_display(&minirt, &display);
-	// render_thread(&minirt);
-	// ft_printf("------------------\n");
-	// render_thread(&minirt);
-	// render_thread(&minirt);
-	// render_thread(&minirt);
-	// render_thread(&minirt);
-	// kill_mlx(&minirt, 1);
-	mlx_loop(minirt.mlx.mlx);
+		return (clear_arena(&rt.arena), EXIT_FAILURE);
+	display = init_display(&rt.elements.cam);
+	mlx_start(&rt, display.width, display.height);
+	init_queue(&rt);
+	init_threads(&rt, &display);
+	// render_display(&rt, &display);
+	render_thread(&rt);
+	kill_mlx(&rt, 1);
+	mlx_loop(rt.mlx.mlx);
 	return (EXIT_FAILURE);
 }

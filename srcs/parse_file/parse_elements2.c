@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 04:51:51 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/15 14:18:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,18 @@ bool	parse_cylinder(t_elem_lst *elements, char **line, int nb)
 		return (print_err("Invalid color in `cylinder`", nb));
 	cy.mat.color = get_color(line[5]);
 	return (add_cylinder(elements, &cy));
+}
+
+bool	parse_new_frame(t_elem_lst *elements, char **line, int nb)
+{
+	uint32_t	count;
+
+	if (line[1])
+		return (print_err("Invalid amount of argument in `new frame`", nb));
+	count = 0;
+	while (line[0][count] && line[0][count] == '=')
+		count++;
+	if (line[0][count] && line[0][count] != '=' && line[0][count] != '\n')
+		return (print_err("Invalid argument `new frame`", nb));
+	return (add_new_frame(elements, nb));
 }

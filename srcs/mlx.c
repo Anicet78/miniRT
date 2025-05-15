@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/14 18:41:05 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/15 15:13:14 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,17 @@ void	put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int color)
 	*(unsigned int *)dst = color;
 }
 
-bool	create_images(t_mlx *mlx, t_arena *arena)
+bool	create_images(t_mlx *mlx, t_arena *arena, size_t img_amount)
 {
 	size_t	i;
-	size_t	amount;
 
 	i = 0;
-	amount = 1;
-	mlx->img_amount = amount;
-	mlx->imgs = arena_calloc(arena, sizeof(void *) * amount);
-	mlx->addr = arena_calloc(arena, sizeof(void *) * amount);
+	mlx->img_amount = img_amount;
+	mlx->imgs = arena_calloc(arena, sizeof(void *) * img_amount);
+	mlx->addr = arena_calloc(arena, sizeof(void *) * img_amount);
 	if (!mlx->imgs || !mlx->addr)
 		return (false);
-	while (i < amount)
+	while (i < img_amount)
 	{
 		mlx->imgs[i] = mlx_new_image(mlx->mlx, mlx->width, mlx->height);
 		if (!mlx->imgs[i])
@@ -57,7 +55,7 @@ bool	create_images(t_mlx *mlx, t_arena *arena)
 		i++;
 	}
 	i = 0;
-	while (i < amount)
+	while (i < img_amount)
 	{
 		mlx->addr[i] = mlx_get_data_addr(mlx->imgs[i], &mlx->bits_per_pixel,
 			&mlx->line_length, &mlx->endian);
@@ -86,7 +84,7 @@ void	mlx_start(t_rt *rt, int width, int height)
 	mlx->mlx_win = mlx_new_window(mlx->mlx, width, height, "miniRT");
 	if (!mlx->mlx_win)
 		kill_mlx(rt, EXIT_FAILURE);
-	if (create_images(&rt->mlx, rt->arena) == false)
+	if (create_images(&rt->mlx, rt->arena, rt->elements.frame_amount) == false)
 		kill_mlx(rt, EXIT_FAILURE);
 	mlx_hook(mlx->mlx_win, 17, 1L << 3, &destroy_hook, mlx);
 	mlx_hook(mlx->mlx_win, 2, 1L << 0, &key_hook, mlx);

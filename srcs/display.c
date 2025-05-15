@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/14 17:42:51 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/15 13:53:55 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_display	init_display(t_camera *cam)
 		ret.vp_u = cross_prod(cam->dir, up_v());
 		ret.vp_u = vmul(norm(ret.vp_u), ret.vp_width);
 	}
-	ret.vp_v = vmul(norm(cross_prod(ret.vp_u, cam->dir)), ret.vp_height);
+	ret.vp_v = vmul(norm(cross_prod(cam->dir, ret.vp_u)), ret.vp_height);
 	ret.pix_du = vdiv(ret.vp_u, (double)ret.width);
 	ret.pix_dv = vdiv(ret.vp_v, (double)ret.height);
 	ret.vp_upleft = vadd(cam->pos, cam->dir);
@@ -54,11 +54,11 @@ void	render_display(t_rt *rt, t_display *d)
 					vadd(vmul(d->pix_du, d->i), vmul(d->pix_dv, d->j)));
 			r.dir = norm(vsub(world_pix, rt->elements.cam.pos));
 			r.p = rt->elements.cam.pos;
-			put_pixel_to_img(&(rt->mlx), rt->mlx.imgs[0], (uint32_t[2]){d->i, d->j}, ray_to_color(&r, &rt->elements));
+			put_pixel_to_img(&(rt->mlx), rt->mlx.addr[0], (uint32_t[2]){d->i, d->j}, ray_to_color(&r, &rt->elements, SIZE_MAX));
 			d->i += 1;
 		}
 		d->j += 1;
 	}
 	mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
-		rt->mlx.addr[0], 0, 0);
+		rt->mlx.imgs[0], 0, 0);
 }

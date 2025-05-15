@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   closest_hit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/13 13:27:59 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/15 15:12:20 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ int32_t	background_color(t_ray *r)
 	);
 }
 
-int32_t	ray_to_color(t_ray *r, t_elem_lst *elems)
+int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame_end)
 {
 	t_hit	hit;
 
-	if (closest_hit(r, elems, &hit))
+	if (closest_hit(r, elems, &hit, frame_end))
 		return (0x000000);
 	return (background_color(r));
 }
 
-bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit)
+bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame_end)
 {
 	void	*elem;
 	int		type;
@@ -47,7 +47,7 @@ bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit)
 	ft_memset(hit, 0, sizeof(t_hit));
 	did_hit = false;
 	elem = get_next_elem(elems);
-	while (elem)
+	while (elem && elems->count <= frame_end)
 	{
 		type = get_elem_type(elem);
 		if (type == AMBIENT_LIGHTING || type == LIGHT || type == CAMERA)
