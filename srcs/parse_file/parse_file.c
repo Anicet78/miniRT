@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/15 15:13:11 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/16 13:06:43 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,55 @@ char	**ft_arena_split(char const *s, char c, t_arena *arena)
 	return (tab);
 }
 
+size_t	count_frames(int fd)
+{
+	size_t	frames;
+	char	*gnl;
+
+	frames = 1;
+	gnl = get_next_line(fd);
+	while (gnl)
+	{
+		if (gnl[0] == '=')
+			frames++;
+		free(gnl);
+		gnl = get_next_line(fd);
+	}
+	lseek(fd, 0, SEEK_SET);
+	return (frames);
+}
+
+bool	init_parsing(t_elem_lst *elems, t_arena *arena)
+{
+	elems->frames = arena_calloc(arena, sizeof(size_t) * elems->frame_amount);
+	if (!elems->frames)
+		return (print_err("Memory allocation failed", 0));
+	elems->cam = arena_calloc(arena, sizeof(t_camera) * elems->frame_amount);
+	if (!elems->cam)
+		return (print_err("Memory allocation failed", 0));
+	elems->frame_amount = 0;
+	return (true);
+}
+
+bool	finish_parsing(t_elem_lst *elems, t_arena *arena)
+{
+	size_t	count;
+
+	count = 0;
+	while (count <= elems->frame_amount)
+	{
+		if (elems->cam[count].declared == false)
+		{
+			ft_fprintf(2, "\e[1;31mError\nFrame %d: %s\e[0m\n",
+				elems->frame_amount + 1, "Camera missing");
+			return (false);
+		}
+		count++;
+	}
+	elems->frames[elems->frame_amount++] = elems->count;
+	return (true);
+}
+
 bool	parse_elements(t_elem_lst *elements, char **line, int nb)
 {
 	if (ft_strcmp(line[0], "A") == 0)
@@ -61,39 +110,14 @@ bool	parse_elements(t_elem_lst *elements, char **line, int nb)
 	return (print_err("Unknown identifier", nb));
 }
 
-bool	init_parsing(t_elem_lst *elements)
-{
-	elements->cam.declared = false;
-	elements->frames = ft_calloc(1, sizeof(size_t));
-	if (!elements->frames)
-		return (print_err("Memory allocation failed", 0));
-	elements->frame_amount = 0;
-	return (true);
-}
-
-bool	finish_parsing(t_elem_lst *elements, t_arena *arena)
-{
-	size_t	*frames;
-
-	frames = elements->frames;
-	elements->frames = arena_calloc(arena, sizeof(size_t) * elements->frame_amount + 1);
-	if (!elements->frames)
-		return (free(frames) ,print_err("Memory allocation failed", 0));
-	ft_memmove(elements->frames, frames, elements->frame_amount + 1);
-	free(frames);
-	if (elements->cam.declared == false)
-		return (print_err("Camera missing", 0));
-	elements->frames[elements->frame_amount++] = elements->count;
-	return (true);
-}
-
 bool	read_rtfile(int fd, t_elem_lst *elements, t_arena *arena)
 {
 	char	*line;
 	char	**split;
 	int		i;
 
-	if (init_parsing(elements) == false)
+	elements->frame_amount = count_frames(fd);
+	if (init_parsing(elements, arena) == false)
 		return (false);
 	i = 1;
 	line = get_next_line(fd);
@@ -102,11 +126,11 @@ bool	read_rtfile(int fd, t_elem_lst *elements, t_arena *arena)
 		split = ft_arena_split(line, ' ', arena);
 		free(line);
 		if (!split)
-			return (free(elements->frames), print_err("Memory allocation failed", 0));
+			return (print_err("Memory allocation failed", 0));
 		if (split[0] && split[0][0] && split[0][0] != '\n')
 		{
 			if (parse_elements(elements, split, i) == false)
-				return (free(elements->frames), false);
+				return (false);
 		}
 		i++;
 		line = get_next_line(fd);

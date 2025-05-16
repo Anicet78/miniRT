@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/15 14:11:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/16 10:58:33 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_elem_lst
 	size_t		count;
 	size_t		frame_amount;
 	size_t		*frames;
-	t_camera	cam;
+	t_camera	*cam;
 	uintptr_t	*elem_lst;
 }	t_elem_lst;
 
@@ -112,7 +112,6 @@ t_sphere	*add_sphere(t_elem_lst *elements, t_point pos, float diameter,
 t_plane		*add_plane(t_elem_lst *elements, t_point pos, t_vec axis,
 				uint32_t color);
 t_cylinder	*add_cylinder(t_elem_lst *elements, t_cylinder *cylinder);
-bool		add_new_frame(t_elem_lst *elements, int nb);
 
 // parsing
 bool		read_rtfile(int fd, t_elem_lst *elements, t_arena *arena);

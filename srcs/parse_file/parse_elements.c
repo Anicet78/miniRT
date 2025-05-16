@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 04:50:22 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/16 12:01:57 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ bool	parse_ambient(t_elem_lst *elements, char **line, int nb)
 
 bool	parse_camera(t_elem_lst *elements, char **line, int nb)
 {
-	t_point		pos;
-	t_vec		axis;
-	int64_t		fov;
-	static int	amount;
+	t_point			pos;
+	t_vec			axis;
+	int64_t			fov;
+	static bool		declared;
+	static size_t	current_frame;
 
-	if (amount++ > 0)
+	if (current_frame != elements->frame_amount)
+		declared = false;
+	current_frame = elements->frame_amount;
+	if (declared++ > 0)
 		return (print_err("Multiple declaration of `camera`", nb));
 	if (tab_len(line) != 4)
 		return (print_err("Invalid amount of argument in `camera`", nb));

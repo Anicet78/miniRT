@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_elements.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 04:50:47 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/16 11:25:06 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ t_ambient	*add_ambient_lighting(t_elem_lst *elements, float ratio,
 t_camera	*add_camera(t_elem_lst *elements, t_point pos, t_vec axis,
 	uint32_t fov)
 {
-	elements->cam.pos = pos;
-	elements->cam.dir = axis;
-	elements->cam.fov = fov;
-	elements->cam.declared = true;
+	elements->cam[elements->frame_amount].pos = pos;
+	elements->cam[elements->frame_amount].dir = axis;
+	elements->cam[elements->frame_amount].fov = fov;
+	elements->cam[elements->frame_amount].declared = true;
 	return ((t_camera *)1);
 }
 

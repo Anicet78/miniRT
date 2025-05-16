@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:09:34 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/15 15:24:41 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/16 15:59:02 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_block	*get_next_block(t_queue *queue, t_mlx *mlx)
 	}
 	block = &queue->blocks[queue->counter];
 	block->img_index = queue->render_index;
+	// ft_fprintf(2, "index: %p\n", &block->img_index);
 	queue->counter++;
 	pthread_mutex_unlock(&queue->lock);
 	return (block);

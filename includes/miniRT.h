@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/15 14:59:47 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/16 13:08:19 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_hit
 t_elem_lst	*init_elem_list(t_rt *minirt);
 
 // mlx
-void		mlx_start(t_rt *minirt, int width, int height);
+void		mlx_start(t_rt *rt, int width, int height);
 void		kill_mlx(t_rt *minirt, int exit_code);
 void		put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int color);
 
@@ -106,6 +106,7 @@ int			min(int a, int b);
 int			max(int a, int b);
 double		mind(double a, double b);
 double		maxd(double a, double b);
+t_display	*init_all_displays(t_camera *cam, t_arena *arena, size_t frame_amount);
 t_display	init_display(t_camera *cam);
 void		render_display(t_rt *rt, t_display *d);
 

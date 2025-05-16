@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/15 14:18:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/16 10:58:26 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ bool	parse_new_frame(t_elem_lst *elements, char **line, int nb)
 		count++;
 	if (line[0][count] && line[0][count] != '=' && line[0][count] != '\n')
 		return (print_err("Invalid argument `new frame`", nb));
-	return (add_new_frame(elements, nb));
+	elements->frames[elements->frame_amount] = elements->count;
+	elements->frame_amount++;
+	return (true);
 }
