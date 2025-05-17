@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 22:38:23 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/17 23:25:18 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/17 23:57:16 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,17 @@ bool intersect_cyl_caps(t_cylinder *cylinder, t_ray *r, t_hit *hit, t_vec cap_ce
 {
 	const double	denom = dot(cylinder->axis, r->dir);
 	double			t;
+	t_vec			point;
 
 	if (fabs(denom) < 0.000001)
 		return (false);
 	t = dot(vsub(cap_center, r->p), cylinder->axis) / denom;
 	if (t < 0 || hit->t < t)
 		return (false);
-	if (magn(vsub(hit->p, cap_center)) > cylinder->radius)
+	point = vadd(r->p, vmul(r->dir, t));
+	if (magn(vsub(point, cap_center)) > cylinder->radius)
 		return (false);
-	hit->p = vadd(r->p, vmul(r->dir, t));
+	hit->p = point;
 	hit->t = t;
 	hit->normal = cylinder->axis;
 	hit->front = (denom < 0);
