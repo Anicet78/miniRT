@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 04:50:22 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/18 00:01:45 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	parse_camera(t_elem_lst *elements, char **line, int nb)
 	if (is_vec(line[2]) == false)
 		return (print_err("Invalid orientation vector in `camera`", nb));
 	pos = get_vec(line[1]);
-	axis = get_vec(line[2]);
+	axis = norm(get_vec(line[2]));
 	fov = ft_atol(line[3]);
 	if (fov < 0 || fov > 180)
 		return (print_err("Invalid FOV in `camera`", nb));
@@ -110,7 +110,7 @@ bool	parse_plane(t_elem_lst *elements, char **line, int nb)
 	if (is_normalize_vec(line[2]) == false)
 		return (print_err("Invalid normal vector in `plane`", nb));
 	pos = get_vec(line[1]);
-	axis = get_vec(line[2]);
+	axis = norm(get_vec(line[2]));
 	if (is_color(line[3]) == false)
 		return (print_err("Invalid color in `plane`", nb));
 	color = get_color(line[3]);
