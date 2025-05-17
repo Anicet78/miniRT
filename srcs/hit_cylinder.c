@@ -6,13 +6,13 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 22:38:23 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/17 04:46:33 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/17 23:25:18 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-static bool	intersect_cyl_body_two(
+static bool	intersect_cyl_body_part_two(
 	t_cylinder *cyl, t_ray *r, t_hit *hit, t_vec hit_point)
 {
 	double	height;
@@ -46,15 +46,14 @@ bool intersect_cyl_body(t_cylinder *cyl, t_ray *r, t_hit *hit)
 	t = (-b - sqrt(delta)) / (2 * a);
 	if (t < 0 || hit->t < t)
 		return (false);
-	hit_point = vadd(r->p, vmul(r->dir, hit->t));
-	if (!intersect_cyl_body_two(cyl, r, hit, hit_point))
+	hit_point = vadd(r->p, vmul(r->dir, t));
+	if (!intersect_cyl_body_part_two(cyl, r, hit, hit_point))
 		return (false);
 	hit->t = t;
 	return (true);
 }
 
-bool intersect_cyl_caps(
-	t_cylinder *cylinder, t_ray *r, t_hit *hit, t_vec cap_center)
+bool intersect_cyl_caps(t_cylinder *cylinder, t_ray *r, t_hit *hit, t_vec cap_center)
 {
 	const double	denom = dot(cylinder->axis, r->dir);
 	double			t;
@@ -63,6 +62,8 @@ bool intersect_cyl_caps(
 		return (false);
 	t = dot(vsub(cap_center, r->p), cylinder->axis) / denom;
 	if (t < 0 || hit->t < t)
+		return (false);
+	if (magn(vsub(hit->p, cap_center)) > cylinder->radius)
 		return (false);
 	hit->p = vadd(r->p, vmul(r->dir, t));
 	hit->t = t;

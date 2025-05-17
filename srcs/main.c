@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 18:45:26 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/17 23:11:57 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static void	iterate(t_elem_lst *elements, t_arena **arena)
 			print_cylinder(elem);
 		elem = get_next_elem(elements);
 	}
-	clear_arena(arena);
+	elements->count = 0;
+	// clear_arena(arena);
 }
 
 int	main(int ac, char **av)
@@ -78,9 +79,9 @@ int	main(int ac, char **av)
 	mlx_start(&minirt, display.width, display.height);
 	// init_queue(&minirt);
 	// init_threads(&minirt, &display);
+	// iterate(&minirt.elements, &minirt.arena);
 	render_display(&minirt, &display);
 	// render_thread(&minirt);
-	// iterate(&minirt.elements, &minirt.arena);
 	// kill_mlx(&minirt, 1);
 	mlx_loop(minirt.mlx.mlx);
 	return (EXIT_FAILURE);
