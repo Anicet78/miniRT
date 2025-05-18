@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/14 22:32:32 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/18 02:13:16 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems)
 	t_hit	hit;
 
 	if (closest_hit(r, elems, &hit))
-		return (0x000000);
+		return (hit.mat->color);
 	return (background_color(r));
 }
 
