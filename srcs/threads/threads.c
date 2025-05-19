@@ -6,56 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/19 12:01:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 17:37:44 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
-
-static void	print_pixels(t_block block, t_params *p, t_mlx *mlx, t_queue *queue)
-{
-	uint32_t			x;
-	uint32_t			y;
-	t_ray				r;
-	t_point				world_pix;
-	const t_elem_lst	*elems = p->elements;
-	const t_display		*d = &p->display[block.img_index];
-
-	block.width += block.x_start;
-	block.height += block.y_start;
-	y = block.y_start;
-	while (y < block.height)
-	{
-		x = block.x_start;
-		while (x < block.width)
-		{
-			world_pix = vadd(d->pixel00,
-					vadd(vmul(d->pix_du, x), vmul(d->pix_dv, y)));
-			r.dir = norm(vsub(world_pix, elems->cam[block.img_index].pos));
-			r.p = elems->cam[block.img_index].pos;
-			put_pixel_to_img(mlx, mlx->addr[block.img_index], (uint32_t[2]){x, y},
-				ray_to_color(&r, (t_elem_lst *)elems, elems->frames[block.img_index]));
-			x++;
-		}
-		y++;
-	}
-}
-
-void	*start_routine(void *param)
-{
-	t_block		block;
-	t_params	*params;
-
-	params = param;
-	while (true)
-	{
-		if (!get_next_block(&block, params->queue, params->mlx))
-			return (NULL);
-		print_pixels(block, params, params->mlx, params->queue);
-		set_ready(params->queue, &block);
-	}
-	return (NULL);
-}
 
 static bool	init_mutex(t_queue *queue, pthread_attr_t *attr)
 {
@@ -82,6 +37,48 @@ static bool	init_mutex(t_queue *queue, pthread_attr_t *attr)
 	return (true);
 }
 
+static bool	init_params(t_rt *rt, t_display *display, t_params *params)
+{
+	uintptr_t	*elem_lst;
+	t_camera	*cams;
+
+	elem_lst = rt->elements.elem_lst;
+	params->elements = rt->elements;
+	params->elements.elem_lst = arena_calloc(params->arena, rt->elements.size + 277); // WTF
+	if (!params->elements.elem_lst)
+		return (false);
+	ft_memmove(params->elements.elem_lst, elem_lst, rt->elements.size + 277);
+	cams = params->elements.cam;
+	params->elements.cam = arena_alloc(sizeof(t_camera) * rt->elements.frame_amount,
+		params->arena);
+	if (!params->elements.cam)
+		return (false);
+	ft_memmove(params->elements.cam, cams, sizeof(t_camera) * rt->elements.frame_amount);
+	params->mlx = &rt->mlx;
+	params->queue = &rt->queue;
+	params->display = display;
+	return (true);
+}
+
+static bool	new_thread(t_rt *rt, t_display *display, pthread_attr_t *attr)
+{
+	t_arena		*memdup;
+	t_params	*params;
+
+	params = arena_alloc(sizeof(t_params), rt->arena);
+	if (!params)
+		return (false);
+	memdup = arena_init();
+	if (!memdup)
+		return (false);
+	params->arena = memdup;
+	if (!init_params(rt, display, params))
+		return (false);
+	if (pthread_create(&rt->threads[rt->thread_amount], attr, &start_routine, params))
+		return (false);
+	return (true);
+}
+
 bool	init_threads(t_rt *rt, t_display *display)
 {
 	t_params		*params;
@@ -95,32 +92,10 @@ bool	init_threads(t_rt *rt, t_display *display)
 	pthread_mutex_lock(&rt->queue.lock);
 	while (rt->thread_amount < RENDER_THREADS)
 	{
-		params = arena_alloc(sizeof(t_params), rt->arena);
-		if (!params)
-			return (pthread_attr_destroy(&attr), false);
-		params->elements = &rt->elements;
-		params->mlx = &rt->mlx;
-		params->queue = &rt->queue;
-		params->display = display;
-		if (pthread_create(&rt->threads[rt->thread_amount], &attr, &start_routine, params))
+		if (!new_thread(rt, display, &attr))
 			return (pthread_attr_destroy(&attr), false);
 		rt->thread_amount++;
 	}
 	pthread_attr_destroy(&attr);
-	return (true);
-}
-
-bool	render_thread(t_rt *rt)
-{
-	rt->queue.counter = 0;
-	rt->queue.render_index = 0;
-	while (rt->queue.print_index + 1 < rt->mlx.img_amount)
-	{
-		pthread_cond_wait(&rt->queue.cond, &rt->queue.lock);
-		// sleep for fps (mlx loop at the same time ?)
-		// print fps
-		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win, rt->mlx.imgs[rt->queue.print_index], 0, 0);
-		// rt->queue.print_index++;
-	}
 	return (true);
 }

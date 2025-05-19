@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cylinder.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 22:38:23 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/17 23:57:16 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/19 14:05:21 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,5 @@ bool hit_cylinder(t_cylinder *cylinder, t_ray *r, t_hit *hit)
 		|| intersect_cyl_caps(cylinder, r, hit,
 			vsub(cylinder->pos, vmul(cylinder->axis, cylinder->height / 2))))
 		return (true);
+	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:47:21 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/19 12:06:29 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 15:50:48 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define RENDER_THREADS 22
+# define RENDER_THREADS 1
 # define BLOCK_SIZE 32
 
 typedef struct s_mlx		t_mlx;
@@ -47,15 +47,17 @@ typedef struct s_queue
 
 typedef struct s_params
 {
-	t_elem_lst	*elements;
+	t_elem_lst	elements;
 	t_mlx		*mlx;
 	t_queue		*queue;
 	t_display	*display;
+	t_arena		*arena;
 }	t_params;
 
 // threads
 bool	init_threads(t_rt *minirt, t_display *display);
 bool	render_thread(t_rt *minirt);
+void	*start_routine(void *param);
 
 // queue
 bool	init_queue(t_rt *minirt);

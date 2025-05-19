@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/16 13:08:19 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 16:54:10 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ t_display	init_display(t_camera *cam);
 void		render_display(t_rt *rt, t_display *d);
 
 // tests
+void		iterate(t_elem_lst *elements);
 void		print_ambient(t_ambient *ambient);
 void		print_cam(t_camera *camera);
 void		print_light(t_light *light);

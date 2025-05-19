@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/15 12:23:43 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 17:40:29 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	*get_next_elem(t_elem_lst *elements)
 	void	*elem;
 	size_t	elem_size;
 
-	if (elements->count >= ELEM_LST_SIZE)
+	if (elements->count >= elements->size)
 		return (NULL);
 	elem = elements->elem_lst + elements->count;
 	elem_size = get_elem_size(elem);

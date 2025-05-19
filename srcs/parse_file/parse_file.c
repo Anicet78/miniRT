@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/19 14:01:25 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 14:45:52 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ bool	finish_parsing(t_elem_lst *elems, t_arena *arena)
 		count++;
 	}
 	elems->frames[elems->frame_amount++] = elems->count;
+	elems->size = elems->count;
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/16 10:58:33 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 14:45:22 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_cylinder
 typedef struct s_elem_lst
 {
 	size_t		count;
+	size_t		size;
 	size_t		frame_amount;
 	size_t		*frames;
 	t_camera	*cam;

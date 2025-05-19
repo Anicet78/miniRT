@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/19 14:00:26 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 17:38:46 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	open_file(int ac, char **av)
 	return (fd);
 }
 
-static void	iterate(t_elem_lst *elements, t_arena **arena)
+void	iterate(t_elem_lst *elements)
 {
 	void	*elem;
 	int		type;
@@ -75,10 +75,11 @@ int	main(int ac, char **av)
 		return (clear_arena(&rt.arena), EXIT_FAILURE);
 	display = init_all_displays(rt.elements.cam, rt.arena, rt.elements.frame_amount);
 	mlx_start(&rt, display[0].width, display[0].height);
-	// init_queue(&rt);
-	// init_threads(&rt, display);
-	render_display(&rt, display);
-	// render_thread(&rt);
+	init_queue(&rt);
+	init_threads(&rt, display);
+	// render_display(&rt, display);
+	// iterate(&rt.elements);
+	render_thread(&rt);
 	// kill_mlx(&rt, 1);
 	mlx_loop(rt.mlx.mlx);
 	return (EXIT_FAILURE);
