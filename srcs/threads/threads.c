@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/16 15:52:14 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 12:01:00 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,21 @@ static void	print_pixels(t_block block, t_params *p, t_mlx *mlx, t_queue *queue)
 
 void	*start_routine(void *param)
 {
-	t_block		*block_ptr;
+	t_block		block;
 	t_params	*params;
 
 	params = param;
 	while (true)
 	{
-		block_ptr = get_next_block(params->queue, params->mlx);
-		if (!block_ptr)
+		if (!get_next_block(&block, params->queue, params->mlx))
 			return (NULL);
-		print_pixels(*block_ptr, params, params->mlx, params->queue);
-		set_ready(params->queue, block_ptr);
+		print_pixels(block, params, params->mlx, params->queue);
+		set_ready(params->queue, &block);
 	}
 	return (NULL);
 }
 
-static bool	init_mutex(t_queue *queue)
+static bool	init_mutex(t_queue *queue, pthread_attr_t *attr)
 {
 	if (pthread_mutex_init(&queue->lock, NULL))
 		return (false);
@@ -67,32 +66,47 @@ static bool	init_mutex(t_queue *queue)
 		pthread_mutex_destroy(&queue->lock);
 		return (false);
 	}
+	if(pthread_attr_init(attr))
+	{
+		pthread_mutex_destroy(&queue->lock);
+		pthread_cond_destroy(&queue->cond);
+		return (false);
+	}
+	if (pthread_attr_setstacksize(attr, 1048576))
+	{
+		pthread_mutex_destroy(&queue->lock);
+		pthread_cond_destroy(&queue->cond);
+		pthread_attr_destroy(attr);
+		return (false);
+	}
 	return (true);
 }
 
 bool	init_threads(t_rt *rt, t_display *display)
 {
-	t_params	*params;
+	t_params		*params;
+	pthread_attr_t	attr;
 
-	if (init_mutex(&rt->queue) == false)
+	if (init_mutex(&rt->queue, &attr) == false)
 		return (false);
 	rt->threads = arena_alloc(sizeof(pthread_t) * RENDER_THREADS, rt->arena);
 	if (!rt->threads)
-		return (false);
+		return (pthread_attr_destroy(&attr), false);
 	pthread_mutex_lock(&rt->queue.lock);
 	while (rt->thread_amount < RENDER_THREADS)
 	{
 		params = arena_alloc(sizeof(t_params), rt->arena);
 		if (!params)
-			return (false);
+			return (pthread_attr_destroy(&attr), false);
 		params->elements = &rt->elements;
 		params->mlx = &rt->mlx;
 		params->queue = &rt->queue;
 		params->display = display;
-		if (pthread_create(&rt->threads[rt->thread_amount], NULL, &start_routine, params))
-			return (false);
+		if (pthread_create(&rt->threads[rt->thread_amount], &attr, &start_routine, params))
+			return (pthread_attr_destroy(&attr), false);
 		rt->thread_amount++;
 	}
+	pthread_attr_destroy(&attr);
 	return (true);
 }
 
@@ -100,13 +114,13 @@ bool	render_thread(t_rt *rt)
 {
 	rt->queue.counter = 0;
 	rt->queue.render_index = 0;
-	while (rt->queue.print_index < rt->mlx.img_amount)
+	while (rt->queue.print_index + 1 < rt->mlx.img_amount)
 	{
 		pthread_cond_wait(&rt->queue.cond, &rt->queue.lock);
 		// sleep for fps (mlx loop at the same time ?)
 		// print fps
 		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win, rt->mlx.imgs[rt->queue.print_index], 0, 0);
-		rt->queue.print_index++;
+		// rt->queue.print_index++;
 	}
 	return (true);
 }

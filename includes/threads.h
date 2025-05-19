@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:47:21 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/14 17:36:20 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 12:06:29 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define RENDER_THREADS 20
+# define RENDER_THREADS 22
 # define BLOCK_SIZE 32
 
 typedef struct s_mlx		t_mlx;
@@ -59,7 +59,7 @@ bool	render_thread(t_rt *minirt);
 
 // queue
 bool	init_queue(t_rt *minirt);
-t_block	*get_next_block(t_queue *queue, t_mlx *mlx);
+bool	get_next_block(t_block *block, t_queue *queue, t_mlx *mlx);
 void	set_ready(t_queue *queue, t_block *block);
 
 #endif

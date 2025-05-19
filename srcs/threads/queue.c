@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:09:34 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/16 15:59:02 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 12:00:47 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,28 @@ void	set_ready(t_queue *queue, t_block *block)
 	pthread_mutex_lock(&queue->lock);
 	queue->ready[block->img_index]++;
 	if (queue->ready[block->img_index] >= queue->size)
+	{
+		queue->print_index = block->img_index;
 		pthread_cond_signal(&queue->cond);
+	}
 	pthread_mutex_unlock(&queue->lock);
 }
 
-t_block	*get_next_block(t_queue *queue, t_mlx *mlx)
+bool	get_next_block(t_block *block, t_queue *queue, t_mlx *mlx)
 {
-	t_block	*block;
-
 	pthread_mutex_lock(&queue->lock);
 	if (queue->counter >= queue->size)
 	{
 		if (queue->render_index + 1 >= mlx->img_amount)
-			return (pthread_mutex_unlock(&queue->lock), NULL);
+			return (pthread_mutex_unlock(&queue->lock), false);
 		queue->render_index++;
 		queue->counter = 0;
 	}
-	block = &queue->blocks[queue->counter];
+	*block = queue->blocks[queue->counter];
 	block->img_index = queue->render_index;
-	// ft_fprintf(2, "index: %p\n", &block->img_index);
 	queue->counter++;
 	pthread_mutex_unlock(&queue->lock);
-	return (block);
+	return (true);
 }
 
 static void	fill_block(t_block *block, uint32_t px_start[2], int32_t width,

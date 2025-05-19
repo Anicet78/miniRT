@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/16 13:06:43 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/16 16:07:06 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ bool	finish_parsing(t_elem_lst *elems, t_arena *arena)
 		if (elems->cam[count].declared == false)
 		{
 			ft_fprintf(2, "\e[1;31mError\nFrame %d: %s\e[0m\n",
-				elems->frame_amount + 1, "Camera missing");
+				count + 1, "Camera missing");
 			return (false);
 		}
 		count++;
