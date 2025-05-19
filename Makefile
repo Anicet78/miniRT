@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -ggdb #-Wall -Werror -Wextra
+CFLAGS		= -ggdb#-Wall -Werror -Wextra
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -31,12 +31,13 @@ SRC			=	main.c							\
 				utils/print_tests.c				\
 				utils/minmax.c					\
 				utils/vec_utils.c				\
-				intersect.c						\
 				closest_hit.c					\
+				display.c						\
+				hit_cylinder.c					\
+				intersect.c						\
 				mlx.c							\
 				print_utils.c					\
 				vec3op.c						\
-				display.c						\
 				vec3op2.c
 
 OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))

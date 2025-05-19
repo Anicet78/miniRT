@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/16 16:23:46 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:59:45 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,13 @@
 
 int32_t	background_color(t_ray *r)
 {
-	const t_vec	ground = (t_color){0.35, 0.25, 0.15};
-	const t_vec	sky_top = (t_color){0.2, 0.5, 0.78};
+	const t_vec	sky_top = (t_color){0.5, 0.65, 0.84};
 	const t_vec	sky_bot = (t_color){0.63, 0.72, 0.90};
-	float		t;
 
 	if (r->dir.y < 0)
-		return (vec_to_col(ground));
-	t = r->dir.y * r->dir.y;
-	if (t > 1)
-		t = 1.0f;
-	return (
-		vec_to_col(lerp_vec(sky_bot, sky_top, t))
-	);
+		return (vec_to_col(sky_top));
+	else
+		return (vec_to_col(sky_bot));
 }
 
 int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame_end)
@@ -34,18 +28,20 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame_end)
 	t_hit	hit;
 
 	if (closest_hit(r, elems, &hit, frame_end))
-		return (0x000000);
+		return (hit.mat->color);
 	return (background_color(r));
 }
 
 bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame_end)
 {
 	void	*elem;
-	int		type;
+	uint8_t	type;
 	bool	did_hit;
 
 	ft_memset(hit, 0, sizeof(t_hit));
+	hit->t = 9999999999;
 	did_hit = false;
+	elems->count = 0;
 	elem = get_next_elem(elems);
 	while (elem && elems->count <= frame_end)
 	{

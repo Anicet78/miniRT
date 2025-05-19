@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/16 10:58:26 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 14:01:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	parse_cylinder(t_elem_lst *elements, char **line, int nb)
 	if (is_normalize_vec(line[2]) == false)
 		return (print_err("Invalid axis vector in `cylinder`", nb));
 	cy.pos = get_vec(line[1]);
-	cy.axis = get_vec(line[2]);
+	cy.axis = norm(get_vec(line[2]));
 	diameter = ft_atof_parse(line[3]);
 	if (diameter < 0 || diameter > INT_MAX)
 		return (print_err("Invalid diameter in `cylinder`", nb));
