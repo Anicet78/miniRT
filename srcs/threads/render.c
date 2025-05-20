@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/19 17:19:10 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/20 12:16:35 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	*start_routine(void *param)
 	t_params	*params;
 
 	params = param;
-	iterate(&params->elements);
 	while (true)
 	{
 		if (!get_next_block(&block, params->queue, params->mlx))

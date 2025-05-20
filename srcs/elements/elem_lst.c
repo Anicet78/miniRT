@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/19 17:40:29 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/20 12:51:51 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ void	*get_next_elem(t_elem_lst *elements)
 
 t_elem_lst	*add_element(t_elem_lst *elements, void *new_elem, size_t size)
 {
-	if (elements->count + size > ELEM_LST_SIZE)
+	if (elements->count + size > ELEM_LST_SIZE / 8)
 	{
 		print_err("Memory allocation failed: chunk size too small", 0);
 		return (NULL);
 	}
-	ft_memcpy(elements->elem_lst + elements->count, new_elem, size);
+	ft_memmove(elements->elem_lst + elements->count, new_elem, size);
 	elements->count += size;
 	return (elements);
 }

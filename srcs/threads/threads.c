@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/19 17:37:44 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/20 12:09:53 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,13 @@ static bool	init_mutex(t_queue *queue, pthread_attr_t *attr)
 
 static bool	init_params(t_rt *rt, t_display *display, t_params *params)
 {
-	uintptr_t	*elem_lst;
 	t_camera	*cams;
 
-	elem_lst = rt->elements.elem_lst;
 	params->elements = rt->elements;
-	params->elements.elem_lst = arena_calloc(params->arena, rt->elements.size + 277); // WTF
+	params->elements.elem_lst = arena_calloc(params->arena, rt->elements.size * 10); // WTF
 	if (!params->elements.elem_lst)
 		return (false);
-	ft_memmove(params->elements.elem_lst, elem_lst, rt->elements.size + 277);
+	ft_memmove(params->elements.elem_lst, rt->elements.elem_lst, rt->elements.size * 10);
 	cams = params->elements.cam;
 	params->elements.cam = arena_alloc(sizeof(t_camera) * rt->elements.frame_amount,
 		params->arena);
