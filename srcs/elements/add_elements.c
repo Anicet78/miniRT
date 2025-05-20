@@ -6,37 +6,28 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/16 11:25:06 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:49:29 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-t_ambient	*add_ambient_lighting(t_elem_lst *elements, float ratio,
-	uint32_t color)
+void	add_ambient_lighting(t_elem_lst *elems, float ratio, uint32_t color)
 {
-	t_ambient	al;
-
-	al.type = AMBIENT_LIGHTING;
-	al.ratio = ratio;
-	al.color = color;
-	if (!add_element(elements, &al, sizeof(t_ambient)))
-		return (NULL);
-	return ((t_ambient *)1);
+	elems->al[elems->frame_amount].ratio = ratio;
+	elems->al[elems->frame_amount].color = color;
+	elems->al[elems->frame_amount].declared = true;
 }
 
-t_camera	*add_camera(t_elem_lst *elements, t_point pos, t_vec axis,
-	uint32_t fov)
+void	add_camera(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t fov)
 {
-	elements->cam[elements->frame_amount].pos = pos;
-	elements->cam[elements->frame_amount].dir = axis;
-	elements->cam[elements->frame_amount].fov = fov;
-	elements->cam[elements->frame_amount].declared = true;
-	return ((t_camera *)1);
+	elems->cam[elems->frame_amount].pos = pos;
+	elems->cam[elems->frame_amount].dir = axis;
+	elems->cam[elems->frame_amount].fov = fov;
+	elems->cam[elems->frame_amount].declared = true;
 }
 
-t_light	*add_light(t_elem_lst *elements, t_point pos, float ratio,
-	uint32_t color)
+bool	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color)
 {
 	t_light	li;
 
@@ -44,13 +35,12 @@ t_light	*add_light(t_elem_lst *elements, t_point pos, float ratio,
 	li.ratio = ratio;
 	li.pos = pos;
 	li.color = color;
-	if (!add_element(elements, &li, sizeof(t_light)))
-		return (NULL);
-	return ((t_light *)1);
+	if (!add_element(elems, &li, sizeof(t_light)))
+		return (false);
+	return (true);
 }
 
-t_sphere	*add_sphere(t_elem_lst *elements, t_point pos, float diameter,
-	uint32_t color)
+bool	add_sphere(t_elem_lst *elems, t_point pos, float diameter, uint32_t color)
 {
 	t_sphere	sp;
 
@@ -58,13 +48,12 @@ t_sphere	*add_sphere(t_elem_lst *elements, t_point pos, float diameter,
 	sp.radius = diameter / 2;
 	sp.pos = pos;
 	sp.mat.color = color;
-	if (!add_element(elements, &sp, sizeof(t_sphere)))
-		return (NULL);
-	return ((t_sphere *)1);
+	if (!add_element(elems, &sp, sizeof(t_sphere)))
+		return (false);
+	return (true);
 }
 
-t_plane	*add_plane(t_elem_lst *elements, t_point pos, t_vec axis,
-	uint32_t color)
+bool	add_plane(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t color)
 {
 	t_plane	pl;
 
@@ -72,7 +61,7 @@ t_plane	*add_plane(t_elem_lst *elements, t_point pos, t_vec axis,
 	pl.mat.color = color;
 	pl.pos = pos;
 	pl.normal = axis;
-	if (!add_element(elements, &pl, sizeof(t_plane)))
-		return (NULL);
-	return ((t_plane *)1);
+	if (!add_element(elems, &pl, sizeof(t_plane)))
+		return (false);
+	return (true);
 }

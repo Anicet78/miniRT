@@ -6,15 +6,15 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/16 10:58:19 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:41:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-t_cylinder	*add_cylinder(t_elem_lst *elements, t_cylinder *cylinder)
+bool	add_cylinder(t_elem_lst *elems, t_cylinder *cylinder)
 {
-	if (!add_element(elements, cylinder, sizeof(t_cylinder)))
-		return (NULL);
-	return ((t_cylinder *)1);
+	if (!add_element(elems, cylinder, sizeof(t_cylinder)))
+		return (false);
+	return (true);
 }

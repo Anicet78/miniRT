@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/19 14:45:52 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/20 13:54:05 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ bool	init_parsing(t_elem_lst *elems, t_arena *arena)
 	elems->cam = arena_calloc(arena, sizeof(t_camera) * elems->frame_amount);
 	if (!elems->cam)
 		return (print_err("Memory allocation failed", 0));
+	elems->al = arena_calloc(arena, sizeof(t_ambient) * elems->frame_amount);
+	if (!elems->al)
+		return (print_err("Memory allocation failed", 0));
 	elems->frame_amount = 0;
 	return (true);
 }
@@ -81,6 +84,12 @@ bool	finish_parsing(t_elem_lst *elems, t_arena *arena)
 		{
 			ft_fprintf(2, "\e[1;31mError\nFrame %d: %s\e[0m\n",
 				count + 1, "Camera missing");
+			return (false);
+		}
+		if (elems->al[count].declared == false)
+		{
+			ft_fprintf(2, "\e[1;31mError\nFrame %d: %s\e[0m\n",
+				count + 1, "Ambient Lighting missing");
 			return (false);
 		}
 		count++;

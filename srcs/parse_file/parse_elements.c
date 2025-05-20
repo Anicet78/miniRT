@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/19 14:01:02 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/20 13:41:00 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 bool	parse_ambient(t_elem_lst *elements, char **line, int nb)
 {
-	float		ratio;
-	uint32_t	color;
-	static int	amount;
+	float			ratio;
+	uint32_t		color;
+	static bool		declared;
+	static size_t	current_frame;
 
-	if (amount++ > 0)
+	if (current_frame != elements->frame_amount)
+		declared = false;
+	current_frame = elements->frame_amount;
+	if (declared++ > 0)
 		return (print_err("Multiple declaration of `ambient light`", nb));
 	if (tab_len(line) != 3)
 		return (print_err("Invalid amount of argument in `ambient light`", nb));
@@ -28,7 +32,8 @@ bool	parse_ambient(t_elem_lst *elements, char **line, int nb)
 	if (is_color(line[2]) == false)
 		return (print_err("Invalid color in `ambient light`", nb));
 	color = get_color(line[2]);
-	return (add_ambient_lighting(elements, ratio, color));
+	add_ambient_lighting(elements, ratio, color);
+	return (true);
 }
 
 bool	parse_camera(t_elem_lst *elements, char **line, int nb)
@@ -55,7 +60,8 @@ bool	parse_camera(t_elem_lst *elements, char **line, int nb)
 	fov = ft_atol(line[3]);
 	if (fov < 0 || fov > 180)
 		return (print_err("Invalid FOV in `camera`", nb));
-	return (add_camera(elements, pos, axis, fov));
+	add_camera(elements, pos, axis, fov);
+	return (true);
 }
 
 bool	parse_light(t_elem_lst *elements, char **line, int nb)

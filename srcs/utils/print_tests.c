@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:52:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/13 17:18:17 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/20 13:46:20 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_ambient(t_ambient *ambient)
 {
-	ft_printf("%d | %.2f | %#x\n", ambient->type, ambient->ratio, ambient->color);
+	ft_printf("%d | %.2f | %#x\n", AMBIENT_LIGHTING, ambient->ratio, ambient->color);
 }
 
 void	print_cam(t_camera *camera)
