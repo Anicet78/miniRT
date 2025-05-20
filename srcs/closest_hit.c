@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/19 15:47:29 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/20 15:05:08 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ int32_t	background_color(t_ray *r)
 		return (vec_to_col(sky_bot));
 }
 
-int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame_end)
+int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 {
 	t_hit	hit;
 
-	if (closest_hit(r, elems, &hit, frame_end))
+	if (closest_hit(r, elems, &hit, frame))
 		return (hit.mat->color);
 	return (background_color(r));
 }
 
-bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame_end)
+bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 {
 	void	*elem;
 	uint8_t	type;
@@ -42,8 +42,10 @@ bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame_end)
 	hit->t = 9999999999;
 	did_hit = false;
 	elems->count = 0;
+	if (frame > 0)
+		elems->count = elems->frames[frame - 1];
 	elem = get_next_elem(elems);
-	while (elem && elems->count <= frame_end)
+	while (elem && elems->count <= elems->frames[frame])
 	{
 		type = get_elem_type(elem);
 		if (type == AMBIENT_LIGHTING || type == LIGHT)

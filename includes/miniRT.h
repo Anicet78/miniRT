@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/19 16:54:10 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/20 16:34:00 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,16 @@ void		print_cylinder(t_cylinder *cylinder);
 // utils
 uint32_t	rgb_to_hex(uint8_t r, uint8_t g, uint8_t b);
 int			print_err(char *msg, int line);
+void		ft_usleep(size_t usec);
+long		get_time(struct timeval *timestamp);
+long		get_time_now(void);
 
 // intersects
 
-bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit);
-bool	hit_plane(t_plane *plane, t_ray *r, t_hit *hit);
-bool	hit_cylinder(t_cylinder *c, t_ray *r, t_hit *hit);
-bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame_end);
-int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame_end);
+bool		hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit);
+bool		hit_plane(t_plane *plane, t_ray *r, t_hit *hit);
+bool		hit_cylinder(t_cylinder *c, t_ray *r, t_hit *hit);
+bool		closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame);
+int32_t		ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame);
 
 #endif
