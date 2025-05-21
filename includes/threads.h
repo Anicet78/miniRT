@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:47:21 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/20 15:11:37 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 16:28:21 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ typedef struct s_params
 }	t_params;
 
 // threads
-bool	init_threads(t_rt *minirt, t_display *display);
-bool	render_thread(t_rt *minirt);
+void	init_threads(t_rt *rt, t_display *display);
+void	render_thread(t_rt *rt);
 void	*start_routine(void *param);
 
 // queue
-bool	init_queue(t_rt *minirt);
+void	init_queue(t_rt *rt);
 bool	get_next_block(t_block *block, t_queue *queue, t_mlx *mlx);
 void	set_ready(t_queue *queue, t_block *block);
 

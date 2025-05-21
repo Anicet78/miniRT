@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 12:25:10 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 17:08:00 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void		*get_next_elem(t_elem_lst *elements);
 // add element functions
 void	add_ambient_lighting(t_elem_lst *elems, float ratio, uint32_t color);
 void	add_camera(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t fov);
-void	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color);
+bool	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color);
 bool	add_sphere(t_elem_lst *elems, t_point pos, float diameter, uint32_t color);
 bool	add_plane(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t color);
 bool	add_cylinder(t_elem_lst *elements, t_cylinder *cylinder);

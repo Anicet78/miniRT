@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/20 12:52:17 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 16:05:58 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,10 +241,11 @@ typedef struct s_arena
 {
 	t_chunk	*begin;
 	t_chunk	*end;
+	size_t	size;
 	int		freed;
 }	t_arena;
 
-t_arena	*arena_init(void);
+t_arena	*arena_init(size_t size);
 t_chunk	*region_create(size_t capacity);
 void	*arena_regions_free(t_arena *arena);
 void	*arena_alloc(size_t size, t_arena *arena);

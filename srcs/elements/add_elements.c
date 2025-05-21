@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 11:51:56 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 17:12:14 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,15 @@ void	add_camera(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t fov)
 	elems->cam[elems->frame_amount].declared = true;
 }
 
-void	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color)
+bool	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color)
 {
+	if (!elems->lights || !elems->lights[elems->frame_amount])
+		return (false);
 	elems->lights[elems->frame_amount][elems->light_index].ratio = ratio;
 	elems->lights[elems->frame_amount][elems->light_index].pos = pos;
 	elems->lights[elems->frame_amount][elems->light_index].color = color;
 	elems->light_index++;
+	return (true);
 }
 
 bool	add_sphere(t_elem_lst *elems, t_point pos, float diameter, uint32_t color)

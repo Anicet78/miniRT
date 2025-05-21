@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/20 16:04:20 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 12:33:42 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	*start_routine(void *param)
 	return (NULL);
 }
 
-bool	render_thread(t_rt *rt)
+void	render_thread(t_rt *rt)
 {
 	double	fps;
 	long	before;
@@ -76,5 +76,4 @@ bool	render_thread(t_rt *rt)
 		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
 			rt->mlx.imgs[rt->queue.print_index++], 0, 0);
 	}
-	return (true);
 }

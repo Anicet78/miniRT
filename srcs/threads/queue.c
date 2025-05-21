@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:09:34 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/19 12:00:47 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 12:34:06 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	fill_block(t_block *block, uint32_t px_start[2], int32_t width,
 	block->height = ft_min(BLOCK_SIZE, height - px_start[1]);
 }
 
-bool	init_queue(t_rt *rt)
+void	init_queue(t_rt *rt)
 {
 	const size_t	count_x = (rt->mlx.width + BLOCK_SIZE - 1) / BLOCK_SIZE;
 	const size_t	count_y = (rt->mlx.height + BLOCK_SIZE - 1) / BLOCK_SIZE;
@@ -60,7 +60,7 @@ bool	init_queue(t_rt *rt)
 	rt->queue.blocks = arena_alloc(sizeof(t_block) * size, rt->arena);
 	rt->queue.ready = arena_calloc(rt->arena, sizeof(uint32_t) * rt->mlx.img_amount);
 	if (!rt->queue.blocks || !rt->queue.ready)
-		return (false);
+		kill_mlx(rt, 1);
 	rt->queue.counter = 0;
 	rt->queue.render_index = rt->mlx.img_amount;
 	rt->queue.print_index = 0;
@@ -79,5 +79,4 @@ bool	init_queue(t_rt *rt)
 		rt->queue.counter++;
 		px_start[0] += BLOCK_SIZE;
 	}
-	return (true);
 }

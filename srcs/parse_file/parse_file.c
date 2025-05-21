@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 12:22:49 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 16:54:05 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ size_t	count_frames(int fd)
 
 	frames = 1;
 	gnl = get_next_line(fd);
+	if (!gnl)
+		return (0);
 	while (gnl)
 	{
 		if (gnl[0] == '=')
@@ -58,7 +60,7 @@ size_t	count_frames(int fd)
 	return (frames);
 }
 
-bool	alloc_lights(t_light **lights, t_arena *arena, int fd)
+bool	alloc_lights(t_light **lights, t_arena *arena, int fd, size_t frames)
 {
 	size_t	frame;
 	size_t	count_lights;
@@ -68,8 +70,8 @@ bool	alloc_lights(t_light **lights, t_arena *arena, int fd)
 	count_lights = 0;
 	gnl = get_next_line(fd);
 	if (!gnl)
-		return (print_err("An error occured while reading file", 0));
-	while (gnl)
+		return (print_err("An error has occured while reading the file", 0));
+	while (gnl && frame < frames)
 	{
 		if (gnl[0] == 'L')
 			count_lights++;
@@ -98,6 +100,8 @@ bool	alloc_lights(t_light **lights, t_arena *arena, int fd)
 bool	init_parsing(t_elem_lst *elems, t_arena *arena, int fd)
 {
 	elems->frame_amount = count_frames(fd);
+	if (elems->frame_amount == 0)
+		return (print_err("An error has occured while reading the file", 0));
 	elems->frames = arena_calloc(arena, sizeof(size_t) * elems->frame_amount);
 	if (!elems->frames)
 		return (print_err("Memory allocation failed", 0));
@@ -110,7 +114,7 @@ bool	init_parsing(t_elem_lst *elems, t_arena *arena, int fd)
 	elems->lights = arena_calloc(arena, sizeof(t_light *) * elems->frame_amount);
 	if (!elems->lights)
 		return (print_err("Memory allocation failed", 0));
-	if (!alloc_lights(elems->lights, arena, fd))
+	if (!alloc_lights(elems->lights, arena, fd, elems->frame_amount))
 		return (false);
 	elems->light_index = 0;
 	elems->frame_amount = 0;

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/20 12:09:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 16:26:50 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static bool	init_params(t_rt *rt, t_display *display, t_params *params)
 	t_camera	*cams;
 
 	params->elements = rt->elements;
-	params->elements.elem_lst = arena_calloc(params->arena, rt->elements.size * 10); // WTF
+	params->elements.elem_lst = arena_calloc(params->arena, rt->elements.size * 10);
 	if (!params->elements.elem_lst)
 		return (false);
 	ft_memmove(params->elements.elem_lst, rt->elements.elem_lst, rt->elements.size * 10);
@@ -58,6 +58,11 @@ static bool	init_params(t_rt *rt, t_display *display, t_params *params)
 	return (true);
 }
 
+static size_t	get_arena_size(t_rt *rt)
+{
+	return ((rt->elements.size + sizeof(t_camera) * rt->elements.frame_amount) * 10);
+}
+
 static bool	new_thread(t_rt *rt, t_display *display, pthread_attr_t *attr)
 {
 	t_arena		*memdup;
@@ -66,7 +71,7 @@ static bool	new_thread(t_rt *rt, t_display *display, pthread_attr_t *attr)
 	params = arena_alloc(sizeof(t_params), rt->arena);
 	if (!params)
 		return (false);
-	memdup = arena_init();
+	memdup = arena_init(get_arena_size(rt) + 1);
 	if (!memdup)
 		return (false);
 	params->arena = memdup;
@@ -77,23 +82,22 @@ static bool	new_thread(t_rt *rt, t_display *display, pthread_attr_t *attr)
 	return (true);
 }
 
-bool	init_threads(t_rt *rt, t_display *display)
+void	init_threads(t_rt *rt, t_display *display)
 {
 	t_params		*params;
 	pthread_attr_t	attr;
 
 	if (init_mutex(&rt->queue, &attr) == false)
-		return (false);
+		kill_mlx(rt, 1);
 	rt->threads = arena_alloc(sizeof(pthread_t) * RENDER_THREADS, rt->arena);
 	if (!rt->threads)
-		return (pthread_attr_destroy(&attr), false);
+		(pthread_attr_destroy(&attr), kill_mlx(rt, 1));
 	pthread_mutex_lock(&rt->queue.lock);
 	while (rt->thread_amount < RENDER_THREADS)
 	{
 		if (!new_thread(rt, display, &attr))
-			return (pthread_attr_destroy(&attr), false);
+			(pthread_attr_destroy(&attr), kill_mlx(rt, 1));
 		rt->thread_amount++;
 	}
 	pthread_attr_destroy(&attr);
-	return (true);
 }

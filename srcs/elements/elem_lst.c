@@ -6,22 +6,26 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/20 12:51:51 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 17:11:02 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-t_elem_lst	*init_elem_list(t_rt *minirt)
+t_elem_lst	*init_elem_list(t_rt *rt)
 {
-	minirt->arena = arena_init();
-	if (!minirt->arena)
+	rt->arena = arena_init(CHUNK_SIZE);
+	if (!rt->arena)
+		return (print_err("Memory allocation failed", 0), NULL);
+	rt->elements.count = 0;
+	rt->elements.elem_lst = arena_calloc(rt->arena, ELEM_LST_SIZE);
+	if (!rt->elements.elem_lst)
+	{
+		clear_arena(&rt->arena);
+		print_err("Memory allocation failed", 0);
 		return (NULL);
-	minirt->elements.count = 0;
-	minirt->elements.elem_lst = arena_calloc(minirt->arena, ELEM_LST_SIZE);
-	if (!minirt->elements.elem_lst)
-		return (clear_arena(&minirt->arena), NULL);
-	return (&minirt->elements);
+	}
+	return (&rt->elements);
 }
 
 uint8_t	get_elem_type(void *elem)

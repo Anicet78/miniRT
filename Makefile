@@ -16,9 +16,9 @@ CFLAGS		+= -I$(INCLUDES)
 LIBS		= -Lmlx -lmlx -lXext -lX11 -lm
 
 SRC			=	main.c							\
-				elements/elem_lst.c				\
 				elements/add_elements.c			\
 				elements/add_elements2.c		\
+				elements/elem_lst.c				\
 				parse_file/check_params.c		\
 				parse_file/libc_remaster.c		\
 				parse_file/parse_elements.c		\

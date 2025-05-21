@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 11:30:49 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 17:08:08 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ bool	parse_light(t_elem_lst *elements, char **line, int nb)
 	if (is_color(line[3]) == false)
 		return (print_err("Invalid color in `light`", nb));
 	color = get_color(line[3]);
-	add_light(elements, pos, ratio, color);
-	return (true);
+	return (add_light(elements, pos, ratio, color));
 }
 
 bool	parse_sphere(t_elem_lst *elements, char **line, int nb)
