@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/20 15:05:08 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:28:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 	while (elem && elems->count <= elems->frames[frame])
 	{
 		type = get_elem_type(elem);
-		if (type == AMBIENT_LIGHTING || type == LIGHT)
-			;
-		else if (type == SPHERE)
+		if (type == SPHERE)
 			did_hit |= hit_sphere(elem, r, hit);
 		else if (type == PLANE)
 			did_hit |= hit_plane(elem, r, hit);

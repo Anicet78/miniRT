@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/20 16:34:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:06:31 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void		print_cylinder(t_cylinder *cylinder);
 // utils
 uint32_t	rgb_to_hex(uint8_t r, uint8_t g, uint8_t b);
 int			print_err(char *msg, int line);
+int			frame_err(char *msg, int frame);
 void		ft_usleep(size_t usec);
 long		get_time(struct timeval *timestamp);
 long		get_time_now(void);

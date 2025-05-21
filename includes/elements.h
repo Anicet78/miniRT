@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/20 13:41:05 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 12:25:10 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "miniRT.h"
 # include <float.h>
 
-# define ELEM_LST_SIZE (CHUNK_SIZE * 50 / 100)
+# define ELEM_LST_SIZE (CHUNK_SIZE * 90 / 100)
 
 typedef enum elem_type
 {
@@ -53,7 +53,6 @@ typedef struct s_camera
 
 typedef struct s_light
 {
-	uint8_t		type;
 	float		ratio;
 	t_point		pos;
 	uint32_t	color;
@@ -93,6 +92,8 @@ typedef struct s_elem_lst
 	size_t		*frames;
 	t_camera	*cam;
 	t_ambient	*al;
+	t_light		**lights;
+	size_t		light_index;
 	uintptr_t	*elem_lst;
 }	t_elem_lst;
 
@@ -105,7 +106,7 @@ void		*get_next_elem(t_elem_lst *elements);
 // add element functions
 void	add_ambient_lighting(t_elem_lst *elems, float ratio, uint32_t color);
 void	add_camera(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t fov);
-bool	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color);
+void	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color);
 bool	add_sphere(t_elem_lst *elems, t_point pos, float diameter, uint32_t color);
 bool	add_plane(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t color);
 bool	add_cylinder(t_elem_lst *elements, t_cylinder *cylinder);

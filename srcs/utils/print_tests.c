@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:52:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/20 13:46:20 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:34:57 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	print_cam(t_camera *camera)
 
 void	print_light(t_light *light)
 {
-	ft_printf("%d | %.2f,%.2f,%.2f | %.2f | %#x\n", light->type,
+	ft_printf("%d | %.2f,%.2f,%.2f | %.2f | %#x\n", LIGHT,
 		light->pos.x, light->pos.y, light->pos.z, light->ratio, light->color);
 }
 

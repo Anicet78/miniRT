@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/20 13:41:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/21 11:30:49 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,7 @@ bool	parse_light(t_elem_lst *elements, char **line, int nb)
 	t_point		pos;
 	double		ratio;
 	uint32_t	color;
-	static int	amount;
 
-	if (amount++ > 0)
-		return (print_err("Multiple declaration of `light`", nb));
 	if (tab_len(line) != 4)
 		return (print_err("Invalid amount of argument in `light`", nb));
 	if (is_vec(line[1]) == false)
@@ -84,7 +81,8 @@ bool	parse_light(t_elem_lst *elements, char **line, int nb)
 	if (is_color(line[3]) == false)
 		return (print_err("Invalid color in `light`", nb));
 	color = get_color(line[3]);
-	return (add_light(elements, pos, ratio, color));
+	add_light(elements, pos, ratio, color);
+	return (true);
 }
 
 bool	parse_sphere(t_elem_lst *elements, char **line, int nb)
