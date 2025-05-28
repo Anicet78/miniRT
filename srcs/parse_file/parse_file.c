@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 16:54:05 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/28 17:07:42 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,33 @@ bool	alloc_lights(t_light **lights, t_arena *arena, int fd, size_t frames)
 	return (true);
 }
 
+size_t	count_elems(char *dirname)
+{
+	DIR		*dir;
+	size_t	count;
+
+	dir = opendir(dirname);
+	count = 0;
+	if (!dir)
+		return (0);
+	while (readdir(dir))
+		count++;
+	closedir(dir);
+	return (count);
+}
+
 bool	init_parsing(t_elem_lst *elems, t_arena *arena, int fd)
 {
+	elems->texture_index = count_elems("textures");
+	elems->textures = arena_calloc(arena, sizeof(t_image) * elems->texture_index);
+	if (!elems->textures)
+		return (print_err("Memory allocation failed", 0));
+	elems->texture_index = 0;
+	elems->normal_index = count_elems("normals");
+	elems->normals = arena_calloc(arena, sizeof(t_image) * elems->texture_index);
+	if (!elems->normals)
+		return (print_err("Memory allocation failed", 0));
+	elems->normal_index = 0;
 	elems->frame_amount = count_frames(fd);
 	if (elems->frame_amount == 0)
 		return (print_err("An error has occured while reading the file", 0));
@@ -166,7 +191,7 @@ bool	read_rtfile(int fd, t_elem_lst *elements, t_arena *arena)
 	char	**split;
 	int		i;
 
-	if (init_parsing(elements, arena, fd) == false)
+	if (!init_parsing(elements, arena, fd))
 		return (false);
 	i = 1;
 	line = get_next_line(fd);

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 17:08:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/28 17:05:56 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_material
 {
 	uint32_t	color;
 	void		*texture;
-	void		*bump;
+	void		*normal;
 }	t_material;
 
 typedef struct s_ambient
@@ -84,6 +84,15 @@ typedef struct s_cylinder
 	float		height;
 }	t_cylinder;
 
+typedef struct s_image
+{
+	char	*name;
+	void	*img;
+	void	*addr;
+	int		width;
+	int		height;
+}	t_image;
+
 typedef struct s_elem_lst
 {
 	size_t		count;
@@ -94,6 +103,10 @@ typedef struct s_elem_lst
 	t_ambient	*al;
 	t_light		**lights;
 	size_t		light_index;
+	t_image		*textures;
+	size_t		texture_index;
+	t_image		*normals;
+	size_t		normal_index;
 	uintptr_t	*elem_lst;
 }	t_elem_lst;
 
@@ -108,7 +121,7 @@ void	add_ambient_lighting(t_elem_lst *elems, float ratio, uint32_t color);
 void	add_camera(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t fov);
 bool	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color);
 bool	add_sphere(t_elem_lst *elems, t_point pos, float diameter, uint32_t color);
-bool	add_plane(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t color);
+bool	add_plane(t_elem_lst *elems, char **line, int texture, int normal);
 bool	add_cylinder(t_elem_lst *elements, t_cylinder *cylinder);
 
 // parsing
@@ -126,5 +139,10 @@ bool		parse_plane(t_elem_lst *elements, char **line, int nb);
 bool		parse_cylinder(t_elem_lst *elements, char **line, int nb);
 bool		parse_new_frame(t_elem_lst *elements, char **line, int nb);
 double		ft_atof_parse(char *str);
+
+// xpm
+int			try_file(char **line, char *folder, size_t tabsize, int index);
+int			texture_err(int error, int nb, char *type);
+int			normal_err(int error, int nb, char *type);
 
 #endif

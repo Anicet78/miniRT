@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/20 16:07:57 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/28 12:06:55 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,15 @@ int	main(int ac, char **av)
 	bool		map_file;
 
 	fd = open_file(ac, av);
-	if (!init_elem_list(&rt))
+	if (!init_minirt(&rt))
 		return (close(fd), EXIT_FAILURE);
 	map_file = read_rtfile(fd, &rt.elements, rt.arena);
 	close(fd);
 	if (!map_file)
-		return (clear_arena(&rt.arena), EXIT_FAILURE);
+		kill_mlx(&rt, EXIT_FAILURE);
 	display = init_all_displays(rt.elements.cam, rt.arena, rt.elements.frame_amount);
+	if (!display)
+		kill_mlx(&rt, EXIT_FAILURE);
 	mlx_start(&rt, display[0].width, display[0].height);
 	init_queue(&rt);
 	init_threads(&rt, display);

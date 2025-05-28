@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 17:11:11 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/28 12:06:28 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typedef struct s_hit
 }	t_hit;
 
 // init
-t_elem_lst	*init_elem_list(t_rt *rt);
+t_elem_lst	*init_minirt(t_rt *rt);
 
 // mlx
 void		mlx_start(t_rt *rt, int width, int height);

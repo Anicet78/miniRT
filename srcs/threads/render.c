@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 12:33:42 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:10:34 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	render_thread(t_rt *rt)
 		// sleep for fps (mlx loop at the same time ?)
 		// print fps
 		// after = get_time_now();
+		// usleep(100000);
 		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
 			rt->mlx.imgs[rt->queue.print_index++], 0, 0);
 	}

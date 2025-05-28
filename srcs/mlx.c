@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 12:38:05 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/28 16:22:22 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,9 @@ void	mlx_start(t_rt *rt, int width, int height)
 {
 	t_mlx	*mlx;
 
-	rt->thread_amount = 0;
 	mlx = &rt->mlx;
-	mlx->mlx = NULL;
-	mlx->mlx_win = NULL;
-	mlx->imgs = NULL;
-	mlx->addr = NULL;
 	mlx->width = width;
 	mlx->height = height;
-	mlx->mlx = mlx_init();
-	if (!mlx->mlx)
-		kill_mlx(rt, EXIT_FAILURE);
 	mlx->mlx_win = mlx_new_window(mlx->mlx, width, height, "miniRT");
 	if (!mlx->mlx_win)
 		kill_mlx(rt, EXIT_FAILURE);

@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 22:38:23 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/19 14:05:21 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/28 12:05:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../includes/miniRT.h"
 
 static bool	intersect_cyl_body_part_two(
 	t_cylinder *cyl, t_ray *r, t_hit *hit, t_vec hit_point)
