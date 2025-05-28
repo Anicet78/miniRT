@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/28 15:29:23 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/28 15:39:03 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ int32_t	background_color(t_ray *r)
 int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 {
 	t_hit	hit;
+	t_color	color;
 
-	if (closest_hit(r, elems, &hit, frame))
-		return (hit.mat->color);
-	return (background_color(r));
+	if (!closest_hit(r, elems, &hit, frame))
+		return (background_color(r));
+	// ambient component
+	
 }
 
 bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
