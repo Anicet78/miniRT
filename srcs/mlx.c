@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 12:38:05 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 00:44:32 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	key_hook(int keycode, t_rt *rt)
 	return (0);
 }
 
-void	put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int color)
+void	put_pixel_to_img(t_mlx *mlx, void *addr, int coords[2], int color)
 {
-	char		*dst;
-	const int	x = coords[0];
-	const int	y = coords[1];
+	char			*dst;
+	const int		x = coords[0];
+	const int		y = coords[1];
 
-	if (x < 0 || x > mlx->width || y < 0 || y > mlx->height)
+	if (x > mlx->width || y > mlx->height)
 		return ;
 	dst = addr + (y * mlx->line_length + x * (mlx->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;

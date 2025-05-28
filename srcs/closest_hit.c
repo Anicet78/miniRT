@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/28 15:39:03 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/29 00:31:44 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,38 @@ int32_t	background_color(t_ray *r)
 		return (vec_to_col(sky_top));
 }
 
+uint32_t	get_pixel(t_tpmp *data, int x, int y)
+{
+	return (*(uint32_t *)(data->addr + y * data->line_size
+		+ x * data->bpp / 8));
+}
+
+t_color	texture_color(t_tpmp *texture, double u, double v)
+{
+	int			x;
+	int			y;
+	uint32_t	col;
+
+	if (!texture || texture->width <= 0 || texture->height <= 0)
+		return ((t_color){1.0, 1.0, 1.0});
+	u = mind(maxd(u, 0), 1);
+	v = mind(maxd(v, 0), 1);
+	x = (int)(u * texture->width) % texture->width;
+	y = (int)(v * texture->height) % texture->height;
+	col = get_pixel(texture, x, y);
+	return (int_to_tcol(col));
+}
+
+t_color	ambient_component(t_hit *hit, t_elem_lst *elems)
+{
+	t_color	color;
+
+	color = int_to_tcol(hit->mat->color);
+	color = hadamar(color, texture_color(hit->mat->texture, hit->u, hit->v));
+	color = hadamar(vmul(int_to_tcol(elems->al->color), elems->al->ratio), color);
+	return (color);
+}
+
 int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 {
 	t_hit	hit;
@@ -38,8 +70,8 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 
 	if (!closest_hit(r, elems, &hit, frame))
 		return (background_color(r));
-	// ambient component
-	
+	color = ambient_component(&hit, elems);
+	return (vec_to_col(color));
 }
 
 bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)

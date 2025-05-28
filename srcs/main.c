@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/20 16:07:57 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 01:10:24 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,40 @@ void	iterate(t_elem_lst *elements)
 	}
 }
 
+void	test_earth(t_elem_lst *elements, void *mlx)
+{
+	void		*elem;
+	int			type;
+	t_sphere	*test;
+	t_tpmp		*textu;
+
+	elements->count = 0;
+	elem = get_next_elem(elements);
+	while (elem && elements->count <= elements->frames[0])
+	{
+		type = get_elem_type(elem);
+		if (type == SPHERE)
+		{
+			test = elem;
+			print_sphere(test);
+			test->mat.texture = calloc(1, sizeof(t_tpmp));
+			textu = test->mat.texture;
+			if (!textu)
+				return;
+			textu->img = mlx_xpm_file_to_image(
+					mlx, "earth.xpm",
+					&textu->width,
+					&textu->height);
+			if (!textu->img)
+				write(1, "merde alors !\n", 15);
+			textu->addr = mlx_get_data_addr(textu->img, &textu->bpp, &textu->line_size, &textu->endian);
+			if (!textu->addr)
+				write(1, "caca boudin !\n", 15);
+		}
+		elem = get_next_elem(elements);
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_rt		rt;
@@ -75,6 +109,7 @@ int	main(int ac, char **av)
 		return (clear_arena(&rt.arena), EXIT_FAILURE);
 	display = init_all_displays(rt.elements.cam, rt.arena, rt.elements.frame_amount);
 	mlx_start(&rt, display[0].width, display[0].height);
+	test_earth(&rt.elements, rt.mlx.mlx);
 	init_queue(&rt);
 	init_threads(&rt, display);
 	// render_display(&rt, display);

@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:31:23 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/28 15:57:23 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/28 19:50:39 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ uint32_t	vec_to_col(t_color a)
 	return (col);
 }
 
-t_color	uint_to_tcol(uint32_t col)
+t_color	int_to_tcol(uint32_t col)
 {
 	t_color	a;
 
 	a.x = ((col >> 16) & 0xFF) / 255.999;
 	a.y = ((col >> 8) & 0xFF) / 255.999;
 	a.z = (col & 0xFF) / 255.999;
+	return (a);
 }
 
 t_color	lerp_vec(t_color a, t_color b, double t)

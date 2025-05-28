@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 17:08:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 00:31:20 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "miniRT.h"
 # include <float.h>
+# include "../mlx/mlx_int.h"
 
 # define ELEM_LST_SIZE (CHUNK_SIZE * 90 / 100)
 
@@ -29,11 +30,22 @@ typedef enum elem_type
 	CYLINDER
 }	t_elem_type;
 
+typedef	struct
+{
+	void	*img;
+	int		width;
+	int		height;
+	char	*addr;
+	int		bpp;
+	int		line_size;
+	int		endian;
+}	t_tpmp; // en attendant pour tester
+
 typedef struct s_material
 {
 	uint32_t	color;
-	void		*texture;
-	void		*bump;
+	t_tpmp		*texture;
+	t_tpmp		*bump;
 }	t_material;
 
 typedef struct s_ambient

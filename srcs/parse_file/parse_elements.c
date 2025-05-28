@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 17:08:08 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 00:40:43 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ bool	parse_ambient(t_elem_lst *elements, char **line, int nb)
 	if (current_frame != elements->frame_amount)
 		declared = false;
 	current_frame = elements->frame_amount;
-	if (declared++ > 0)
+	if (declared)
 		return (print_err("Multiple declaration of `ambient light`", nb));
+	declared = true;
 	if (tab_len(line) != 3)
 		return (print_err("Invalid amount of argument in `ambient light`", nb));
 	ratio = ft_atof(line[1]);
@@ -47,8 +48,9 @@ bool	parse_camera(t_elem_lst *elements, char **line, int nb)
 	if (current_frame != elements->frame_amount)
 		declared = false;
 	current_frame = elements->frame_amount;
-	if (declared++ > 0)
+	if (declared)
 		return (print_err("Multiple declaration of `camera`", nb));
+	declared = true;
 	if (tab_len(line) != 4)
 		return (print_err("Invalid amount of argument in `camera`", nb));
 	if (is_vec(line[1]) == false)

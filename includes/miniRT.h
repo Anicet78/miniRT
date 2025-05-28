@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 17:11:11 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 00:46:17 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef struct s_display
 	t_vec		pix_dv;
 	t_point		vp_upleft;
 	t_point		pixel00;
-	uint32_t	i;
-	uint32_t	j;
+	int			i;
+	int			j;
 }	t_display;
 
 typedef struct s_ray
@@ -98,7 +98,7 @@ t_elem_lst	*init_elem_list(t_rt *rt);
 // mlx
 void		mlx_start(t_rt *rt, int width, int height);
 void		kill_mlx(t_rt *minirt, int exit_code);
-void		put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int color);
+void		put_pixel_to_img(t_mlx *mlx, void *addr, int coords[2], int color);
 
 // tristan
 void		print_color(unsigned int col);
