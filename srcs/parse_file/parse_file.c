@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 11:28:09 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:39:09 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,21 @@ bool	alloc_lights(t_light **lights, t_arena *arena, int fd, size_t frames)
 
 size_t	count_elems(char *dirname)
 {
-	DIR		*dir;
-	size_t	count;
+	DIR				*dir;
+	struct dirent	*entry;
+	size_t			count;
 
 	dir = opendir(dirname);
-	count = 0;
 	if (!dir)
 		return (0);
-	while (readdir(dir))
-		count++;
+	count = 0;
+	entry = readdir(dir);
+	while (entry)
+	{
+		if (entry->d_type == DT_REG && entry->d_name[0] != '.')
+			count++;
+		entry = readdir(dir);
+	}
 	closedir(dir);
 	return (count);
 }

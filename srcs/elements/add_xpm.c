@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 17:09:09 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 16:21:02 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 18:08:18 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,21 @@ t_image	*add_img(char *file[2], t_image *list, size_t amount, void *mlx_ptr)
 t_image	*add_texture(t_elem_lst *elems, char *filename)
 {
 	char	*file;
-	char	path[4096];
-	t_image	*img;
 
-	realpath(filename, path);
-	file = ft_strrstr(path, "/textures/") + 10;
+	file = ft_strrchr(filename, '/');
 	if (!file)
 		return (NULL);
+	file++;
 	return (add_img((char *[2]){file, filename}, elems->textures, elems->texture_amount, elems->mlx_ptr));
 }
 
 t_image	*add_normal(t_elem_lst *elems, char *filename)
 {
 	char	*file;
-	char	path[4096];
 
-	realpath(filename, path);
-	file = ft_strrstr(path, "/normals/") + 9;
+	file = ft_strrchr(filename, '/');
 	if (!file)
 		return (NULL);
+	file++;
 	return (add_img((char *[2]){file, filename}, elems->normals, elems->normal_amount, elems->mlx_ptr));
 }

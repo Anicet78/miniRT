@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:12:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 16:47:54 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:56:05 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	try_file(char **line, char *folder, size_t tabsize, int index)
 {
 	char			*path;
+	char			*filename;
 	const size_t	len = ft_strlen(line[index]);
 
 	if (tabsize <= index)
@@ -30,8 +31,14 @@ int	try_file(char **line, char *folder, size_t tabsize, int index)
 	path = realpath(line[index], NULL);
 	if (!path)
 		return (4);
-	if (!ft_strlstr(path, folder, ft_strlen(folder)))
+	filename = ft_strrstr(path, folder);
+	if (!filename)
 		return (free(path), 0);
+	filename += ft_strlen(folder);
+	if (filename[0] == '.')
+		return (free(path), 5);
+	if (ft_strchr(filename, '/'))
+		return (free(path), 6);
 	free(path);
 	return (1);
 }
@@ -41,16 +48,19 @@ int	texture_err(int error, int nb, char *type)
 	char *temp;
 	char *err_msg;
 
-	if (error == 0)
-		return (0);
-	if (error == 1)
-		return (1);
+	if (error == 0 || error == 1)
+		return (error);
 	if (error == 2)
 		temp = ft_strdup("Invalid texture file in ");
 	else if (error == 3)
 		temp = ft_strdup("Invalid texture file format in ");
 	else if (error == 4)
 		temp = ft_strdup("Memory allocation failed in ");
+	else if (error == 5)
+		temp = ft_strdup("Texture file name cannot start with a '.' in ");
+	else if (error == 6)
+		temp = ft_strdup("Texture file must be in the root `textures` \
+directory in ");
 	if (!temp)
 		return (print_err("Memory allocation failed", nb), 2);
 	err_msg = ft_strjoin(temp, type);
@@ -72,13 +82,16 @@ int	normal_err(int error, int nb, char *type)
 	if (error == 1)
 		return (1);
 	if (error == 2)
-		temp = ft_strdup("Invalid texture file in ");
+		temp = ft_strdup("Invalid normal map file in ");
 	else if (error == 3)
-		temp = ft_strdup("Invalid texture file format in ");
+		temp = ft_strdup("Invalid normal map file format in ");
 	else if (error == 4)
 		temp = ft_strdup("Memory allocation failed in ");
-	else if (error == 5)
-		temp = ft_strdup("Texture file isn't in the `normals` folder in ");
+		else if (error == 5)
+		temp = ft_strdup("Normal map file name cannot start with a '.' in ");
+	else if (error == 6)
+		temp = ft_strdup("Normal map file must be in the root `normals` \
+directory in ");
 	if (!temp)
 		return (print_err("Memory allocation failed", nb), 2);
 	err_msg = ft_strjoin(temp, type);
