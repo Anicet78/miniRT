@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/28 17:07:42 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 11:28:09 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,14 @@ size_t	count_elems(char *dirname)
 
 bool	init_parsing(t_elem_lst *elems, t_arena *arena, int fd)
 {
-	elems->texture_index = count_elems("textures");
-	elems->textures = arena_calloc(arena, sizeof(t_image) * elems->texture_index);
+	elems->texture_amount = count_elems("textures");
+	elems->textures = arena_calloc(arena, sizeof(t_image) * elems->texture_amount);
 	if (!elems->textures)
 		return (print_err("Memory allocation failed", 0));
-	elems->texture_index = 0;
-	elems->normal_index = count_elems("normals");
-	elems->normals = arena_calloc(arena, sizeof(t_image) * elems->texture_index);
+	elems->normal_amount = count_elems("normals");
+	elems->normals = arena_calloc(arena, sizeof(t_image) * elems->normal_amount);
 	if (!elems->normals)
 		return (print_err("Memory allocation failed", 0));
-	elems->normal_index = 0;
 	elems->frame_amount = count_frames(fd);
 	if (elems->frame_amount == 0)
 		return (print_err("An error has occured while reading the file", 0));

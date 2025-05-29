@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/28 16:22:58 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 16:16:27 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_elem_lst	*init_minirt(t_rt *rt)
 	rt->mlx.mlx_win = NULL;
 	rt->mlx.imgs = NULL;
 	rt->mlx.addr = NULL;
+	rt->elements.textures = NULL;
+	rt->elements.normals = NULL;
 	rt->arena = arena_init(CHUNK_SIZE);
 	if (!rt->arena)
 		return (print_err("Memory allocation failed", 0), NULL);
@@ -32,6 +34,7 @@ t_elem_lst	*init_minirt(t_rt *rt)
 	rt->mlx.mlx = mlx_init();
 	if (!rt->mlx.mlx)
 		kill_mlx(rt, EXIT_FAILURE);
+	rt->elements.mlx_ptr = rt->mlx.mlx;
 	return (&rt->elements);
 }
 

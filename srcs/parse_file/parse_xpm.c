@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:12:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/28 16:45:59 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 16:47:54 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	try_file(char **line, char *folder, size_t tabsize, int index)
 	path = realpath(line[index], NULL);
 	if (!path)
 		return (4);
-	if (!ft_strlstr(path, folder, 10))
-		return (free(path), 5);
+	if (!ft_strlstr(path, folder, ft_strlen(folder)))
+		return (free(path), 0);
 	free(path);
 	return (1);
 }
@@ -51,8 +51,6 @@ int	texture_err(int error, int nb, char *type)
 		temp = ft_strdup("Invalid texture file format in ");
 	else if (error == 4)
 		temp = ft_strdup("Memory allocation failed in ");
-	else if (error == 5)
-		temp = ft_strdup("Texture file isn't in the `textures` folder in ");
 	if (!temp)
 		return (print_err("Memory allocation failed", nb), 2);
 	err_msg = ft_strjoin(temp, type);

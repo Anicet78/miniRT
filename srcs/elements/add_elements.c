@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/28 17:10:55 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:01:23 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,28 @@ bool	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color)
 	return (true);
 }
 
-bool	add_sphere(t_elem_lst *elems, t_point pos, float diameter, uint32_t color)
+bool	add_sphere(t_elem_lst *elems, char **line, int texture, int normal)
 {
 	t_sphere	sp;
 
 	sp.type = SPHERE;
-	sp.radius = diameter / 2;
-	sp.pos = pos;
-	sp.mat.color = color;
+	sp.radius = ft_atof(line[2]) / 2;
+	sp.pos = get_vec(line[1]);;
+	sp.mat.color = get_color(line[3]);
+	sp.mat.texture = NULL;
+	sp.mat.normal = NULL;
+	if (texture)
+	{
+		sp.mat.texture = add_texture(elems, line[4]);
+		if (!sp.mat.texture)
+			return (print_err("Invalid texture file in `sphere`", 0), false);
+	}
+	if (normal)
+	{
+		sp.mat.normal = add_normal(elems, line[4 + texture]);
+		if (!sp.mat.normal)
+			return (print_err("Invalid normal map file in `sphere`", 0), false);
+	}
 	if (!add_element(elems, &sp, sizeof(t_sphere)))
 		return (false);
 	return (true);
@@ -65,13 +79,13 @@ bool	add_plane(t_elem_lst *elems, char **line, int texture, int normal)
 	{
 		pl.mat.texture = add_texture(elems, line[4]);
 		if (!pl.mat.texture)
-			return (print_err("Memory allocation failed", 0), false);
+			return (print_err("Invalid texture file in `plane`", 0), false);
 	}
 	if (normal)
 	{
 		pl.mat.normal = add_normal(elems, line[4 + texture]);
 		if (!pl.mat.normal)
-			return (print_err("Memory allocation failed", 0), false);
+			return (print_err("Invalid normal map file in `plane`", 0), false);
 	}
 	if (!add_element(elems, &pl, sizeof(t_plane)))
 		return (false);

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/28 16:59:06 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:02:19 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,22 +86,30 @@ bool	parse_light(t_elem_lst *elements, char **line, int nb)
 
 bool	parse_sphere(t_elem_lst *elements, char **line, int nb)
 {
-	t_point		pos;
-	double		diameter;
-	uint32_t	color;
+	const size_t	tsize = tab_len(line);
+	double			diameter;
+	int				text;
+	int				normal;
 
-	if (tab_len(line) != 4)
+	if (tsize < 4 || tsize > 6)
 		return (print_err("Invalid amount of argument in `sphere`", nb));
 	if (is_vec(line[1]) == false)
 		return (print_err("Invalid coordinates in `sphere`", nb));
-	pos = get_vec(line[1]);
 	diameter = ft_atof(line[2]);
 	if (diameter < 0 || diameter > INT_MAX)
 		return (print_err("Invalid diameter in `sphere`", nb));
 	if (is_color(line[3]) == false)
 		return (print_err("Invalid color in `sphere`", nb));
-	color = get_color(line[3]);
-	return (add_sphere(elements, pos, diameter, color));
+	text = texture_err(try_file(line, "/textures/", tsize, 4), nb, "`sphere`");
+	if (text > 1)
+		return (false);
+	normal = normal_err(try_file(line, "/normals/", tsize, 4 + text),
+		nb, "`sphere`");
+	if (normal > 1)
+		return (false);
+	if ((tsize > 4 && !normal && !text) || (tsize > 5 && normal + text != 2))
+		return (print_err("Invalid amount of argument in `sphere`", nb));
+	return (add_sphere(elements, line, text, normal));
 }
 
 bool	parse_plane(t_elem_lst *elements, char **line, int nb)
@@ -125,7 +133,7 @@ bool	parse_plane(t_elem_lst *elements, char **line, int nb)
 		nb, "`plane`");
 	if (normal > 1)
 		return (false);
-	if ((tsize > 4 && !normal && !text) || (tsize > 5 && normal + text != 1))
+	if ((tsize > 4 && !normal && !text) || (tsize > 5 && normal + text != 2))
 		return (print_err("Invalid amount of argument in `plane`", nb));
 	return (add_plane(elements, line, text, normal));
 }

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/28 16:22:22 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/29 16:29:35 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,18 @@ void	destroy_mlx(t_rt *rt)
 {
 	size_t	i;
 
+	i = 0;
+	while (rt->elements.textures && i < rt->elements.texture_amount && rt->elements.textures[i].declared)
+	{
+		mlx_destroy_image(rt->mlx.mlx, rt->elements.textures[i].img);
+		i++;
+	}
+	i = 0;
+	while (rt->elements.normals && i < rt->elements.normal_amount && rt->elements.normals[i].declared)
+	{
+		mlx_destroy_image(rt->mlx.mlx, rt->elements.normals[i].img);
+		i++;
+	}
 	i = 0;
 	while (rt->mlx.mlx && rt->mlx.mlx_win &&
 		i < rt->mlx.img_amount && rt->mlx.imgs[i])
