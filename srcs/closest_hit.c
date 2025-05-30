@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/29 00:31:44 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/05/30 17:54:51 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ uint32_t	get_pixel(t_tpmp *data, int x, int y)
 		+ x * data->bpp / 8));
 }
 
-t_color	texture_color(t_tpmp *texture, double u, double v)
+t_color	surface_color(t_tpmp *texture, double u, double v)
 {
 	int			x;
 	int			y;
@@ -53,13 +53,36 @@ t_color	texture_color(t_tpmp *texture, double u, double v)
 	return (int_to_tcol(col));
 }
 
-t_color	ambient_component(t_hit *hit, t_elem_lst *elems)
+t_color	ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface)
 {
 	t_color	color;
 
 	color = int_to_tcol(hit->mat->color);
-	color = hadamar(color, texture_color(hit->mat->texture, hit->u, hit->v));
-	color = hadamar(vmul(int_to_tcol(elems->al->color), elems->al->ratio), color);
+	color = hadamar(color, *surface);
+	color = hadamar(
+		vmul(
+			int_to_tcol(elems->al->color),
+			elems->al->ratio
+		),
+		color
+	);
+	return (color);
+}
+
+t_color	lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface)
+{
+	t_color	color;
+	t_light	*yagami;
+	t_vec	light_dir;
+
+	yagami = elems->lights[0];
+	color = vmul(*surface,
+		dot(
+			norm(vsub(yagami->pos, hit->p)),
+			hit->normal
+		)
+	);
+	color = vmul(color, yagami->ratio);
 	return (color);
 }
 
@@ -67,10 +90,14 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 {
 	t_hit	hit;
 	t_color	color;
+	t_color	surface;
 
 	if (!closest_hit(r, elems, &hit, frame))
-		return (background_color(r));
-	color = ambient_component(&hit, elems);
+		return (0x0);
+		// return (background_color(r));
+	surface = surface_color(hit.mat->texture, hit.u, hit.v);
+	color = ambient_component(&hit, elems, &surface);
+	color = vadd(color, lambertian(&hit, elems, &surface));
 	return (vec_to_col(color));
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec3op.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/19 14:00:55 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/30 17:38:30 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 double	dot(t_vec a, t_vec b)
 {
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
+	double	debug;
+
+	debug = a.x * b.x + a.y * b.y + a.z * b.z;
+	return (debug);
 }
 
 t_vec	vmul(t_vec a, double scalar)
