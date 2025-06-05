@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 17:26:03 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/05 12:18:11 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,8 @@ bool	add_cylinder(t_elem_lst *elems, char **line, int texture, int normal)
 	{
 		cy.mat.normal = add_normal(elems, line[6 + texture]);
 		if (!cy.mat.normal)
-			return (print_err("Invalid normal map file in `cylinder`", 0), false);
+			return (print_err("Invalid normal map file in `cylinder`", 0),
+				false);
 	}
-	if (!add_element(elems, &cy, sizeof(t_cylinder)))
-		return (false);
-	return (true);
+	return (add_element(elems, &cy, sizeof(t_cylinder)) && true);
 }

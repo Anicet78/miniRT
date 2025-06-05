@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 17:02:19 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/05 12:28:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ bool	parse_sphere(t_elem_lst *elements, char **line, int nb)
 	if (text > 1)
 		return (false);
 	normal = normal_err(try_file(line, "/normals/", tsize, 4 + text),
-		nb, "`sphere`");
+			nb, "`sphere`");
 	if (normal > 1)
 		return (false);
 	if ((tsize > 4 && !normal && !text) || (tsize > 5 && normal + text != 2))
@@ -130,7 +130,7 @@ bool	parse_plane(t_elem_lst *elements, char **line, int nb)
 	if (text > 1)
 		return (false);
 	normal = normal_err(try_file(line, "/normals/", tsize, 4 + text),
-		nb, "`plane`");
+			nb, "`plane`");
 	if (normal > 1)
 		return (false);
 	if ((tsize > 4 && !normal && !text) || (tsize > 5 && normal + text != 2))

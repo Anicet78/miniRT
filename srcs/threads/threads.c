@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 16:26:50 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:14:41 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	init_mutex(t_queue *queue, pthread_attr_t *attr)
 		pthread_mutex_destroy(&queue->lock);
 		return (false);
 	}
-	if(pthread_attr_init(attr))
+	if (pthread_attr_init(attr))
 	{
 		pthread_mutex_destroy(&queue->lock);
 		pthread_cond_destroy(&queue->cond);
@@ -48,7 +48,7 @@ static bool	init_params(t_rt *rt, t_display *display, t_params *params)
 	ft_memmove(params->elements.elem_lst, rt->elements.elem_lst, rt->elements.size * 10);
 	cams = params->elements.cam;
 	params->elements.cam = arena_alloc(sizeof(t_camera) * rt->elements.frame_amount,
-		params->arena);
+			params->arena);
 	if (!params->elements.cam)
 		return (false);
 	ft_memmove(params->elements.cam, cams, sizeof(t_camera) * rt->elements.frame_amount);

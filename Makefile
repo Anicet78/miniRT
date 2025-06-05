@@ -41,6 +41,7 @@ SRC			=	main.c							\
 				raytraceur/print_utils.c		\
 				raytraceur/vec3op.c				\
 				raytraceur/vec3op2.c			\
+				mlx_hook.c						\
 				mlx.c
 
 OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))

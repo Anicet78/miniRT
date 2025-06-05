@@ -6,24 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 16:29:35 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:35:29 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
-
-int	destroy_hook(t_rt *rt)
-{
-	kill_mlx(rt, EXIT_SUCCESS);
-	return (0);
-}
-
-int	key_hook(int keycode, t_rt *rt)
-{
-	if (keycode == ESC_K)
-		kill_mlx(rt, EXIT_SUCCESS);
-	return (0);
-}
 
 void	put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int color)
 {
@@ -58,7 +45,7 @@ bool	create_images(t_mlx *mlx, t_arena *arena, size_t img_amount)
 	while (i < img_amount)
 	{
 		mlx->addr[i] = mlx_get_data_addr(mlx->imgs[i], &mlx->bits_per_pixel,
-			&mlx->line_length, &mlx->endian);
+				&mlx->line_length, &mlx->endian);
 		if (!mlx->addr[i])
 			return (false);
 		i++;
@@ -80,61 +67,4 @@ void	mlx_start(t_rt *rt, int width, int height)
 		kill_mlx(rt, EXIT_FAILURE);
 	mlx_hook(mlx->mlx_win, 17, 1L << 3, &destroy_hook, mlx);
 	mlx_hook(mlx->mlx_win, 2, 1L << 0, &key_hook, mlx);
-}
-
-void	destroy_mlx(t_rt *rt)
-{
-	size_t	i;
-
-	i = 0;
-	while (rt->elements.textures && i < rt->elements.texture_amount && rt->elements.textures[i].declared)
-	{
-		mlx_destroy_image(rt->mlx.mlx, rt->elements.textures[i].img);
-		i++;
-	}
-	i = 0;
-	while (rt->elements.normals && i < rt->elements.normal_amount && rt->elements.normals[i].declared)
-	{
-		mlx_destroy_image(rt->mlx.mlx, rt->elements.normals[i].img);
-		i++;
-	}
-	i = 0;
-	while (rt->mlx.mlx && rt->mlx.mlx_win &&
-		i < rt->mlx.img_amount && rt->mlx.imgs[i])
-	{
-		mlx_destroy_image(rt->mlx.mlx, rt->mlx.imgs[i]);
-		i++;
-	}
-	if (rt->mlx.mlx_win)
-		mlx_destroy_window(rt->mlx.mlx, rt->mlx.mlx_win);
-	if (rt->mlx.mlx)
-	{
-		mlx_destroy_display(rt->mlx.mlx);
-		free(rt->mlx.mlx);
-	}
-}
-
-void	destroy_threads(t_rt *rt)
-{
-	uint8_t	i;
-
-	i = 0;
-	pthread_mutex_unlock(&rt->queue.lock);
-	while (i < rt->thread_amount)
-	{
-		pthread_join(rt->threads[i], NULL);
-		i++;
-	}
-	pthread_mutex_destroy(&rt->queue.lock);
-	pthread_cond_destroy(&rt->queue.cond);
-}
-
-void	kill_mlx(t_rt *rt, int exit_code)
-{
-	if (rt->thread_amount != 0)
-		destroy_threads(rt);
-	destroy_mlx(rt);
-	if (rt->arena)
-		clear_arena(&rt->arena);
-	exit(exit_code);
 }

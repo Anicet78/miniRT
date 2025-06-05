@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 17:14:36 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:43:39 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,12 @@ size_t		get_elem_size(void *elem);
 void		*get_next_elem(t_elem_lst *elements);
 
 // add element functions
-void	add_ambient_lighting(t_elem_lst *elems, float ratio, uint32_t color);
-void	add_camera(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t fov);
-bool	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color);
-bool	add_sphere(t_elem_lst *elems, char **line, int texture, int normal);
-bool	add_plane(t_elem_lst *elems, char **line, int texture, int normal);
-bool	add_cylinder(t_elem_lst *elems, char **line, int texture, int normal);
+void		add_ambient_lighting(t_elem_lst *elems, float ratio, uint32_t col);
+void		add_camera(t_elem_lst *elems, t_point p, t_vec axis, uint32_t fov);
+bool		add_light(t_elem_lst *elems, t_point p, float ratio, uint32_t col);
+bool		add_sphere(t_elem_lst *elems, char **line, int texture, int norm);
+bool		add_plane(t_elem_lst *elems, char **line, int texture, int norm);
+bool		add_cylinder(t_elem_lst *elems, char **line, int texture, int norm);
 
 // parsing
 bool		read_rtfile(int fd, t_elem_lst *elements, t_arena *arena);

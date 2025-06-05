@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 17:06:24 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:47:52 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool	add_sphere(t_elem_lst *elems, char **line, int texture, int normal)
 
 	sp.type = SPHERE;
 	sp.radius = ft_atof(line[2]) / 2;
-	sp.pos = get_vec(line[1]);;
+	sp.pos = get_vec(line[1]);
 	sp.mat.color = get_color(line[3]);
 	sp.mat.texture = NULL;
 	sp.mat.normal = NULL;

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/28 12:06:28 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:42:35 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ t_elem_lst	*init_minirt(t_rt *rt);
 // mlx
 void		mlx_start(t_rt *rt, int width, int height);
 void		kill_mlx(t_rt *minirt, int exit_code);
-void		put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int color);
+void		put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int col);
+int			destroy_hook(t_rt *rt);
+int			key_hook(int keycode, t_rt *rt);
 
 // tristan
 void		print_color(unsigned int col);
