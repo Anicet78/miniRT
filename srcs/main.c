@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 01:10:24 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:31:40 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	iterate(t_elem_lst *elements)
 		elem = get_next_elem(elements);
 	}
 }
-
+// A enlever
 void	test_earth(t_elem_lst *elements, void *mlx)
 {
 	void		*elem;
@@ -77,17 +77,11 @@ void	test_earth(t_elem_lst *elements, void *mlx)
 			print_sphere(test);
 			test->mat.texture = calloc(1, sizeof(t_tpmp));
 			textu = test->mat.texture;
-			if (!textu)
-				return;
 			textu->img = mlx_xpm_file_to_image(
 					mlx, "earth.xpm",
 					&textu->width,
 					&textu->height);
-			if (!textu->img)
-				write(1, "merde alors !\n", 15);
 			textu->addr = mlx_get_data_addr(textu->img, &textu->bpp, &textu->line_size, &textu->endian);
-			if (!textu->addr)
-				write(1, "caca boudin !\n", 15);
 		}
 		elem = get_next_elem(elements);
 	}

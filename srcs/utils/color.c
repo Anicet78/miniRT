@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:31:23 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/30 17:50:24 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:11:24 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,9 @@ t_color	lerp_vec(t_color a, t_color b, double t)
 	ret.y = a.y + (b.y - a.y) * t;
 	ret.z = a.z + (b.z - a.z) * t;
 	return (ret);
+}
+
+t_color	white_color()
+{
+	return ((t_color){1.0, 1.0, 1.0});
 }

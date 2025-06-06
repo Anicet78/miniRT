@@ -32,12 +32,14 @@ SRC			=	main.c							\
 				utils/print_tests.c				\
 				utils/minmax.c					\
 				utils/vec_utils.c				\
-				closest_hit.c					\
+				utils/print_utils.c				\
+				ray/closest_hit.c				\
+				ray/hit_cylinder.c				\
+				ray/intersect.c					\
+				ray/phong.c						\
+				ray/texture.c					\
 				display.c						\
-				hit_cylinder.c					\
-				intersect.c						\
 				mlx.c							\
-				print_utils.c					\
 				vec3op.c						\
 				vec3op2.c
 

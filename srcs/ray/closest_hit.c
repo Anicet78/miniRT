@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/30 17:54:51 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:19:25 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,61 +29,6 @@ int32_t	background_color(t_ray *r)
 		return (vec_to_col(sky_bot));
 	else
 		return (vec_to_col(sky_top));
-}
-
-uint32_t	get_pixel(t_tpmp *data, int x, int y)
-{
-	return (*(uint32_t *)(data->addr + y * data->line_size
-		+ x * data->bpp / 8));
-}
-
-t_color	surface_color(t_tpmp *texture, double u, double v)
-{
-	int			x;
-	int			y;
-	uint32_t	col;
-
-	if (!texture || texture->width <= 0 || texture->height <= 0)
-		return ((t_color){1.0, 1.0, 1.0});
-	u = mind(maxd(u, 0), 1);
-	v = mind(maxd(v, 0), 1);
-	x = (int)(u * texture->width) % texture->width;
-	y = (int)(v * texture->height) % texture->height;
-	col = get_pixel(texture, x, y);
-	return (int_to_tcol(col));
-}
-
-t_color	ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface)
-{
-	t_color	color;
-
-	color = int_to_tcol(hit->mat->color);
-	color = hadamar(color, *surface);
-	color = hadamar(
-		vmul(
-			int_to_tcol(elems->al->color),
-			elems->al->ratio
-		),
-		color
-	);
-	return (color);
-}
-
-t_color	lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface)
-{
-	t_color	color;
-	t_light	*yagami;
-	t_vec	light_dir;
-
-	yagami = elems->lights[0];
-	color = vmul(*surface,
-		dot(
-			norm(vsub(yagami->pos, hit->p)),
-			hit->normal
-		)
-	);
-	color = vmul(color, yagami->ratio);
-	return (color);
 }
 
 int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
