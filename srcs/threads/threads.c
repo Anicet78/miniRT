@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 15:14:41 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/05 17:05:10 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static bool	init_params(t_rt *rt, t_display *display, t_params *params)
 	t_camera	*cams;
 
 	params->elements = rt->elements;
-	params->elements.elem_lst = arena_calloc(params->arena, rt->elements.size * 10);
+	params->elements.elem_lst = arena_alloc(rt->elements.size * 10, params->arena);
 	if (!params->elements.elem_lst)
 		return (false);
 	ft_memmove(params->elements.elem_lst, rt->elements.elem_lst, rt->elements.size * 10);

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/28 12:05:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/05 16:35:03 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 	uint8_t	type;
 	bool	did_hit;
 
-	ft_memset(hit, 0, sizeof(t_hit));
+	// ft_memset(hit, 0, sizeof(t_hit));
 	hit->t = 9999999999;
 	did_hit = false;
 	elems->count = 0;
