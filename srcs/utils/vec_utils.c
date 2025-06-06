@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 00:03:17 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/05 13:20:24 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/06 11:09:17 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/vec3.h"
+#include "../../includes/vec3.h"
 
 t_vec	up_v(void)
 {

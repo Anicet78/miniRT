@@ -32,7 +32,6 @@ SRC			=	main.c							\
 				utils/err_message.c				\
 				utils/color.c					\
 				utils/print_tests.c				\
-				utils/minmax.c					\
 				utils/vec_utils.c				\
 				raytraceur/closest_hit.c		\
 				raytraceur/display.c			\
