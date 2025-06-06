@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/28 12:05:26 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/06 10:57:03 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ t_display	init_display(t_camera *cam)
 {
 	t_display	ret;
 
-	cam->fov = mind(cam->fov, 179.9999999);
+	cam->fov = fmin(cam->fov, 179.9999999);
 	cam->fov *= PI / 180;
 	ret.width = WIDTH;
-	ret.height = max((int)(WIDTH * (1 / ASPECT_RATIO)), 1);
+	ret.height = ft_max((int)(WIDTH * (1 / ASPECT_RATIO)), 1);
 	ret.focal_len = 1.0;
 	ret.vp_width = 2 * tan(cam->fov / 2);
 	ret.vp_height = ret.vp_width * ((double)ret.height / (double)ret.width);

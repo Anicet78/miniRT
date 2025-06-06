@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 15:42:35 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/06 10:56:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,6 @@ int			key_hook(int keycode, t_rt *rt);
 
 // tristan
 void		print_color(unsigned int col);
-int			min(int a, int b);
-int			max(int a, int b);
-double		mind(double a, double b);
-double		maxd(double a, double b);
 t_display	*init_all_displays(t_camera *cam, t_arena *arena, size_t frame_amount);
 t_display	init_display(t_camera *cam);
 void		render_display(t_rt *rt, t_display *d);
