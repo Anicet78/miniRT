@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 15:35:29 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/06 17:51:17 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int color)
 {
-	char		*dst;
-	const int	x = coords[0];
-	const int	y = coords[1];
+	char			*dst;
+	const int		x = coords[0];
+	const int		y = coords[1];
 
-	if (x < 0 || x > mlx->width || y < 0 || y > mlx->height)
+	if (x > mlx->width || y > mlx->height)
 		return ;
 	dst = addr + (y * mlx->line_length + x * (mlx->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:38:50 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/05 15:36:01 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/06 17:49:53 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@ t_vec		norm(t_vec a);
 t_vec		vsub(t_vec a, t_vec b);
 t_vec		vdiv(t_vec a, double scalar);
 t_vec		vtrans(t_vec a, double scalar);
-t_vec		vmulv(t_vec a, t_vec b);
 uint32_t	vec_to_col(t_color a);
+t_color		int_to_tcol(uint32_t col);
 t_vec		cross_prod(t_vec a, t_vec b);
 t_vec		up_v(void);
 t_vec		right_v(void);
 t_color		lerp_vec(t_color a, t_color b, double t);
+t_vec		hadamar(t_vec a, t_vec b);
 
 #endif

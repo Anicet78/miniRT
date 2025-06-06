@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/23 18:10:34 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/06 18:01:39 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	print_pixels(t_block block, t_params *p, t_mlx *mlx, t_queue *queue)
 {
-	uint32_t			x;
-	uint32_t			y;
+	int					x;
+	int					y;
 	t_ray				r;
 	t_point				world_pix;
 	const t_elem_lst	elems = p->elements;

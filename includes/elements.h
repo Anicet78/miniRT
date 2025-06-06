@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 15:43:39 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/06 17:49:00 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "miniRT.h"
 # include <float.h>
+# include "../mlx/mlx_int.h"
 
 # define ELEM_LST_SIZE (CHUNK_SIZE * 90 / 100)
 
@@ -41,6 +42,17 @@ typedef enum elem_type
 	PLANE,
 	CYLINDER
 }	t_elem_type;
+
+typedef	struct
+{
+	void	*img;
+	int		width;
+	int		height;
+	char	*addr;
+	int		bpp;
+	int		line_size;
+	int		endian;
+}	t_tpmp; // en attendant pour tester
 
 typedef struct s_material
 {

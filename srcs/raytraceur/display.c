@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/06 10:57:03 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/06 18:07:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	render_display(t_rt *rt, t_display *d)
 					vadd(vmul(d->pix_du, d->i), vmul(d->pix_dv, d->j)));
 			r.dir = norm(vsub(world_pix, rt->elements.cam[0].pos));
 			r.p = rt->elements.cam[0].pos;
-			put_pixel_to_img(&(rt->mlx), rt->mlx.addr[0], (uint32_t[2]){d->i, d->j}, ray_to_color(&r, &rt->elements, SIZE_MAX));
+			put_pixel_to_img(&(rt->mlx), rt->mlx.addr[0], (uint32_t[2]){d->i, d->j},
+					ray_to_color(&r, &rt->elements, SIZE_MAX));
 			d->i += 1;
 		}
 		d->j += 1;

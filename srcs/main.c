@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 16:28:46 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/06 18:24:39 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,13 @@ int	main(int ac, char **av)
 	if (!display)
 		kill_mlx(&rt, EXIT_FAILURE);
 	mlx_start(&rt, display[0].width, display[0].height);
+	// test_earth(&rt.elements, rt.mlx.mlx);
 	init_queue(&rt);
 	init_threads(&rt, display);
 	// render_display(&rt, display);
 	// iterate(&rt.elements);
 	render_thread(&rt);
-	kill_mlx(&rt, 1);
+	// kill_mlx(&rt, 1);
 	mlx_loop(rt.mlx.mlx);
 	return (EXIT_FAILURE);
 }

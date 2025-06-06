@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:57:56 by tgallet           #+#    #+#             */
+<<<<<<<< HEAD:srcs/raytraceur/intersect.c
 /*   Updated: 2025/05/28 12:05:42 by agruet           ###   ########.fr       */
+========
+/*   Updated: 2025/05/29 01:07:38 by tgallet          ###   ########.fr       */
+>>>>>>>> origin/triste:srcs/ray/intersect.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +35,8 @@ bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit)
 	hit->normal = norm(vsub(hit->p, sphere->pos));
 	hit->mat = &sphere->mat;
 	hit->front = (dot(r->dir, hit->normal) < 0);
-	hit->u = atan2(hit->normal.z, hit->normal.x) / (2 * PI);
-	hit->v = atan2(hit->normal.y, sqrt(hit->normal.x * hit->normal.x
-				+ hit->normal.z * hit->normal.z)) / PI;
+	hit->u = (atan2(hit->normal.z, hit->normal.x) / (2 * PI)) + 0.5;
+	hit->v =  0.5 - (asin(hit->normal.y) / PI);
 	return (true);
 }
 

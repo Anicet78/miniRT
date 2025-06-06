@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 12:28:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/06 17:52:24 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ bool	parse_ambient(t_elem_lst *elements, char **line, int nb)
 	if (current_frame != elements->frame_amount)
 		declared = false;
 	current_frame = elements->frame_amount;
-	if (declared++ > 0)
+	if (declared)
 		return (print_err("Multiple declaration of `ambient light`", nb));
+	declared = true;
 	if (tab_len(line) != 3)
 		return (print_err("Invalid amount of argument in `ambient light`", nb));
 	ratio = ft_atof(line[1]);
@@ -47,8 +48,9 @@ bool	parse_camera(t_elem_lst *elements, char **line, int nb)
 	if (current_frame != elements->frame_amount)
 		declared = false;
 	current_frame = elements->frame_amount;
-	if (declared++ > 0)
+	if (declared)
 		return (print_err("Multiple declaration of `camera`", nb));
+	declared = true;
 	if (tab_len(line) != 4)
 		return (print_err("Invalid amount of argument in `camera`", nb));
 	if (is_vec(line[1]) == false)

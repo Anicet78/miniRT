@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   closest_hit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
+<<<<<<<< HEAD:srcs/raytraceur/closest_hit.c
 /*   Updated: 2025/06/05 16:35:03 by agruet           ###   ########.fr       */
+========
+/*   Updated: 2025/06/06 17:19:25 by tgallet          ###   ########.fr       */
+>>>>>>>> origin/triste:srcs/ray/closest_hit.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +18,36 @@
 
 int32_t	background_color(t_ray *r)
 {
-	const t_vec	sky_top = (t_color){0.5, 0.65, 0.84};
-	const t_vec	sky_bot = (t_color){0.63, 0.72, 0.90};
+	const t_vec	sky_bot = (t_color){0.42, 0.55, 0.84};
+	const t_vec	sky_top = (t_color){0.7, 0.8, 1};
 
-	if (r->dir.y < 0)
-		return (vec_to_col(sky_top));
-	else
+	if (r->dir.y * r->dir.y < 0.02 * 0.02)
+		return (vec_to_col(
+			lerp_vec(
+				sky_bot,
+				sky_top,
+				(r->dir.y + 0.02) / 0.04
+			)
+		));
+	else if (r->dir.y < 0)
 		return (vec_to_col(sky_bot));
+	else
+		return (vec_to_col(sky_top));
 }
 
 int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 {
 	t_hit	hit;
+	t_color	color;
+	t_color	surface;
 
-	if (closest_hit(r, elems, &hit, frame))
-		return (hit.mat->color);
-	return (background_color(r));
+	if (!closest_hit(r, elems, &hit, frame))
+		return (0x0);
+		// return (background_color(r));
+	surface = surface_color(hit.mat->texture, hit.u, hit.v);
+	color = ambient_component(&hit, elems, &surface);
+	color = vadd(color, lambertian(&hit, elems, &surface));
+	return (vec_to_col(color));
 }
 
 bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)

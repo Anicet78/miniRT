@@ -33,11 +33,13 @@ SRC			=	main.c							\
 				utils/color.c					\
 				utils/print_tests.c				\
 				utils/vec_utils.c				\
-				raytraceur/closest_hit.c		\
+				utils/print_utils.c				\
+				ray/closest_hit.c				\
+				ray/hit_cylinder.c				\
+				ray/intersect.c					\
+				ray/phong.c						\
+				ray/texture.c					\
 				raytraceur/display.c			\
-				raytraceur/hit_cylinder.c		\
-				raytraceur/intersect.c			\
-				raytraceur/print_utils.c		\
 				raytraceur/vec3op.c				\
 				raytraceur/vec3op2.c			\
 				mlx_hook.c						\
