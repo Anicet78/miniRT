@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -ggdb #-Wall -Werror -Wextra
+CFLAGS		= -ggdb -Ofast -flto -ffast-math -march=native -pipe #-Wall -Werror -Wextra
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -42,6 +42,7 @@ SRC			=	main.c							\
 				raytraceur/display.c			\
 				raytraceur/vec3op.c				\
 				raytraceur/vec3op2.c			\
+				raytraceur/vec3op3.c			\
 				mlx_hook.c						\
 				mlx.c
 

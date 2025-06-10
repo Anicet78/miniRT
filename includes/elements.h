@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 17:49:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/10 11:03:30 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ typedef struct s_elem_lst
 {
 	size_t		count;
 	size_t		size;
+	size_t		elem_amount;
 	size_t		frame_amount;
 	size_t		*frames;
 	t_camera	*cam;
@@ -123,6 +124,7 @@ typedef struct s_elem_lst
 	size_t		texture_amount;
 	t_image		*normals;
 	size_t		normal_amount;
+	t_bvh_node	*bvh;
 	void		*mlx_ptr;
 	uintptr_t	*elem_lst;
 }	t_elem_lst;
