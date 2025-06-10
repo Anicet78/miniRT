@@ -34,6 +34,7 @@ bool	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color)
 	elems->lights[elems->frame_amount][elems->light_index].ratio = ratio;
 	elems->lights[elems->frame_amount][elems->light_index].pos = pos;
 	elems->lights[elems->frame_amount][elems->light_index].color = color;
+	elems->lights[elems->frame_amount][elems->light_index].declared = true;
 	elems->light_index++;
 	return (true);
 }

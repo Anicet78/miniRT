@@ -79,7 +79,7 @@ bool	alloc_lights(t_light **lights, t_arena *arena, int fd, size_t frames)
 		{
 			if (count_lights == 0)
 				return (free(gnl), frame_err("Light missing", frame + 1));
-			lights[frame] = arena_calloc(arena, sizeof(t_light) * count_lights);
+			lights[frame] = arena_calloc(arena, sizeof(t_light) * (count_lights + 1));
 			if (!lights[frame])
 				return (free(gnl), print_err("Memory allocation failed", 0));
 			count_lights = 0;
@@ -90,7 +90,7 @@ bool	alloc_lights(t_light **lights, t_arena *arena, int fd, size_t frames)
 	}
 	if (count_lights == 0)
 		return (frame_err("Light missing", frame + 1));
-	lights[frame] = arena_calloc(arena, sizeof(t_light) * count_lights);
+	lights[frame] = arena_calloc(arena, sizeof(t_light) * (count_lights + 1));
 	if (!lights[frame])
 		return (print_err("Memory allocation failed", 0));
 	lseek(fd, 0, SEEK_SET);

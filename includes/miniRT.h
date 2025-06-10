@@ -111,7 +111,7 @@ void		render_display(t_rt *rt, t_display *d);
 t_color		white_color();
 t_color		surface_color(t_image *texture, double u, double v);
 t_color		ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface);
-t_color		lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface);
+t_color		lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface, size_t frame);
 
 // tests
 void		iterate(t_elem_lst *elements);
