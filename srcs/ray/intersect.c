@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:57:56 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/29 01:07:38 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:47:19 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit)
 	if (delta < 0)
 		return (false);
 	t = (-b - sqrt(delta)) / (2 * a);
-	if (hit->t < t)
+	if (hit->t < t || t < 0)
 		return (false);
 	hit->t = t;
 	hit->p = vadd(r->p, vmul(r->dir, hit->t));
