@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 17:31:40 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/07 12:45:55 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	test_earth(t_elem_lst *elements, void *mlx)
 			test->mat.texture = calloc(1, sizeof(t_tpmp));
 			textu = test->mat.texture;
 			textu->img = mlx_xpm_file_to_image(
-					mlx, "earth.xpm",
+					mlx, "imgs/earth.xpm",
 					&textu->width,
 					&textu->height);
 			textu->addr = mlx_get_data_addr(textu->img, &textu->bpp, &textu->line_size, &textu->endian);

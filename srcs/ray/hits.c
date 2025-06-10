@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intersect.c                                        :+:      :+:    :+:   */
+/*   hits.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:57:56 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/29 01:07:38 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/07 11:53:19 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit)
 	hit->p = vadd(r->p, vmul(r->dir, hit->t));
 	hit->normal = norm(vsub(hit->p, sphere->pos));
 	hit->mat = &sphere->mat;
-	hit->front = (dot(r->dir, hit->normal) < 0);
-	hit->u = (atan2(hit->normal.z, hit->normal.x) / (2 * PI)) + 0.5;
+	hit->front = dot(r->dir, hit->normal) < 0;
+	hit->u = 1 - atan2(hit->normal.z, hit->normal.x) / (2 * PI) - 0.5;
 	hit->v =  0.5 - (asin(hit->normal.y) / PI);
 	return (true);
 }

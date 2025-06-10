@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/28 15:34:21 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/07 12:55:02 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_vec	cross_prod(t_vec a, t_vec b)
 	return (c);
 }
 
-t_vec	hadamar(t_vec a, t_vec b)
+t_vec	had(t_vec a, t_vec b)
 {
 	a.x *= b.x;
 	a.y *= b.y;

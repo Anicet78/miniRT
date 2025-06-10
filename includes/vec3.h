@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:38:50 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/28 19:53:59 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/07 12:55:02 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ t_vec		cross_prod(t_vec a, t_vec b);
 t_vec		up_v();
 t_vec		right_v();
 t_color		lerp_vec(t_color a, t_color b, double t);
-t_vec		hadamar(t_vec a, t_vec b);
+t_vec		had(t_vec a, t_vec b);
 
 #endif
