@@ -39,9 +39,9 @@ SRC			=	main.c							\
 				ray/intersect.c					\
 				ray/phong.c						\
 				ray/texture.c					\
-				raytraceur/display.c			\
-				raytraceur/vec3op.c				\
-				raytraceur/vec3op2.c			\
+				ray/display.c					\
+				ray/vec3op.c					\
+				ray/vec3op2.c					\
 				mlx_hook.c						\
 				mlx.c
 
