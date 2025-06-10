@@ -81,6 +81,7 @@ typedef struct s_light
 	float		ratio;
 	t_point		pos;
 	uint32_t	color;
+	bool		declared;
 }	t_light;
 
 typedef struct s_sphere

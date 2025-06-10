@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   closest_hit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-<<<<<<<< HEAD:srcs/raytraceur/closest_hit.c
-/*   Updated: 2025/06/05 16:35:03 by agruet           ###   ########.fr       */
-========
-/*   Updated: 2025/06/06 17:19:25 by tgallet          ###   ########.fr       */
->>>>>>>> origin/triste:srcs/ray/closest_hit.c
+/*   Updated: 2025/06/10 14:56:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +42,7 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 		// return (background_color(r));
 	surface = surface_color(hit.mat->texture, hit.u, hit.v);
 	color = ambient_component(&hit, elems, &surface);
-	color = vadd(color, lambertian(&hit, elems, &surface));
+	color = vadd(color, lambertian(&hit, elems, &surface, frame));
 	return (vec_to_col(color));
 }
 

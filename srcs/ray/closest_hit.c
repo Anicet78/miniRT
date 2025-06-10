@@ -43,7 +43,7 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 		// return (background_color(r));
 	surface = surface_color(hit.mat->texture, hit.u, hit.v);
 	color = ambient_component(&hit, elems, &surface);
-	color = vadd(color, lambertian(&hit, elems, &surface));
+	color = vadd(color, lambertian(&hit, elems, &surface, frame));
 	return (vec_to_col(color));
 }
 
