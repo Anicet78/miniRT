@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 16:05:58 by agruet           ###   ########.fr       */
+/*   Updated: 2025/05/28 17:29:29 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strlstr(const char *big, const char *little, size_t len);
+char	*ft_strrstr(const char *big, const char *little);
 int		ft_strstr_tab(char **tab, char *str);
 int		ft_atoi(const char *nptr);
 long	ft_atol(const char *nptr);

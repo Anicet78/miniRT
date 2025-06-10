@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/30 17:48:32 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/06 18:01:39 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	print_pixels(t_block block, t_params *p, t_mlx *mlx, t_queue *queue)
 					vadd(vmul(d->pix_du, x), vmul(d->pix_dv, y)));
 			r.dir = norm(vsub(world_pix, elems.cam[block.img_index].pos));
 			r.p = elems.cam[block.img_index].pos;
-			put_pixel_to_img(mlx, mlx->addr[block.img_index], (int[2]){x, y},
+			put_pixel_to_img(mlx, mlx->addr[block.img_index], (uint32_t[2]){x, y},
 				ray_to_color(&r, (t_elem_lst *)&elems, block.img_index));
 			x++;
 		}
@@ -73,6 +73,7 @@ void	render_thread(t_rt *rt)
 		// sleep for fps (mlx loop at the same time ?)
 		// print fps
 		// after = get_time_now();
+		// usleep(100000);
 		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
 			rt->mlx.imgs[rt->queue.print_index++], 0, 0);
 	}

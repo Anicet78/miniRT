@@ -42,6 +42,7 @@ SRC			=	libc/ft_atof.c					\
 				libc/ft_strlcpy.c				\
 				libc/ft_strlen.c				\
 				libc/ft_strlstr.c				\
+				libc/ft_strrstr.c				\
 				libc/ft_strmapi.c				\
 				libc/ft_strncmp.c				\
 				libc/ft_strnstr.c				\

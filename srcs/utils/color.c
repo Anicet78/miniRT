@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:31:23 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 17:11:24 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/06 18:02:17 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ uint32_t	vec_to_col(t_color a)
 {
 	uint32_t	col;
 
-	a.x = maxd(mind(1, a.x), 0);
-	a.y = maxd(mind(1, a.y), 0);
-	a.z = maxd(mind(1, a.z), 0);
+	a.x = fmax(fmin(1, a.x), 0);
+	a.y = fmax(fmin(1, a.y), 0);
+	a.z = fmax(fmin(1, a.z), 0);
 	col = (uint32_t)(a.x * 255.999) << 16;
 	col |= (uint32_t)(a.y * 255.999) << 8;
 	col |= (uint32_t)(a.z * 255.999);

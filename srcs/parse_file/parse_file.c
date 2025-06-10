@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 00:39:09 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:52:34 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ bool	alloc_lights(t_light **lights, t_arena *arena, int fd, size_t frames)
 		{
 			if (count_lights == 0)
 				return (free(gnl), frame_err("Light missing", frame + 1));
-			lights[frame] = arena_calloc(arena, sizeof(t_light) * count_lights);
+			lights[frame] = arena_calloc(arena, sizeof(t_light) * (count_lights + 1));
 			if (!lights[frame])
 				return (free(gnl), print_err("Memory allocation failed", 0));
 			count_lights = 0;
@@ -90,15 +90,44 @@ bool	alloc_lights(t_light **lights, t_arena *arena, int fd, size_t frames)
 	}
 	if (count_lights == 0)
 		return (frame_err("Light missing", frame + 1));
-	lights[frame] = arena_calloc(arena, sizeof(t_light) * count_lights);
+	lights[frame] = arena_calloc(arena, sizeof(t_light) * (count_lights + 1));
 	if (!lights[frame])
 		return (print_err("Memory allocation failed", 0));
 	lseek(fd, 0, SEEK_SET);
 	return (true);
 }
 
+size_t	count_elems(char *dirname)
+{
+	DIR				*dir;
+	struct dirent	*entry;
+	size_t			count;
+
+	dir = opendir(dirname);
+	if (!dir)
+		return (0);
+	count = 0;
+	entry = readdir(dir);
+	while (entry)
+	{
+		if (entry->d_type == DT_REG && entry->d_name[0] != '.')
+			count++;
+		entry = readdir(dir);
+	}
+	closedir(dir);
+	return (count);
+}
+
 bool	init_parsing(t_elem_lst *elems, t_arena *arena, int fd)
 {
+	elems->texture_amount = count_elems("textures");
+	elems->textures = arena_calloc(arena, sizeof(t_image) * elems->texture_amount);
+	if (!elems->textures)
+		return (print_err("Memory allocation failed", 0));
+	elems->normal_amount = count_elems("normals");
+	elems->normals = arena_calloc(arena, sizeof(t_image) * elems->normal_amount);
+	if (!elems->normals)
+		return (print_err("Memory allocation failed", 0));
 	elems->frame_amount = count_frames(fd);
 	if (elems->frame_amount == 0)
 		return (print_err("An error has occured while reading the file", 0));
@@ -166,7 +195,7 @@ bool	read_rtfile(int fd, t_elem_lst *elements, t_arena *arena)
 	char	**split;
 	int		i;
 
-	if (init_parsing(elements, arena, fd) == false)
+	if (!init_parsing(elements, arena, fd))
 		return (false);
 	i = 1;
 	line = get_next_line(fd);

@@ -3,29 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 17:17:03 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:51:17 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-int	destroy_hook(t_rt *rt)
-{
-	kill_mlx(rt, EXIT_SUCCESS);
-	return (0);
-}
-
-int	key_hook(int keycode, t_rt *rt)
-{
-	if (keycode == ESC_K)
-		kill_mlx(rt, EXIT_SUCCESS);
-	return (0);
-}
-
-void	put_pixel_to_img(t_mlx *mlx, void *addr, int coords[2], int color)
+void	put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int color)
 {
 	char			*dst;
 	const int		x = coords[0];
@@ -58,7 +45,7 @@ bool	create_images(t_mlx *mlx, t_arena *arena, size_t img_amount)
 	while (i < img_amount)
 	{
 		mlx->addr[i] = mlx_get_data_addr(mlx->imgs[i], &mlx->bits_per_pixel,
-			&mlx->line_length, &mlx->endian);
+				&mlx->line_length, &mlx->endian);
 		if (!mlx->addr[i])
 			return (false);
 		i++;
@@ -70,17 +57,9 @@ void	mlx_start(t_rt *rt, int width, int height)
 {
 	t_mlx	*mlx;
 
-	rt->thread_amount = 0;
 	mlx = &rt->mlx;
-	mlx->mlx = NULL;
-	mlx->mlx_win = NULL;
-	mlx->imgs = NULL;
-	mlx->addr = NULL;
 	mlx->width = width;
 	mlx->height = height;
-	mlx->mlx = mlx_init();
-	if (!mlx->mlx)
-		kill_mlx(rt, EXIT_FAILURE);
 	mlx->mlx_win = mlx_new_window(mlx->mlx, width, height, "miniRT");
 	if (!mlx->mlx_win)
 		kill_mlx(rt, EXIT_FAILURE);
@@ -88,49 +67,4 @@ void	mlx_start(t_rt *rt, int width, int height)
 		kill_mlx(rt, EXIT_FAILURE);
 	mlx_hook(mlx->mlx_win, 17, 1L << 3, &destroy_hook, mlx);
 	mlx_hook(mlx->mlx_win, 2, 1L << 0, &key_hook, mlx);
-}
-
-void	destroy_mlx(t_rt *rt)
-{
-	size_t	i;
-
-	i = 0;
-	while (rt->mlx.mlx && rt->mlx.mlx_win &&
-		i < rt->mlx.img_amount && rt->mlx.imgs[i])
-	{
-		mlx_destroy_image(rt->mlx.mlx, rt->mlx.imgs[i]);
-		i++;
-	}
-	if (rt->mlx.mlx_win)
-		mlx_destroy_window(rt->mlx.mlx, rt->mlx.mlx_win);
-	if (rt->mlx.mlx)
-	{
-		mlx_destroy_display(rt->mlx.mlx);
-		free(rt->mlx.mlx);
-	}
-}
-
-void	destroy_threads(t_rt *rt)
-{
-	uint8_t	i;
-
-	i = 0;
-	pthread_mutex_unlock(&rt->queue.lock);
-	while (i < rt->thread_amount)
-	{
-		pthread_join(rt->threads[i], NULL);
-		i++;
-	}
-	pthread_mutex_destroy(&rt->queue.lock);
-	pthread_cond_destroy(&rt->queue.cond);
-}
-
-void	kill_mlx(t_rt *rt, int exit_code)
-{
-	if (rt->thread_amount != 0)
-		destroy_threads(rt);
-	destroy_mlx(rt);
-	if (rt->arena)
-		clear_arena(&rt->arena);
-	exit(exit_code);
 }

@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_message.c                                      :+:      :+:    :+:   */
+/*   vec3op3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/28 16:40:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 13:09:41 by agruet           ###   ########.fr       */
+/*   Created: 2025/06/06 14:45:19 by agruet            #+#    #+#             */
+/*   Updated: 2025/06/06 14:49:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-int	print_err(char *msg, int line)
+t_vec	vmin(t_vec a, t_vec b)
 {
-	if (line == 0)
-		ft_fprintf(2, "\e[1;31mError\n%s\e[0m\n", msg);
-	else
-		ft_fprintf(2, "\e[1;31mError\nLine %d: %s\e[0m\n", line, msg);
-	return (false);
+	return ((t_vec){fmin(a.x, b.x), fmin(a.y, b.y), fmin(a.z, b.z)});
 }
 
-int	frame_err(char *msg, int frame)
+t_vec	vmax(t_vec a, t_vec b)
 {
-	ft_fprintf(2, "\e[1;31mError\nFrame %d: %s\e[0m\n",
-		frame, msg);
-	return (false);
+	return ((t_vec){fmax(a.x, b.x), fmax(a.y, b.y), fmax(a.z, b.z)});
 }

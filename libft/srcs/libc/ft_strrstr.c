@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_message.c                                      :+:      :+:    :+:   */
+/*   ft_strrstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/28 16:40:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 13:09:41 by agruet           ###   ########.fr       */
+/*   Created: 2024/11/13 13:45:13 by agruet            #+#    #+#             */
+/*   Updated: 2025/05/28 17:28:52 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
+#include "libft.h"
 
-int	print_err(char *msg, int line)
+char	*ft_strrstr(const char *big, const char *little)
 {
-	if (line == 0)
-		ft_fprintf(2, "\e[1;31mError\n%s\e[0m\n", msg);
-	else
-		ft_fprintf(2, "\e[1;31mError\nLine %d: %s\e[0m\n", line, msg);
-	return (false);
-}
+	char	*start;
+	char	*chr;
+	size_t	lsize;
 
-int	frame_err(char *msg, int frame)
-{
-	ft_fprintf(2, "\e[1;31mError\nFrame %d: %s\e[0m\n",
-		frame, msg);
-	return (false);
+	lsize = ft_strlen(little);
+	chr = ft_strlstr(big, little, lsize);
+	if (!chr)
+		return (NULL);
+	while (chr)
+	{
+		start = chr;
+		chr = ft_strlstr(start + lsize, little, ft_strlen(big));
+	}
+	return (start);
 }

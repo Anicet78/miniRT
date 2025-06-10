@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 17:31:40 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/06 18:24:39 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,34 +58,6 @@ void	iterate(t_elem_lst *elements)
 		elem = get_next_elem(elements);
 	}
 }
-// A enlever
-void	test_earth(t_elem_lst *elements, void *mlx)
-{
-	void		*elem;
-	int			type;
-	t_sphere	*test;
-	t_tpmp		*textu;
-
-	elements->count = 0;
-	elem = get_next_elem(elements);
-	while (elem && elements->count <= elements->frames[0])
-	{
-		type = get_elem_type(elem);
-		if (type == SPHERE)
-		{
-			test = elem;
-			print_sphere(test);
-			test->mat.texture = calloc(1, sizeof(t_tpmp));
-			textu = test->mat.texture;
-			textu->img = mlx_xpm_file_to_image(
-					mlx, "earth.xpm",
-					&textu->width,
-					&textu->height);
-			textu->addr = mlx_get_data_addr(textu->img, &textu->bpp, &textu->line_size, &textu->endian);
-		}
-		elem = get_next_elem(elements);
-	}
-}
 
 int	main(int ac, char **av)
 {
@@ -95,15 +67,18 @@ int	main(int ac, char **av)
 	bool		map_file;
 
 	fd = open_file(ac, av);
-	if (!init_elem_list(&rt))
+	if (!init_minirt(&rt))
 		return (close(fd), EXIT_FAILURE);
 	map_file = read_rtfile(fd, &rt.elements, rt.arena);
 	close(fd);
 	if (!map_file)
-		return (clear_arena(&rt.arena), EXIT_FAILURE);
-	display = init_all_displays(rt.elements.cam, rt.arena, rt.elements.frame_amount);
+		kill_mlx(&rt, EXIT_FAILURE);
+	display = init_all_displays(rt.elements.cam, rt.arena,
+			rt.elements.frame_amount);
+	if (!display)
+		kill_mlx(&rt, EXIT_FAILURE);
 	mlx_start(&rt, display[0].width, display[0].height);
-	test_earth(&rt.elements, rt.mlx.mlx);
+	// test_earth(&rt.elements, rt.mlx.mlx);
 	init_queue(&rt);
 	init_threads(&rt, display);
 	// render_display(&rt, display);

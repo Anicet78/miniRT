@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 00:31:20 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/06 17:49:00 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@
 # include "../mlx/mlx_int.h"
 
 # define ELEM_LST_SIZE (CHUNK_SIZE * 90 / 100)
+
+typedef struct s_image
+{
+	char	*name;
+	void	*img;
+	void	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+	bool	declared;
+}	t_image;
 
 typedef enum elem_type
 {
@@ -44,8 +57,8 @@ typedef	struct
 typedef struct s_material
 {
 	uint32_t	color;
-	t_tpmp		*texture;
-	t_tpmp		*bump;
+	t_image		*texture;
+	t_image		*normal;
 }	t_material;
 
 typedef struct s_ambient
@@ -68,6 +81,7 @@ typedef struct s_light
 	float		ratio;
 	t_point		pos;
 	uint32_t	color;
+	bool		declared;
 }	t_light;
 
 typedef struct s_sphere
@@ -106,6 +120,11 @@ typedef struct s_elem_lst
 	t_ambient	*al;
 	t_light		**lights;
 	size_t		light_index;
+	t_image		*textures;
+	size_t		texture_amount;
+	t_image		*normals;
+	size_t		normal_amount;
+	void		*mlx_ptr;
 	uintptr_t	*elem_lst;
 }	t_elem_lst;
 
@@ -116,12 +135,12 @@ size_t		get_elem_size(void *elem);
 void		*get_next_elem(t_elem_lst *elements);
 
 // add element functions
-void	add_ambient_lighting(t_elem_lst *elems, float ratio, uint32_t color);
-void	add_camera(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t fov);
-bool	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color);
-bool	add_sphere(t_elem_lst *elems, t_point pos, float diameter, uint32_t color);
-bool	add_plane(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t color);
-bool	add_cylinder(t_elem_lst *elements, t_cylinder *cylinder);
+void		add_ambient_lighting(t_elem_lst *elems, float ratio, uint32_t col);
+void		add_camera(t_elem_lst *elems, t_point p, t_vec axis, uint32_t fov);
+bool		add_light(t_elem_lst *elems, t_point p, float ratio, uint32_t col);
+bool		add_sphere(t_elem_lst *elems, char **line, int texture, int norm);
+bool		add_plane(t_elem_lst *elems, char **line, int texture, int norm);
+bool		add_cylinder(t_elem_lst *elems, char **line, int texture, int norm);
 
 // parsing
 bool		read_rtfile(int fd, t_elem_lst *elements, t_arena *arena);
@@ -138,5 +157,12 @@ bool		parse_plane(t_elem_lst *elements, char **line, int nb);
 bool		parse_cylinder(t_elem_lst *elements, char **line, int nb);
 bool		parse_new_frame(t_elem_lst *elements, char **line, int nb);
 double		ft_atof_parse(char *str);
+
+// xpm
+int			try_file(char **line, char *folder, size_t tabsize, int index);
+int			texture_err(int error, int nb, char *type);
+int			normal_err(int error, int nb, char *type);
+t_image		*add_texture(t_elem_lst *elems, char *filename);
+t_image		*add_normal(t_elem_lst *elems, char *filename);
 
 #endif
