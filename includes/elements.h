@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/10 11:07:41 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/10 14:41:48 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	uint8_t		type;
 	t_material	mat;
 	t_point		pos;
 	t_vec		normal;
+	bool		declared;
 }	t_plane;
 
 typedef struct s_cylinder
@@ -114,9 +114,10 @@ typedef struct s_elem_lst
 {
 	size_t		count;
 	size_t		size;
-	size_t		elem_amount;
-	size_t		frame_amount;
+	t_plane		**planes;
+	size_t		plane_index;
 	size_t		*frames;
+	size_t		frame_amount;
 	t_camera	*cam;
 	t_ambient	*al;
 	t_light		**lights;

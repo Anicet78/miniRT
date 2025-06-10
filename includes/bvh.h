@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:41:32 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 15:08:04 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/10 12:37:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ typedef struct s_bvh_node
 		void	*obj;
 	};
 }	t_bvh_node;
+
+t_aabb	get_elem_aabb(void *elem);
 
 #endif

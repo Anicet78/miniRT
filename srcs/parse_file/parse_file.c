@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 17:52:34 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:31:54 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,41 @@ bool	alloc_lights(t_light **lights, t_arena *arena, int fd, size_t frames)
 	return (true);
 }
 
+bool	alloc_planes(t_plane **planes, t_arena *arena, int fd, size_t frames)
+{
+	size_t	frame;
+	size_t	count_planes;
+	char	*gnl;
+
+	frame = 0;
+	count_planes = 0;
+	gnl = get_next_line(fd);
+	if (!gnl)
+		return (print_err("An error has occured while reading the file", 0));
+	while (gnl && frame < frames)
+	{
+		if (gnl[0] == 'p' && gnl[1] == 'l' && gnl[2] == ' ')
+			count_planes++;
+		if (gnl[0] == '=')
+		{
+			if (count_planes > 0)
+				planes[frame] = arena_calloc(arena, sizeof(t_plane) * (count_planes + 1));
+			if (count_planes > 0 && !planes[frame])
+				return (free(gnl), print_err("Memory allocation failed", 0));
+			count_planes = 0;
+			frame++;
+		}
+		free(gnl);
+		gnl = get_next_line(fd);
+	}
+	if (count_planes > 0)
+		planes[frame] = arena_calloc(arena, sizeof(t_plane) * (count_planes + 1));
+	if (count_planes > 0 && !planes[frame])
+		return (print_err("Memory allocation failed", 0));
+	lseek(fd, 0, SEEK_SET);
+	return (true);
+}
+
 size_t	count_elems(char *dirname)
 {
 	DIR				*dir;
@@ -145,7 +180,13 @@ bool	init_parsing(t_elem_lst *elems, t_arena *arena, int fd)
 		return (print_err("Memory allocation failed", 0));
 	if (!alloc_lights(elems->lights, arena, fd, elems->frame_amount))
 		return (false);
+	elems->planes = arena_calloc(arena, sizeof(t_plane *) * elems->frame_amount);
+	if (!elems->planes)
+		return (print_err("Memory allocation failed", 0));
+	if (!alloc_planes(elems->planes, arena, fd, elems->frame_amount))
+		return (false);
 	elems->light_index = 0;
+	elems->plane_index = 0;
 	elems->frame_amount = 0;
 	return (true);
 }

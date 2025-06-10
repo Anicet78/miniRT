@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/10 11:07:45 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/10 14:15:24 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 # include "libft.h"
 # include "vec3.h"
+# include "bvh.h"
 # include "elements.h"
 # include "threads.h"
-# include "bvh.h"
 # include "../mlx/mlx.h"
 # include <math.h>
 # include <stdint.h>
@@ -121,6 +121,9 @@ void		print_light(t_light *light);
 void		print_sphere(t_sphere *sphere);
 void		print_plane(t_plane *plane);
 void		print_cylinder(t_cylinder *cylinder);
+
+// bvh
+void		create_bvh(t_rt *rt, t_elem_lst *elems);
 
 // utils
 uint32_t	rgb_to_hex(uint8_t r, uint8_t g, uint8_t b);

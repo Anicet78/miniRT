@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/10 11:07:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:42:01 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,6 @@ static int	open_file(int ac, char **av)
 	return (fd);
 }
 
-void	iterate(t_elem_lst *elements)
-{
-	void	*elem;
-	int		type;
-
-	elements->count = 0;
-	elem = get_next_elem(elements);
-	while (elem && elements->count <= elements->frames[0])
-	{
-		type = get_elem_type(elem);
-		if (type == AMBIENT_LIGHTING)
-			print_ambient(elem);
-		else if (type == LIGHT)
-			print_light(elem);
-		else if (type == SPHERE)
-			print_sphere(elem);
-		else if (type == PLANE)
-			print_plane(elem);
-		else if (type == CYLINDER)
-			print_cylinder(elem);
-		elem = get_next_elem(elements);
-	}
-}
-
 int	main(int ac, char **av)
 {
 	t_rt		rt;
@@ -73,13 +49,12 @@ int	main(int ac, char **av)
 	close(fd);
 	if (!map_file)
 		kill_mlx(&rt, EXIT_FAILURE);
-	create_bvh(&rt, rt.elements);
+	create_bvh(&rt, &rt.elements);
 	display = init_all_displays(rt.elements.cam, rt.arena,
 			rt.elements.frame_amount);
 	if (!display)
 		kill_mlx(&rt, EXIT_FAILURE);
 	mlx_start(&rt, display[0].width, display[0].height);
-	// test_earth(&rt.elements, rt.mlx.mlx);
 	init_queue(&rt);
 	init_threads(&rt, display);
 	render_thread(&rt);
