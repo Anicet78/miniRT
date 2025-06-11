@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:19:34 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/11 15:54:27 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/11 16:21:02 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,29 @@ bool	shadow_ray(t_ray r, t_elem_lst *elems)
 	return (false);
 }
 
-t_color	lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface)
+t_color	lambertian(t_hit *hit, t_elem_lst *elems,
+	t_color *surface, size_t frame)
 {
 	t_color	color;
 	t_light	*lux;
 	size_t	i;
 
-	color = white_color();
-	lux = elems->lights[frame];
+	color = black_color();
 	i = 0;
+	lux = elems->lights[i];
 	while (lux->declared == true)
 	{
-		lux = elems->lights[i];
-		// if (shadow_ray((t_ray){.dir}))
-		// 	;
-		color = had(vmul(vmul(*surface, maxd(0,
+		if (shadow_ray(
+				(t_ray){.dir = norm(vsub(lux->pos, hit->p)),
+					.p = hit->p},
+				elems))
+			continue ;
+		color = vadd(vmul(vmul(*surface, fmax(0,
 			dot(norm(vsub(lux->pos, hit->p)),
 			hit->normal))), lux->ratio), color);
 		i++;
-		lux = elems->lights[frame] + i;
+		lux = elems->lights[i];
 	}
+	clamp_color(&color);
 	return (color);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 00:03:17 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/06 11:09:17 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/11 16:17:23 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,21 @@ t_vec	right_v(void)
 	ret.y = 0;
 	ret.z = 0;
 	return (ret);
+}
+
+t_color	white_color()
+{
+	return ((t_color){1.0, 1.0, 1.0});
+}
+
+t_color	black_color()
+{
+	return ((t_color){0.0, 0.0, 0.0});
+}
+
+void	clamp_color(t_color *col)
+{
+	col->x = fmin(col->x, 1);
+	col->y = fmin(col->y, 1);
+	col->z = fmin(col->z, 1);
 }
