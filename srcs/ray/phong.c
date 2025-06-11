@@ -6,11 +6,11 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:19:34 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/11 01:42:33 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/11 15:54:27 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 t_color	ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface)
 {
@@ -55,11 +55,12 @@ t_color	lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface)
 {
 	t_color	color;
 	t_light	*lux;
-	int		i;
+	size_t	i;
 
 	color = white_color();
+	lux = elems->lights[frame];
 	i = 0;
-	while (i < elems->light_index)
+	while (lux->declared == true)
 	{
 		lux = elems->lights[i];
 		// if (shadow_ray((t_ray){.dir}))
@@ -68,6 +69,7 @@ t_color	lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface)
 			dot(norm(vsub(lux->pos, hit->p)),
 			hit->normal))), lux->ratio), color);
 		i++;
+		lux = elems->lights[frame] + i;
 	}
 	return (color);
 }

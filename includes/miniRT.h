@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 17:20:58 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/06 18:03:53 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,26 +93,24 @@ typedef struct s_hit
 }	t_hit;
 
 // init
-t_elem_lst	*init_elem_list(t_rt *rt);
+t_elem_lst	*init_minirt(t_rt *rt);
 
 // mlx
 void		mlx_start(t_rt *rt, int width, int height);
 void		kill_mlx(t_rt *minirt, int exit_code);
-void		put_pixel_to_img(t_mlx *mlx, void *addr, int coords[2], int color);
+void		put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int col);
+int			destroy_hook(t_rt *rt);
+int			key_hook(int keycode, t_rt *rt);
 
 // tristan
 void		print_color(unsigned int col);
-int			min(int a, int b);
-int			max(int a, int b);
-double		mind(double a, double b);
-double		maxd(double a, double b);
 t_display	*init_all_displays(t_camera *cam, t_arena *arena, size_t frame_amount);
 t_display	init_display(t_camera *cam);
 void		render_display(t_rt *rt, t_display *d);
 t_color		white_color();
-t_color		surface_color(t_tpmp *texture, double u, double v);
+t_color		surface_color(t_image *texture, double u, double v);
 t_color		ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface);
-t_color		lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface);
+t_color		lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface, size_t frame);
 
 // tests
 void		iterate(t_elem_lst *elements);

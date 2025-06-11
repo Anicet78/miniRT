@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -ggdb #-Wall -Wextra
+CFLAGS		= -ggdb #-Wall -Werror -Wextra
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -18,19 +18,20 @@ LIBS		= -Lmlx -lmlx -lXext -lX11 -lm
 SRC			=	main.c							\
 				elements/add_elements.c			\
 				elements/add_elements2.c		\
+				elements/add_xpm.c				\
 				elements/elem_lst.c				\
 				parse_file/check_params.c		\
 				parse_file/libc_remaster.c		\
 				parse_file/parse_elements.c		\
 				parse_file/parse_elements2.c	\
 				parse_file/parse_file.c			\
+				parse_file/parse_xpm.c			\
 				threads/queue.c					\
 				threads/render.c				\
 				threads/threads.c				\
 				utils/err_message.c				\
 				utils/color.c					\
 				utils/print_tests.c				\
-				utils/minmax.c					\
 				utils/vec_utils.c				\
 				utils/print_utils.c				\
 				ray/closest_hit.c				\
@@ -38,10 +39,11 @@ SRC			=	main.c							\
 				ray/hits.c						\
 				ray/phong.c						\
 				ray/texture.c					\
-				display.c						\
-				mlx.c							\
-				vec3op.c						\
-				vec3op2.c
+				ray/display.c					\
+				ray/vec3op.c					\
+				ray/vec3op2.c					\
+				mlx_hook.c						\
+				mlx.c
 
 OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
 
