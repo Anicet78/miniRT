@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:24:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/10 17:02:58 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/11 18:27:13 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,22 @@ size_t	count_elem_amount(t_elem_lst *elems)
 	return (count);
 }
 
-void	init_aabb(t_elem_lst *elems)
+void	init_builder(t_elem_lst *elems, t_bvh_builder *builder)
 {
 	void	*elem;
 	int		type;
 	size_t	count;
+	t_aabb	aabb;
 
 	elems->count = 0;
 	count = 0;
 	elem = get_next_elem(elems);
 	while (elem && elems->count <= elems->frames[0])
 	{
-		elems->bvh[count].bbox = get_elem_aabb(elem);
-		elems->bvh[count].obj = elem;
+		aabb = get_elem_aabb(elem);
+		builder[count].bbox = aabb;
+		builder[count].obj = elem;
+		builder[count].centroid = vmul(vadd(aabb.min, aabb.max), 0.5f);
 		elem = get_next_elem(elems);
 		count++;
 	}
@@ -49,13 +52,22 @@ void	init_aabb(t_elem_lst *elems)
 void	create_bvh(t_rt *rt, t_elem_lst *elems)
 {
 	const size_t	elem_amount = count_elem_amount(elems);
+	t_bvh_builder	*builder;
+	t_bin			bins[NBINS];
 	void			*elem;
 
-	elems->bvh = arena_calloc(rt->arena, sizeof(t_bvh_node) * elem_amount);
+	auto t_arena *arena = arena_init(elem_amount * 1000);
+	if (!arena)
+		(print_err("Memory allocation failed", 0), kill_mlx(rt, 1));
+	builder = arena_calloc(arena, sizeof(t_bvh_builder) * elem_amount);
+	if (!builder)
+		(print_err("Memory allocation failed", 0), kill_mlx(rt, 1));
+	init_builder(elems, builder);
+	memset(bins, 0, sizeof(t_bin) * NBINS);
+	auto uint8_t axis = fill_bins(builder, bins, elem_amount);
+	auto uint8_t cut = cheapest_cut(bins);
+	elems->bvh = arena_calloc(arena, sizeof(t_bvh_node)
+			* (elem_amount * 2 - 1));
 	if (!elems->bvh)
-	{
-		print_err("Memory allocation failed", 0);
-		kill_mlx(rt, 1);
-	}
-	init_aabb(elems);
+		(print_err("Memory allocation failed", 0), kill_mlx(rt, 1));
 }
