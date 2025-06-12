@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:39:02 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/11 18:27:24 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/12 15:11:34 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ int	get_bin_index(double coord, double min_coord, double max_coord, int nbins)
 	return (index);
 }
 
-uint8_t	fill_bins(t_bvh_builder *builder, t_bin bins[8], size_t elem_amount)
+uint8_t	fill_bins(t_bvh_builder *builder, t_bin bins[8], size_t *indexs, size_t size)
 {
 	auto size_t i = 0;
 	auto t_point centroid_min = {INFINITY, INFINITY, INFINITY};
 	auto t_point centroid_max = {-INFINITY, -INFINITY, -INFINITY};
-	while (i < elem_amount)
+	while (i < size)
 	{
-		auto const t_point c = builder[i++].centroid;
+		auto const t_point c = builder[indexs[i++]].centroid;
 		centroid_min = vmin(centroid_min, c);
 		centroid_max = vmin(centroid_max, c);
 	}
@@ -41,13 +41,13 @@ uint8_t	fill_bins(t_bvh_builder *builder, t_bin bins[8], size_t elem_amount)
 	if (extent.z > extent.data[axis])
 		axis = 2;
 	i = 0;
-	while (i < elem_amount)
+	while (i < size)
 	{
-		auto const float coord = builder[i].centroid.data[axis];
+		auto const double coord = builder[indexs[i]].centroid.data[axis];
 		auto const int index = get_bin_index(coord, centroid_min.data[axis],
 			centroid_max.data[axis], NBINS);
 		bins[index].count++;
-		bins[index].bbox = union_aabb(bins[index].bbox, builder[i++].bbox);
+		bins[index].bbox = union_aabb(bins[index].bbox, builder[indexs[i++]].bbox);
 	}
 	return (axis);
 }
