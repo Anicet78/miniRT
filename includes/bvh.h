@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:41:32 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/12 14:59:12 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/13 15:29:33 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,23 @@ typedef struct s_bvh_builder
 	t_aabb	bbox;
 	void	*obj;
 	t_vec	centroid;
-	t_arena	*arena;
 }	t_bvh_builder;
+
+typedef struct s_bvh_info
+{
+	t_arena			*arena;
+	t_bvh_builder	*builder;
+	t_point			centroid_min;
+	t_point			centroid_max;
+	size_t			*index_tab;
+	size_t			size;
+	size_t			*left;
+	size_t			left_size;
+	size_t			*right;
+	size_t			right_size;
+	double			cut_pos;
+	uint8_t			axis;
+}	t_bvh_info;
 
 typedef struct s_bin
 {
@@ -57,8 +72,16 @@ t_aabb	get_elem_aabb(void *elem);
 t_aabb	union_aabb(t_aabb bbox1, t_aabb bbox2);
 
 // bins
-uint8_t	fill_bins(t_bvh_builder *builder, t_bin bins[8], size_t *index, size_t size);
+void	fill_bins(t_bin bins[8], t_bvh_info *info);
 int		get_bin_index(double coord, double min_coord, double max_coord, int nbins);
 uint8_t	cheapest_cut(t_bin *bins);
+
+// utils
+size_t	count_elem_amount(t_elem_lst *elems);
+size_t	*create_first_tab(t_arena *arena, size_t elem_amount);
+void	calc_centroid(t_bvh_info *info);
+void	get_axis(t_bvh_info *info);
+void	calc_branch_sizes(t_bvh_info *info);
+void	create_index_tab(t_bvh_info *info);
 
 #endif
