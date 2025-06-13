@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:57:56 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/10 15:58:55 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/13 14:37:42 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,17 @@ bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit)
 	if (delta < 0)
 		return (false);
 	t = (-b - sqrt(delta)) / (2 * a);
-	if (hit->t < t || t < 0)
+	if (t < 0)
+		t = (-b + sqrt(delta)) / (2 * a);
+	if (t < 0 || hit->t < t)
 		return (false);
 	hit->t = t;
 	hit->p = vadd(r->p, vmul(r->dir, hit->t));
 	hit->normal = norm(vsub(hit->p, sphere->pos));
 	hit->mat = &sphere->mat;
 	hit->front = (dot(r->dir, hit->normal) < 0);
+	if (!hit->front)
+		hit->normal = vmul(hit->normal, -1);
 	hit->u = (atan2(hit->normal.z, hit->normal.x) / (2 * PI)) + 0.5;
 	hit->v =  0.5 - (asin(hit->normal.y) / PI);
 	return (true);
@@ -40,7 +44,10 @@ bool	hit_plane(t_plane *plane, t_ray *r, t_hit *hit)
 {
 	const double	denom = dot(plane->normal, r->dir);
 	double			t;
+	static int a = 0;
 
+	if (!a++)
+		print_plane(plane);
 	if (fabs(denom) < 0.000001)
 		return (false);
 	t = dot(vsub(plane->pos, r->p), plane->normal) / denom;
@@ -53,5 +60,7 @@ bool	hit_plane(t_plane *plane, t_ray *r, t_hit *hit)
 	hit->front = (denom < 0);
 	hit->mat = &plane->mat;
 	hit->normal = plane->normal;
+	if (!hit->front)
+		hit->normal = vmul(hit->normal, -1);
 	return (true);
 }
