@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:41:32 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/13 16:33:46 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/13 17:09:43 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_bvh_info
 	size_t			right_size;
 	double			cut_pos;
 	uint8_t			axis;
+	bool			fallback;
 }	t_bvh_info;
 
 typedef struct s_bin
