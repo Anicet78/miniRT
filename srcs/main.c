@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/10 15:42:01 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/13 16:30:49 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	main(int ac, char **av)
 	close(fd);
 	if (!map_file)
 		kill_mlx(&rt, EXIT_FAILURE);
-	create_bvh(&rt, &rt.elements);
+	if (create_bvh(&rt, &rt.elements) == false)
+		(print_err("Memory allocation failed", 0), kill_mlx(&rt, EXIT_FAILURE));
 	display = init_all_displays(rt.elements.cam, rt.arena,
 			rt.elements.frame_amount);
 	if (!display)

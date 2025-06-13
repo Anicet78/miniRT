@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/10 14:15:24 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/13 16:33:55 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ void		print_plane(t_plane *plane);
 void		print_cylinder(t_cylinder *cylinder);
 
 // bvh
-void		create_bvh(t_rt *rt, t_elem_lst *elems);
+bool		create_bvh(t_rt *rt, t_elem_lst *elems);
+size_t		count_elem_amount(t_elem_lst *elems);;
 
 // utils
 uint32_t	rgb_to_hex(uint8_t r, uint8_t g, uint8_t b);

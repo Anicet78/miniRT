@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -ggdb#-Wall -Werror -Wextra
+CFLAGS		= -ggdb -Wall -Werror -Wextra
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -17,7 +17,10 @@ LIBS		= -Lmlx -lmlx -lXext -lX11 -lm
 
 SRC			=	main.c							\
 				bvh/aabb.c						\
+				bvh/bins.c						\
 				bvh/bvh.c						\
+				bvh/indexs.c					\
+				bvh/utils.c						\
 				elements/add_elements.c			\
 				elements/add_elements2.c		\
 				elements/add_xpm.c				\

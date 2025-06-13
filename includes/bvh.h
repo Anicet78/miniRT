@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:41:32 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/13 15:29:33 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/13 16:33:46 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,14 @@ void	fill_bins(t_bin bins[8], t_bvh_info *info);
 int		get_bin_index(double coord, double min_coord, double max_coord, int nbins);
 uint8_t	cheapest_cut(t_bin *bins);
 
-// utils
-size_t	count_elem_amount(t_elem_lst *elems);
+// indexs
 size_t	*create_first_tab(t_arena *arena, size_t elem_amount);
-void	calc_centroid(t_bvh_info *info);
-void	get_axis(t_bvh_info *info);
 void	calc_branch_sizes(t_bvh_info *info);
 void	create_index_tab(t_bvh_info *info);
+
+// utils
+void	calc_centroid(t_bvh_info *info);
+void	get_axis(t_bvh_info *info);
+void	get_cut_pos(t_bvh_info *info, t_bin *bins);
 
 #endif
