@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 23:24:46 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/17 01:06:22 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/17 01:20:47 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ static bool aabb_xyz(const double boxmin[3], const double boxmax[3],
 			return (false);
 		i++;
 	}
-	if (tmax < 0)
-		return (false);
-	return (true);
+	return (tmax >= 0);
 }
 
 bool	hit_aabb(t_aabb *box, t_ray *r)
