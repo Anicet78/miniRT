@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:15:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/13 16:20:57 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 12:00:52 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ void	calc_centroid(t_bvh_info *info)
 	info->centroid_max = (t_point){-INFINITY, -INFINITY, -INFINITY};
 	while (i < info->size)
 	{
-		auto const t_point c = info->builder[info->index_tab[i++]].centroid;
+		auto const t_point c = info->builder[info->index_tab[i]].centroid;
 		info->centroid_min = vmin(info->centroid_min, c);
 		info->centroid_max = vmax(info->centroid_max, c);
+		i++;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 12:58:38 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/13 16:39:06 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 14:37:29 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ t_aabb	get_elem_aabb(void *elem)
 
 	type = get_elem_type(elem);
 	if (type == SPHERE)
-		return (get_sphere_aabb((t_sphere *)&elem));
+		return (get_sphere_aabb((t_sphere *)elem));
 	else if (type == CYLINDER)
-		return (get_cylinder_aabb((t_cylinder *)&elem));
+		return (get_cylinder_aabb((t_cylinder *)elem));
 	return ((t_aabb){{{0.0, 0.0, 0.0}}, {{0.0, 0.0, 0.0}}});
 }

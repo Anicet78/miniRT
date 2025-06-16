@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:06:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/13 17:12:12 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 13:51:32 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	calc_fallback(t_bvh_info *info)
 			info->left_size++;
 		else
 			info->right_size++;
+		i++;
 	}
 	info->fallback = true;
 }
@@ -60,6 +61,7 @@ void	calc_branch_sizes(t_bvh_info *info)
 			info->left_size++;
 		else
 			info->right_size++;
+		i++;
 	}
 	info->fallback = false;
 	if (info->left_size == 0 || info->right_size == 0)
@@ -77,10 +79,12 @@ void	fallback(t_bvh_info *info)
 	right_index = 0;
 	while (i < info->size)
 	{
+		auto size_t idx = info->index_tab[i];
 		if (i < info->cut_pos)
-			info->left_size++;
+			info->left[left_index++] = idx;
 		else
-			info->right_size++;
+			info->right[right_index++] = idx;
+		i++;
 	}
 }
 
@@ -95,10 +99,7 @@ void	create_index_tab(t_bvh_info *info)
 	if (!info->left || !info->right)
 		return ;
 	if (info->fallback == true)
-	{
-		fallback(info);
-		return ;
-	}
+		return ((void)fallback(info));
 	i = 0;
 	left_index = 0;
 	right_index = 0;
@@ -110,5 +111,6 @@ void	create_index_tab(t_bvh_info *info)
 			info->left[left_index++] = idx;
 		else
 			info->right[right_index++] = idx;
+		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:24:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/13 16:50:13 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 13:39:00 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_builder(t_elem_lst *elems, t_bvh_builder *builder)
 		aabb = get_elem_aabb(elem);
 		builder[count].bbox = aabb;
 		builder[count].obj = elem;
-		builder[count].centroid = vmul(vadd(aabb.min, aabb.max), 0.5f);
+		builder[count].centroid = vmul(vadd(aabb.min, aabb.max), 0.5);
 		elem = get_next_elem(elems);
 		count++;
 	}
@@ -46,6 +46,8 @@ void	init_info(t_bvh_info *info, t_bvh_info *prev_info, size_t pos)
 		info->index_tab = prev_info->right;
 		info->size = prev_info->right_size;
 	}
+	info->left_size = 0;
+	info->right_size = 0;
 }
 
 size_t	create_leaf(t_bvh_node *bvh, t_bvh_info *info, size_t pos)
@@ -71,7 +73,7 @@ size_t	build_bvh(t_bvh_node *bvh, t_bvh_info *prev_info, size_t pos)
 	init_info(&info, prev_info, pos);
 	if (info.size <= 1)
 		return (create_leaf(bvh, &info, pos));
-	memset(bins, 0, sizeof(t_bin) * NBINS);
+	ft_memset(bins, 0, sizeof(t_bin) * NBINS);
 	calc_centroid(&info);
 	get_axis(&info);
 	fill_bins(bins, &info);

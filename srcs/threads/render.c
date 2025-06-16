@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 18:01:39 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 13:52:50 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	render_thread(t_rt *rt)
 	fps = 5.0;
 	rt->queue.counter = 0;
 	rt->queue.render_index = 0;
+	rt->elements.count = 0;
 	while (rt->queue.print_index < rt->mlx.img_amount)
 	{
 		// before = get_time_now();

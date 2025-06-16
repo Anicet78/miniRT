@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:41:32 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/13 17:09:43 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 13:39:20 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_bvh_info
 typedef struct s_bin
 {
 	t_aabb	bbox;
-	int		count;
+	size_t	count;
 }	t_bin;
 
 // aabb

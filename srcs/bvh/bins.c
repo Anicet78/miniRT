@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:39:02 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/13 15:17:15 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 14:25:55 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 int	get_bin_index(double coord, double min_coord, double max_coord, int nbins)
 {
-	const double	normalized = (coord - min_coord) / (max_coord - min_coord);
-	int				index;
+	double	normalized;
+	int		index;
 
+	if (min_coord == max_coord)
+		return (0);
+	normalized = (coord - min_coord) / (max_coord - min_coord);
 	index = (int)(normalized * nbins);
 	if (index == nbins)
 		index = nbins - 1;
@@ -34,7 +37,8 @@ void	fill_bins(t_bin bins[8], t_bvh_info *info)
 		auto const int index = get_bin_index(coord, info->centroid_min.data[info->axis],
 			info->centroid_max.data[info->axis], NBINS);
 		bins[index].count++;
-		bins[index].bbox = union_aabb(bins[index].bbox, info->builder[info->index_tab[i++]].bbox);
+		bins[index].bbox = union_aabb(bins[index].bbox, info->builder[info->index_tab[i]].bbox);
+		i++;
 	}
 }
 
