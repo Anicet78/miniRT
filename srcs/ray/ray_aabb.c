@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 23:24:46 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/17 01:20:47 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/17 01:25:32 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,13 @@ static void	swap_ts(double *t0, double *t1, bool is_neg)
 	}
 }
 
-static bool aabb_xyz(const double boxmin[3], const double boxmax[3],
+static bool	aabb_xyz(const double boxmin[3], const double boxmax[3],
 	const double p[3], const double dir[3])
 {
 	int		i;
 	double	tmin;
 	double	tmax;
-	double	t0;
-	double	t1;
+	t_vec	a;
 
 	tmin = -DBL_MAX;
 	tmax = DBL_MAX;
@@ -40,11 +39,11 @@ static bool aabb_xyz(const double boxmin[3], const double boxmax[3],
 	{
 		if (dir[i] != 0.0)
 		{
-			t0 = (boxmin[i] - p[i]) / dir[i];
-			t1 = (boxmax[i] - p[i]) / dir[i];
-			swap_ts(&t0, &t1, dir[i] < 0);
-			tmin = fmax(tmin, t0);
-			tmax = fmin(tmax, t1);
+			a.x = (boxmin[i] - p[i]) / dir[i];
+			a.y = (boxmax[i] - p[i]) / dir[i];
+			swap_ts(&a.x, &a.y, dir[i] < 0);
+			tmin = fmax(tmin, a.x);
+			tmax = fmin(tmax, a.y);
 			if (tmax > tmin)
 				return (false);
 		}
