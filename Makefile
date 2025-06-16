@@ -40,8 +40,8 @@ SRC			=	main.c							\
 				utils/vec_utils.c				\
 				utils/print_utils.c				\
 				ray/closest_hit.c				\
-				ray/hit_cylinder.c				\
-				ray/intersect.c					\
+				ray/hit_cyl.c					\
+				ray/hit_spP.c					\
 				ray/phong.c						\
 				ray/texture.c					\
 				ray/display.c					\
