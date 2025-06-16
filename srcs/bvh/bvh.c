@@ -6,33 +6,13 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:24:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 13:39:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:17:50 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-void	init_builder(t_elem_lst *elems, t_bvh_builder *builder)
-{
-	void	*elem;
-	size_t	count;
-	t_aabb	aabb;
-
-	elems->count = 0;
-	count = 0;
-	elem = get_next_elem(elems);
-	while (elem && elems->count <= elems->frames[0])
-	{
-		aabb = get_elem_aabb(elem);
-		builder[count].bbox = aabb;
-		builder[count].obj = elem;
-		builder[count].centroid = vmul(vadd(aabb.min, aabb.max), 0.5);
-		elem = get_next_elem(elems);
-		count++;
-	}
-}
-
-void	init_info(t_bvh_info *info, t_bvh_info *prev_info, size_t pos)
+static void	init_info(t_bvh_info *info, t_bvh_info *prev_info, size_t pos)
 {
 	info->arena = prev_info->arena;
 	info->builder = prev_info->builder;
@@ -55,7 +35,7 @@ size_t	create_leaf(t_bvh_node *bvh, t_bvh_info *info, size_t pos)
 	t_bvh_builder	elem;
 
 	if (info->size < 1)
-		return (0);
+		return (pos);
 	elem = info->builder[info->index_tab[0]];
 	bvh[pos].bbox = elem.bbox;
 	bvh[pos].obj = elem.obj;
@@ -92,9 +72,9 @@ size_t	build_bvh(t_bvh_node *bvh, t_bvh_info *prev_info, size_t pos)
 	return (pos);
 }
 
-bool	create_bvh(t_rt *rt, t_elem_lst *elems)
+static bool	create_bvh(t_rt *rt, t_elem_lst *elems, size_t frame)
 {
-	const size_t	elem_amount = count_elem_amount(elems);
+	const size_t	elem_amount = count_elem_amount(elems, frame);
 	t_bvh_builder	*builder;
 	t_arena			*arena;
 	size_t			bvh;
@@ -108,15 +88,40 @@ bool	create_bvh(t_rt *rt, t_elem_lst *elems)
 	if (!builder)
 		return (clear_arena(&arena), false);
 	init_builder(elems, builder);
-	elems->bvh = arena_calloc(rt->arena, sizeof(t_bvh_node)
+	elems->bvh[frame] = arena_calloc(rt->arena, sizeof(t_bvh_node)
 				* (elem_amount * 2 - 1));
-	if (!elems->bvh)
+	if (!elems->bvh[frame])
 		return (clear_arena(&arena), false);
-	bvh = build_bvh(elems->bvh, &(t_bvh_info){.arena = arena, .builder = builder,
+	bvh = build_bvh(elems->bvh[frame], &(t_bvh_info){.arena = arena, .builder = builder,
 		.right = create_first_tab(arena, elem_amount),
 		.right_size = elem_amount}, 0);
 	clear_arena(&arena);
 	if (bvh == 0)
 		return (false);
 	return (true);
+}
+
+void	create_all_bvh(t_rt *rt)
+{
+	t_elem_lst	*elems;
+	size_t		i;
+
+	elems = &rt->elements;
+	i = 0;
+	elems->bvh = arena_calloc(rt->arena, sizeof(t_bvh_node *)
+		* elems->frame_amount);
+	if (!elems->bvh)
+	{
+		print_err("Memory allocation failed", 0);
+		kill_mlx(rt, EXIT_FAILURE);
+	}
+	while (i < elems->frame_amount)
+	{
+		if (create_bvh(rt, elems, i) == false)
+		{
+			print_err("Memory allocation failed", 0);
+			kill_mlx(rt, EXIT_FAILURE);
+		}
+		i++;
+	}
 }

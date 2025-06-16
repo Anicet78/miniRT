@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/10 14:41:48 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:09:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,6 @@ typedef enum elem_type
 	PLANE,
 	CYLINDER
 }	t_elem_type;
-
-typedef	struct
-{
-	void	*img;
-	int		width;
-	int		height;
-	char	*addr;
-	int		bpp;
-	int		line_size;
-	int		endian;
-}	t_tpmp; // en attendant pour tester
 
 typedef struct s_material
 {
@@ -126,7 +115,7 @@ typedef struct s_elem_lst
 	size_t		texture_amount;
 	t_image		*normals;
 	size_t		normal_amount;
-	t_bvh_node	*bvh;
+	t_bvh_node	**bvh;
 	void		*mlx_ptr;
 	uintptr_t	*elem_lst;
 }	t_elem_lst;

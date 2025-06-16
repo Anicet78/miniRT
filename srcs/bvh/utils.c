@@ -6,26 +6,48 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:15:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 12:00:52 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:20:06 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-size_t	count_elem_amount(t_elem_lst *elems)
+size_t	count_elem_amount(t_elem_lst *elems, size_t frame)
 {
 	void	*elem;
 	size_t	count;
+
+	elems->count = 0;
+	if (frame > 0)
+		elems->count = elems->frames[frame - 1];
+	count = 0;
+	elem = get_next_elem(elems);
+	while (elem && elems->count <= elems->frames[frame])
+	{
+		count++;
+		elem = get_next_elem(elems);
+	}
+	return (count);
+}
+
+void	init_builder(t_elem_lst *elems, t_bvh_builder *builder)
+{
+	void	*elem;
+	size_t	count;
+	t_aabb	aabb;
 
 	elems->count = 0;
 	count = 0;
 	elem = get_next_elem(elems);
 	while (elem && elems->count <= elems->frames[0])
 	{
-		count++;
+		aabb = get_elem_aabb(elem);
+		builder[count].bbox = aabb;
+		builder[count].obj = elem;
+		builder[count].centroid = vmul(vadd(aabb.min, aabb.max), 0.5);
 		elem = get_next_elem(elems);
+		count++;
 	}
-	return (count);
 }
 
 void	calc_centroid(t_bvh_info *info)
