@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 15:12:26 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:53:28 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int			destroy_hook(t_rt *rt);
 int			key_hook(int keycode, t_rt *rt);
 
 // tristan
-void		print_color(unsigned int col);
 t_display	*init_all_displays(t_camera *cam, t_arena *arena, size_t frame_amount);
 t_display	init_display(t_camera *cam);
 void		render_display(t_rt *rt, t_display *d);
@@ -114,7 +113,6 @@ t_color		ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface);
 t_color		lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface, size_t frame);
 
 // tests
-void		iterate(t_elem_lst *elements);
 void		print_ambient(t_ambient *ambient);
 void		print_cam(t_camera *camera);
 void		print_light(t_light *light);

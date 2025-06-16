@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 17:39:02 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 14:25:55 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:42:12 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,18 @@ int	get_bin_index(double coord, double min_coord, double max_coord, int nbins)
 void	fill_bins(t_bin bins[8], t_bvh_info *info)
 {
 	size_t	i;
+	double	coord;
+	int		index;
 
 	i = 0;
 	while (i < info->size)
 	{
-		auto const double coord = info->builder[info->index_tab[i]].centroid.data[info->axis];
-		auto const int index = get_bin_index(coord, info->centroid_min.data[info->axis],
-			info->centroid_max.data[info->axis], NBINS);
+		coord = info->builder[info->index_tab[i]].centroid.data[info->axis];
+		index = get_bin_index(coord, info->centroid_min.data[info->axis],
+				info->centroid_max.data[info->axis], NBINS);
 		bins[index].count++;
-		bins[index].bbox = union_aabb(bins[index].bbox, info->builder[info->index_tab[i]].bbox);
+		bins[index].bbox = union_aabb(bins[index].bbox,
+				info->builder[info->index_tab[i]].bbox);
 		i++;
 	}
 }

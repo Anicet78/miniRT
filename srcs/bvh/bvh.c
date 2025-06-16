@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:24:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 15:17:50 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:44:36 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,15 @@ static bool	create_bvh(t_rt *rt, t_elem_lst *elems, size_t frame)
 		return (clear_arena(&arena), false);
 	init_builder(elems, builder);
 	elems->bvh[frame] = arena_calloc(rt->arena, sizeof(t_bvh_node)
-				* (elem_amount * 2 - 1));
+			* (elem_amount * 2 - 1));
 	if (!elems->bvh[frame])
 		return (clear_arena(&arena), false);
-	bvh = build_bvh(elems->bvh[frame], &(t_bvh_info){.arena = arena, .builder = builder,
-		.right = create_first_tab(arena, elem_amount),
-		.right_size = elem_amount}, 0);
+	bvh = build_bvh(elems->bvh[frame], &(t_bvh_info){.arena = arena,
+			.builder = builder,
+			.right = create_first_tab(arena, elem_amount),
+			.right_size = elem_amount}, 0);
 	clear_arena(&arena);
-	if (bvh == 0)
-		return (false);
-	return (true);
+	return (bvh != 0);
 }
 
 void	create_all_bvh(t_rt *rt)
@@ -109,7 +108,7 @@ void	create_all_bvh(t_rt *rt)
 	elems = &rt->elements;
 	i = 0;
 	elems->bvh = arena_calloc(rt->arena, sizeof(t_bvh_node *)
-		* elems->frame_amount);
+			* elems->frame_amount);
 	if (!elems->bvh)
 	{
 		print_err("Memory allocation failed", 0);

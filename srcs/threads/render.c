@@ -6,16 +6,16 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 13:52:50 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:51:47 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-static void	print_pixels(t_block block, t_params *p, t_mlx *mlx, t_queue *queue)
+static void	print_pixels(t_block block, t_params *p, t_mlx *mlx)
 {
-	int					x;
-	int					y;
+	uint32_t			x;
+	uint32_t			y;
 	t_ray				r;
 	t_point				world_pix;
 	const t_elem_lst	elems = p->elements;
@@ -51,7 +51,7 @@ void	*start_routine(void *param)
 	{
 		if (!get_next_block(&block, params->queue, params->mlx))
 			return (clear_arena(&params->arena), NULL);
-		print_pixels(block, params, params->mlx, params->queue);
+		print_pixels(block, params, params->mlx);
 		set_ready(params->queue, &block);
 	}
 	return (NULL);
@@ -60,8 +60,8 @@ void	*start_routine(void *param)
 void	render_thread(t_rt *rt)
 {
 	double	fps;
-	long	before;
-	long	after;
+	/* long	before;
+	long	after; */
 
 	fps = 5.0;
 	rt->queue.counter = 0;

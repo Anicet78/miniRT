@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/10 15:31:54 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:48:13 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ bool	init_parsing(t_elem_lst *elems, t_arena *arena, int fd)
 	return (true);
 }
 
-bool	finish_parsing(t_elem_lst *elems, t_arena *arena)
+bool	finish_parsing(t_elem_lst *elems)
 {
 	size_t	count;
 
@@ -254,7 +254,7 @@ bool	read_rtfile(int fd, t_elem_lst *elements, t_arena *arena)
 		i++;
 		line = get_next_line(fd);
 	}
-	if (!finish_parsing(elements, arena))
+	if (!finish_parsing(elements))
 		return (false);
 	return (true);
 }

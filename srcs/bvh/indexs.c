@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:06:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 13:51:32 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:46:09 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,14 @@ void	calc_fallback(t_bvh_info *info)
 void	calc_branch_sizes(t_bvh_info *info)
 {
 	size_t	i;
+	size_t	idx;
+	double	c;
 
 	i = 0;
 	while (i < info->size)
 	{
-		auto size_t idx = info->index_tab[i];
-		auto double c = info->builder[idx].centroid.data[info->axis];
+		idx = info->index_tab[i];
+		c = info->builder[idx].centroid.data[info->axis];
 		if (c < info->cut_pos)
 			info->left_size++;
 		else
@@ -73,13 +75,14 @@ void	fallback(t_bvh_info *info)
 	size_t	i;
 	size_t	left_index;
 	size_t	right_index;
+	size_t	idx;
 
 	i = 0;
 	left_index = 0;
 	right_index = 0;
 	while (i < info->size)
 	{
-		auto size_t idx = info->index_tab[i];
+		idx = info->index_tab[i];
 		if (i < info->cut_pos)
 			info->left[left_index++] = idx;
 		else
@@ -93,6 +96,8 @@ void	create_index_tab(t_bvh_info *info)
 	size_t	i;
 	size_t	left_index;
 	size_t	right_index;
+	size_t	idx;
+	double	c;
 
 	info->left = arena_calloc(info->arena, sizeof(size_t) * info->left_size);
 	info->right = arena_calloc(info->arena, sizeof(size_t) * info->right_size);
@@ -105,8 +110,8 @@ void	create_index_tab(t_bvh_info *info)
 	right_index = 0;
 	while (i < info->size)
 	{
-		auto size_t idx = info->index_tab[i];
-		auto double c = info->builder[idx].centroid.data[info->axis];
+		idx = info->index_tab[i];
+		c = info->builder[idx].centroid.data[info->axis];
 		if (c < info->cut_pos)
 			info->left[left_index++] = idx;
 		else

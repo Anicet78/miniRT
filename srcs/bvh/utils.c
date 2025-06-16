@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:15:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 15:20:06 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:47:55 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,14 @@ void	init_builder(t_elem_lst *elems, t_bvh_builder *builder)
 void	calc_centroid(t_bvh_info *info)
 {
 	size_t	i;
+	t_point	c;
 
 	i = 0;
-	info->centroid_min = (t_point){INFINITY, INFINITY, INFINITY};
-	info->centroid_max = (t_point){-INFINITY, -INFINITY, -INFINITY};
+	info->centroid_min = (t_point){{INFINITY, INFINITY, INFINITY}};
+	info->centroid_max = (t_point){{-INFINITY, -INFINITY, -INFINITY}};
 	while (i < info->size)
 	{
-		auto const t_point c = info->builder[info->index_tab[i]].centroid;
+		c = info->builder[info->index_tab[i]].centroid;
 		info->centroid_min = vmin(info->centroid_min, c);
 		info->centroid_max = vmax(info->centroid_max, c);
 		i++;
@@ -79,8 +80,8 @@ void	get_axis(t_bvh_info *info)
 
 void	get_cut_pos(t_bvh_info *info, t_bin *bins)
 {
-	info->cut_pos = info->centroid_min.data[info->axis] +
-					((double)cheapest_cut(bins) / (double)NBINS) *
-					(info->centroid_max.data[info->axis]
-						- info->centroid_min.data[info->axis]);
+	info->cut_pos = info->centroid_min.data[info->axis]
+		+ ((double)cheapest_cut(bins) / (double)NBINS)
+		* (info->centroid_max.data[info->axis]
+			- info->centroid_min.data[info->axis]);
 }

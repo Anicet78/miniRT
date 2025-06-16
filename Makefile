@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -ggdb#-Ofast -flto -ffast-math -march=native -pipe-Wall -Werror -Wextra
+CFLAGS		= -ggdb -Ofast -flto -ffast-math -march=native -pipe #-Wall -Werror -Wextra
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a

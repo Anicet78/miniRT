@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 15:09:38 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:48:59 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ bool		parse_new_frame(t_elem_lst *elements, char **line, int nb);
 double		ft_atof_parse(char *str);
 
 // xpm
-int			try_file(char **line, char *folder, size_t tabsize, int index);
+int			try_file(char **line, char *folder, size_t tabsize, size_t index);
 int			texture_err(int error, int nb, char *type);
 int			normal_err(int error, int nb, char *type);
 t_image		*add_texture(t_elem_lst *elems, char *filename);
