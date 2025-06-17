@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/11 15:01:06 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/17 16:55:46 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 	return (vec_to_col(color));
 }
 
-bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
+/* bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 {
 	void	*elem;
 	uint8_t	type;
@@ -71,5 +71,22 @@ bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 			did_hit |= hit_cylinder(elem, r, hit);
 		elem = get_next_elem(elems);
 	}
+	return (did_hit);
+} */
+
+bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
+{
+	size_t	i;
+	bool	did_hit;
+
+	hit->t = INFINITY;
+	did_hit = false;
+	i = 0;
+	while (elems->planes[frame] && elems->planes[frame][i].declared == true)
+	{
+		did_hit |= hit_plane(elems->planes[frame] + i, r, hit);
+		i++;
+	}
+	did_hit |= hit_bvh(elems->bvh[frame], r, hit, 0);
 	return (did_hit);
 }

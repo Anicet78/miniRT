@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_aabb.c                                         :+:      :+:    :+:   */
+/*   hit_aabb.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 23:24:46 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/17 01:25:32 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/06/17 14:41:56 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static bool	aabb_xyz(const double boxmin[3], const double boxmax[3],
 			swap_ts(&a.x, &a.y, dir[i] < 0);
 			tmin = fmax(tmin, a.x);
 			tmax = fmin(tmax, a.y);
-			if (tmax > tmin)
+			if (tmax < tmin)
 				return (false);
 		}
 		else if (p[i] < boxmin[i] || p[i] > boxmax[i])

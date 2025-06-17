@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:06:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 15:46:09 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/17 15:21:03 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	*create_first_tab(t_arena *arena, size_t elem_amount)
 	size_t	*index;
 	size_t	count;
 
-	index = arena_calloc(arena, elem_amount);
+	index = arena_calloc(arena, sizeof(size_t) * elem_amount);
 	if (!index)
 		return (NULL);
 	count = 0;

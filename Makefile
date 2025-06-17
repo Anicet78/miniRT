@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -ggdb -Ofast -flto -ffast-math -march=native -pipe #-Wall -Werror -Wextra
+CFLAGS		= -ggdb #-Ofast -flto -ffast-math -march=native -pipe #-Wall -Werror -Wextra
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -19,6 +19,7 @@ SRC			=	main.c							\
 				bvh/aabb.c						\
 				bvh/bins.c						\
 				bvh/bvh.c						\
+				bvh/hit_bvh.c					\
 				bvh/indexs.c					\
 				bvh/utils.c						\
 				elements/add_elements.c			\
@@ -40,6 +41,7 @@ SRC			=	main.c							\
 				utils/vec_utils.c				\
 				utils/print_utils.c				\
 				ray/closest_hit.c				\
+				ray/hit_aabb.c					\
 				ray/hit_cyl.c					\
 				ray/hit_spP.c					\
 				ray/phong.c						\
