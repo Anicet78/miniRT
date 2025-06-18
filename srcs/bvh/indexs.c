@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 16:06:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/17 15:21:03 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/18 15:41:10 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ void	calc_branch_sizes(t_bvh_info *info)
 	double	c;
 
 	i = 0;
+	if (info->fallback == true)
+	{
+		calc_fallback(info);
+		return ;
+	}
 	while (i < info->size)
 	{
 		idx = info->index_tab[i];
@@ -65,7 +70,6 @@ void	calc_branch_sizes(t_bvh_info *info)
 			info->right_size++;
 		i++;
 	}
-	info->fallback = false;
 	if (info->left_size == 0 || info->right_size == 0)
 		calc_fallback(info);
 }

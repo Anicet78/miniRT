@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:24:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/17 16:25:49 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/18 12:53:42 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	init_info(t_bvh_info *info, t_bvh_info *prev_info, size_t pos)
 {
 	info->arena = prev_info->arena;
 	info->builder = prev_info->builder;
+	info->fallback = false;
 	if (pos % 2 == 1)
 	{
 		info->index_tab = prev_info->left;
@@ -34,12 +35,13 @@ size_t	create_leaf(t_bvh_node *bvh, t_bvh_info *info, size_t pos)
 {
 	t_bvh_builder	elem;
 
+	elem.obj = NULL;
+	bvh[pos].is_leaf = 1;
 	if (info->size < 1)
 		return (pos);
 	elem = info->builder[info->index_tab[0]];
 	bvh[pos].bbox = elem.bbox;
 	bvh[pos].obj = elem.obj;
-	bvh[pos].is_leaf = 1;
 	if (pos == 0)
 		return (1);
 	return (pos);

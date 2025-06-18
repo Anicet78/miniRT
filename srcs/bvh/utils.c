@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:15:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/17 16:25:36 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/18 16:03:04 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,11 @@ void	calc_centroid(t_bvh_info *info)
 
 void	get_axis(t_bvh_info *info)
 {
-	const t_point	extent = vsub(info->centroid_max, info->centroid_min);
+	t_point	extent;
 
+	if (info->fallback == true)
+		return ;
+	extent = vsub(info->centroid_max, info->centroid_min);
 	info->axis = 0;
 	if (extent.y > extent.x)
 		info->axis = 1;
@@ -82,8 +85,29 @@ void	get_axis(t_bvh_info *info)
 
 void	get_cut_pos(t_bvh_info *info, t_bin *bins)
 {
-	info->cut_pos = info->centroid_min.data[info->axis]
-		+ ((double)cheapest_cut(bins) / (double)NBINS)
-		* (info->centroid_max.data[info->axis]
-			- info->centroid_min.data[info->axis]);
+	uint8_t	cut;
+	double	cost;
+
+	if (info->fallback == true)
+		return ;
+	auto t_aabb total_bbox = (t_aabb){{{INFINITY, INFINITY, INFINITY}},
+		{{INFINITY, INFINITY, INFINITY}}};
+	auto size_t i = 0;
+	while (i < info->size)
+	{
+		auto size_t idx = info->index_tab[i];
+		total_bbox = union_aabb(total_bbox, info->builder[idx].bbox);
+		i++;
+	}
+	cut = cheapest_cut(bins, &cost);
+	auto double leaf_cost = surface_area(total_bbox) * info->size;
+	if (cost >= leaf_cost)
+		info->fallback = true;
+	else
+	{
+		info->cut_pos = info->centroid_min.data[info->axis]
+			+ ((double)(cut + 1) / NBINS)
+			* (info->centroid_max.data[info->axis]
+				- info->centroid_min.data[info->axis]);
+	}
 }

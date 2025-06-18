@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 11:41:32 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/17 14:08:23 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/18 15:12:13 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ t_aabb	union_aabb(t_aabb bbox1, t_aabb bbox2);
 // bins
 void	fill_bins(t_bin bins[8], t_bvh_info *info);
 int		get_bin_index(double coord, double min_coord, double max_coord, int nbins);
-uint8_t	cheapest_cut(t_bin *bins);
+double	surface_area(t_aabb bbox);
+uint8_t	cheapest_cut(t_bin *bins, double *out_cost);
 
 // indexs
 size_t	*create_first_tab(t_arena *arena, size_t elem_amount);
