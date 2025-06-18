@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 23:24:46 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/17 14:41:56 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:25:02 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static bool	aabb_xyz(const double boxmin[3], const double boxmax[3],
 	int		i;
 	double	tmin;
 	double	tmax;
-	t_vec	a;
 
 	tmin = -DBL_MAX;
 	tmax = DBL_MAX;
@@ -39,11 +38,11 @@ static bool	aabb_xyz(const double boxmin[3], const double boxmax[3],
 	{
 		if (dir[i] != 0.0)
 		{
-			a.x = (boxmin[i] - p[i]) / dir[i];
-			a.y = (boxmax[i] - p[i]) / dir[i];
-			swap_ts(&a.x, &a.y, dir[i] < 0);
-			tmin = fmax(tmin, a.x);
-			tmax = fmin(tmax, a.y);
+			auto double t0 = (boxmin[i] - p[i]) / dir[i];
+			auto double t1 = (boxmax[i] - p[i]) / dir[i];
+			swap_ts(&t0, &t1, dir[i] < 0);
+			tmin = fmax(tmin, t0);
+			tmax = fmin(tmax, t1);
 			if (tmax < tmin)
 				return (false);
 		}

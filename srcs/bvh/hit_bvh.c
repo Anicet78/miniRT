@@ -6,13 +6,13 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:57:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/18 16:03:23 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:07:03 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-static bool	hit_object(void *obj, t_ray *r, t_hit *hit)
+bool	hit_object(void *obj, t_ray *r, t_hit *hit)
 {
 	uint8_t	type;
 
@@ -26,6 +26,14 @@ static bool	hit_object(void *obj, t_ray *r, t_hit *hit)
 	return (false);
 }
 
+bool	valid_node(t_bvh_node *node)
+{
+	if (node->is_leaf)
+		return (node->obj != NULL);
+	return (true);
+}
+
+
 bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit, size_t index)
 {
 	bool			did_hit;
@@ -33,14 +41,14 @@ bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit, size_t index)
 	const size_t	right = index * 2 + 2;
 
 	did_hit = false;
-	if (hit_aabb(&bvh[left].bbox, r))
+	if (valid_node(&bvh[left]) && hit_aabb(&bvh[left].bbox, r))
 	{
 		if (bvh[left].is_leaf)
 			did_hit |= hit_object(bvh[left].obj, r, hit);
 		else
 			did_hit |= hit_bvh(bvh, r, hit, left);
 	}
-	if (hit_aabb(&bvh[right].bbox, r))
+	if (valid_node(&bvh[right]) && hit_aabb(&bvh[right].bbox, r))
 	{
 		if (bvh[right].is_leaf)
 			did_hit |= hit_object(bvh[right].obj, r, hit);

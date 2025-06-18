@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/17 16:55:46 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/18 16:15:20 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 		did_hit |= hit_plane(elems->planes[frame] + i, r, hit);
 		i++;
 	}
-	did_hit |= hit_bvh(elems->bvh[frame], r, hit, 0);
+	if (elems->bvh[frame][0].is_leaf == true)
+		did_hit |= hit_object(elems->bvh[frame][0].obj, r, hit);
+	else
+		did_hit |= hit_bvh(elems->bvh[frame], r, hit, 0);
 	return (did_hit);
 }
