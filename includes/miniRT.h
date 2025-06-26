@@ -124,7 +124,8 @@ void		print_cylinder(t_cylinder *cylinder);
 void		create_all_bvh(t_rt *rt);
 void		init_builder(t_elem_lst *elems, t_bvh_builder *builder, size_t frame);
 size_t		count_elem_amount(t_elem_lst *elems, size_t frame);
-bool		hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit, size_t index);
+// bool		hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit, size_t index);
+bool		hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit);
 bool		hit_object(void *obj, t_ray *r, t_hit *hit);
 bool		hit_aabb(t_aabb *box, t_ray *r);
 

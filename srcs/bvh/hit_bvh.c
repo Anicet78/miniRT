@@ -34,7 +34,7 @@ bool	valid_node(t_bvh_node *node)
 }
 
 
-bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit, size_t index)
+/* bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit, size_t index)
 {
 	bool			did_hit;
 	const size_t	left = index * 2 + 1;
@@ -54,6 +54,35 @@ bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit, size_t index)
 			did_hit |= hit_object(bvh[right].obj, r, hit);
 		else
 			did_hit |= hit_bvh(bvh, r, hit, right);
+	}
+	return (did_hit);
+} */
+
+bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
+{
+	bool	did_hit;
+	size_t	index;
+
+	if (bvh[0].is_leaf == true)
+		return (hit_object(bvh[0].obj, r, hit));
+	else if (!hit_aabb(&bvh[0].bbox, r))
+		return (false);
+	did_hit = false;
+	index = 1;
+	while (index != 0 && valid_node(&bvh[index]))
+	{
+		if (hit_aabb(&bvh[index].bbox, r))
+		{
+			if (bvh[index].is_leaf)
+			{
+				did_hit |= hit_object(bvh[index].obj, r, hit);
+				index = bvh[index].next;
+			}
+			else
+				index = index * 2 + 1;
+		}
+		else
+			index = bvh[index].next;
 	}
 	return (did_hit);
 }

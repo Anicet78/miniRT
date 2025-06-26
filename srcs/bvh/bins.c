@@ -26,7 +26,7 @@ int	get_bin_index(double coord, double min_coord, double max_coord, int nbins)
 	return (index);
 }
 
-void	fill_bins(t_bin bins[8], t_bvh_info *info)
+void	fill_bins(t_bin *bins, t_bvh_info *info)
 {
 	size_t	i;
 	double	coord;

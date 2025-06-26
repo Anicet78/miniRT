@@ -87,9 +87,10 @@ bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 		did_hit |= hit_plane(elems->planes[frame] + i, r, hit);
 		i++;
 	}
-	if (elems->bvh[frame][0].is_leaf == true)
+	/* if (elems->bvh[frame][0].is_leaf == true)
 		did_hit |= hit_object(elems->bvh[frame][0].obj, r, hit);
 	else
-		did_hit |= hit_bvh(elems->bvh[frame], r, hit, 0);
+		did_hit |= hit_bvh(elems->bvh[frame], r, hit, 0); */
+	did_hit |= hit_bvh(elems->bvh[frame], r, hit);
 	return (did_hit);
 }

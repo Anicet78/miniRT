@@ -36,6 +36,7 @@ typedef struct s_bvh_node
 		};
 		void	*obj;
 	};
+	size_t	next;
 }	t_bvh_node;
 
 typedef struct s_bvh_builder
@@ -73,7 +74,7 @@ t_aabb	get_elem_aabb(void *elem);
 t_aabb	union_aabb(t_aabb bbox1, t_aabb bbox2);
 
 // bins
-void	fill_bins(t_bin bins[8], t_bvh_info *info);
+void	fill_bins(t_bin *bins, t_bvh_info *info);
 int		get_bin_index(double coord, double min_coord, double max_coord, int nbins);
 double	surface_area(t_aabb bbox);
 uint8_t	cheapest_cut(t_bin *bins, double *out_cost);

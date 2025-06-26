@@ -31,15 +31,30 @@ static void	init_info(t_bvh_info *info, t_bvh_info *prev_info, size_t pos)
 	info->right_size = 0;
 }
 
+size_t	get_next(size_t pos)
+{
+	size_t	i;
+
+	if (pos == 0)
+		return (2);
+	i = pos;
+	while (i != 0 && i % 2 == 0)
+		i = (i - 1) / 2;
+	if (i == 0)
+		return (0);
+	return ((i - 1) / 2 * 2 + 2);
+}
+
 size_t	create_leaf(t_bvh_node *bvh, t_bvh_info *info, size_t pos)
 {
 	t_bvh_builder	elem;
 
 	elem.obj = NULL;
-	bvh[pos].is_leaf = 1;
+	bvh[pos].is_leaf = true;
 	if (info->size < 1)
 		return (pos);
 	elem = info->builder[info->index_tab[0]];
+	bvh[pos].next = get_next(pos);
 	bvh[pos].bbox = elem.bbox;
 	bvh[pos].obj = elem.obj;
 	if (pos == 0)
@@ -64,6 +79,7 @@ size_t	build_bvh(t_bvh_node *bvh, t_bvh_info *prev_info, size_t pos)
 	create_index_tab(&info);
 	if (!info.left || !info.right)
 		return (0);
+	bvh[pos].next = get_next(pos);
 	bvh[pos].left = build_bvh(bvh, &info, pos * 2 + 1);
 	bvh[pos].right = build_bvh(bvh, &info, pos * 2 + 2);
 	if (bvh[pos].left == 0 || bvh[pos].right == 0)

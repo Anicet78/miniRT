@@ -17,7 +17,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define RENDER_THREADS 22
+# define RENDER_THREADS 1
 # define BLOCK_SIZE 32
 
 typedef struct s_mlx		t_mlx;
