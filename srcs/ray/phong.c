@@ -60,7 +60,7 @@ t_color	lambertian(t_hit *hit, t_elem_lst *elems,
 
 	color = black_color();
 	i = 0;
-	lux = elems->lights[i];
+	lux = elems->lights[frame];
 	while (lux->declared == true)
 	{
 		if (shadow_ray(
