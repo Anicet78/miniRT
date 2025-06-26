@@ -63,7 +63,7 @@ t_color	lambertian(t_hit *hit, t_elem_lst *elems,
 	lux = elems->lights[frame];
 	while (lux->declared == true)
 	{
-		if (!shadow_ray((t_ray){.dir = norm(vsub(lux->pos, hit->p)),.p = hit->p},elems))
+		if (!shadow_ray((t_ray){.dir = norm(vsub(lux->pos, hit->p)),.p = vadd(hit->p, vmul(hit->normal, 0.000001))},elems))
 			color = vadd(had(vmul(vmul(*surface,fmax(0,dot(norm(vsub(lux->pos, hit->p)),hit->normal))),lux->ratio),int_to_tcol(lux->color)),color);
 		i++;
 		lux = elems->lights[frame] + i;
