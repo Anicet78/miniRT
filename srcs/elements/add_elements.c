@@ -12,7 +12,7 @@
 
 #include "../../includes/miniRT.h"
 
-void	add_ambient_lighting(t_elem_lst *elems, float ratio, uint32_t color)
+void	add_ambient_lighting(t_elem_lst *elems, float ratio, t_color color)
 {
 	elems->al[elems->frame_amount].ratio = ratio;
 	elems->al[elems->frame_amount].color = color;
@@ -27,7 +27,7 @@ void	add_camera(t_elem_lst *elems, t_point pos, t_vec axis, uint32_t fov)
 	elems->cam[elems->frame_amount].declared = true;
 }
 
-bool	add_light(t_elem_lst *elems, t_point pos, float ratio, uint32_t color)
+bool	add_light(t_elem_lst *elems, t_point pos, float ratio, t_color color)
 {
 	if (!elems->lights || !elems->lights[elems->frame_amount])
 		return (false);

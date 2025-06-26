@@ -41,7 +41,7 @@ bool	is_color(char *str)
 	return (true);
 }
 
-uint32_t	get_color(char *str)
+t_color	get_color(char *str)
 {
 	int			i;
 	uint8_t		r;
@@ -60,7 +60,7 @@ uint32_t	get_color(char *str)
 	b = ft_atoi(str + i);
 	while (ft_isdigit(str[i]))
 		i++;
-	return (rgb_to_hex(r, g, b));
+	return ((t_color){.x = r / 255.0, .y = g / 255.0, .z = b / 255.0});
 }
 
 bool	is_vec(char *str)

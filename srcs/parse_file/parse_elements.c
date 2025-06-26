@@ -15,7 +15,7 @@
 bool	parse_ambient(t_elem_lst *elements, char **line, int nb)
 {
 	float			ratio;
-	uint32_t		color;
+	t_color			color;
 	static bool		declared;
 	static size_t	current_frame;
 
@@ -68,9 +68,9 @@ bool	parse_camera(t_elem_lst *elements, char **line, int nb)
 
 bool	parse_light(t_elem_lst *elements, char **line, int nb)
 {
-	t_point		pos;
-	double		ratio;
-	uint32_t	color;
+	t_point	pos;
+	double	ratio;
+	t_color	color;
 
 	if (tab_len(line) != 4)
 		return (print_err("Invalid amount of argument in `light`", nb));

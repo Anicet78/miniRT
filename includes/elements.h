@@ -43,45 +43,34 @@ typedef enum elem_type
 	CYLINDER
 }	t_elem_type;
 
-typedef	struct
-{
-	void	*img;
-	int		width;
-	int		height;
-	char	*addr;
-	int		bpp;
-	int		line_size;
-	int		endian;
-}	t_tpmp; // en attendant pour tester
-
 typedef struct s_material
 {
-	uint32_t	color;
+	t_color		color;
 	t_image		*texture;
 	t_image		*normal;
 }	t_material;
 
 typedef struct s_ambient
 {
-	float		ratio;
-	uint32_t	color;
-	bool		declared;
+	float	ratio;
+	t_color	color;
+	bool	declared;
 }	t_ambient;
 
 typedef struct s_camera
 {
-	t_point		pos;
-	t_vec		dir;
-	double		fov;
-	bool		declared;
+	t_point	pos;
+	t_vec	dir;
+	double	fov;
+	bool	declared;
 }	t_camera;
 
 typedef struct s_light
 {
-	float		ratio;
-	t_point		pos;
-	uint32_t	color;
-	bool		declared;
+	float	ratio;
+	t_point	pos;
+	t_color	color;
+	bool	declared;
 }	t_light;
 
 typedef struct s_sphere
@@ -135,16 +124,16 @@ size_t		get_elem_size(void *elem);
 void		*get_next_elem(t_elem_lst *elements);
 
 // add element functions
-void		add_ambient_lighting(t_elem_lst *elems, float ratio, uint32_t col);
+void		add_ambient_lighting(t_elem_lst *elems, float ratio, t_color col);
 void		add_camera(t_elem_lst *elems, t_point p, t_vec axis, uint32_t fov);
-bool		add_light(t_elem_lst *elems, t_point p, float ratio, uint32_t col);
+bool		add_light(t_elem_lst *elems, t_point p, float ratio, t_color col);
 bool		add_sphere(t_elem_lst *elems, char **line, int texture, int norm);
 bool		add_plane(t_elem_lst *elems, char **line, int texture, int norm);
 bool		add_cylinder(t_elem_lst *elems, char **line, int texture, int norm);
 
 // parsing
 bool		read_rtfile(int fd, t_elem_lst *elements, t_arena *arena);
-uint32_t	get_color(char *str);
+t_color		get_color(char *str);
 bool		is_color(char *str);
 bool		is_vec(char *str);
 bool		is_normalize_vec(char *str);

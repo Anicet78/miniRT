@@ -16,11 +16,10 @@ t_color	ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface)
 {
 	t_color	color;
 
-	color = int_to_tcol(hit->mat->color);
-	color = hadamar(color, *surface);
+	color = hadamar(hit->mat->color, *surface);
 	color = hadamar(
 		vmul(
-			int_to_tcol(elems->al->color),
+			elems->al->color,
 			elems->al->ratio
 		),
 		color
