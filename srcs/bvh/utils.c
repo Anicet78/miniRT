@@ -111,3 +111,17 @@ void	get_cut_pos(t_bvh_info *info, t_bin *bins)
 				- info->centroid_min.data[info->axis]);
 	}
 }
+
+size_t	get_bvh_size(size_t elem_amount)
+{
+	size_t	pow2;
+	size_t	bvh_node_count;
+
+	if (elem_amount == 1)
+		return (1);
+	bvh_node_count = 2 * elem_amount - 1;
+	pow2 = 1;
+	while (pow2 < bvh_node_count)
+		pow2 *= 2;
+	return (pow2 * 2);
+}

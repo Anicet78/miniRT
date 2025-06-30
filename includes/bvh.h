@@ -88,5 +88,6 @@ void	create_index_tab(t_bvh_info *info);
 void	calc_centroid(t_bvh_info *info);
 void	get_axis(t_bvh_info *info);
 void	get_cut_pos(t_bvh_info *info, t_bin *bins);
+size_t	get_bvh_size(size_t elem_amount);
 
 #endif

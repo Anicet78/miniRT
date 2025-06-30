@@ -107,7 +107,7 @@ static bool	create_bvh(t_rt *rt, t_elem_lst *elems, size_t frame)
 		return (clear_arena(&arena), false);
 	init_builder(elems, builder, frame);
 	elems->bvh[frame] = arena_calloc(rt->arena, sizeof(t_bvh_node)
-			* (elem_amount * 2 - 1));
+			* get_bvh_size(elem_amount));
 	if (!elems->bvh[frame])
 		return (clear_arena(&arena), false);
 	bvh = build_bvh(elems->bvh[frame], &(t_bvh_info){.arena = arena,
