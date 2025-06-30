@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "vec3.h"
+# include "bvh.h"
 # include "elements.h"
 # include "threads.h"
 # include "../mlx/mlx.h"
@@ -103,7 +104,6 @@ int			destroy_hook(t_rt *rt);
 int			key_hook(int keycode, t_rt *rt);
 
 // tristan
-void		print_color(unsigned int col);
 t_display	*init_all_displays(t_camera *cam, t_arena *arena, size_t frame_amount);
 t_display	init_display(t_camera *cam);
 void		render_display(t_rt *rt, t_display *d);
@@ -114,13 +114,21 @@ t_color		ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface);
 t_color		lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface, size_t frame);
 
 // tests
-void		iterate(t_elem_lst *elements);
 void		print_ambient(t_ambient *ambient);
 void		print_cam(t_camera *camera);
 void		print_light(t_light *light);
 void		print_sphere(t_sphere *sphere);
 void		print_plane(t_plane *plane);
 void		print_cylinder(t_cylinder *cylinder);
+
+// bvh
+void		create_all_bvh(t_rt *rt);
+void		init_builder(t_elem_lst *elems, t_bvh_builder *builder, size_t frame);
+size_t		count_elem_amount(t_elem_lst *elems, size_t frame);
+// bool		hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit, size_t index);
+bool		hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit);
+bool		hit_object(void *obj, t_ray *r, t_hit *hit);
+bool		hit_aabb(t_aabb *box, t_ray *r);
 
 // utils
 uint32_t	rgb_to_hex(uint8_t r, uint8_t g, uint8_t b);

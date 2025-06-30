@@ -15,11 +15,15 @@
 
 # include <stdint.h>
 
-typedef struct s_vec
+typedef union s_vec
 {
-	double	x;
-	double	y;
-	double	z;
+	struct
+	{
+		double x;
+		double y;
+		double z;
+	};
+	double data[3];
 }	t_vec;
 
 typedef struct s_icolor
@@ -49,5 +53,7 @@ t_vec		right_v(void);
 t_color		lerp_vec(t_color a, t_color b, double t);
 t_vec		had(t_vec a, t_vec b);
 void		clamp_color(t_color *col);
+t_vec		vmin(t_vec a, t_vec b);
+t_vec		vmax(t_vec a, t_vec b);
 
 #endif

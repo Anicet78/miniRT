@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 17:49:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/17 14:08:39 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	uint8_t		type;
 	t_material	mat;
 	t_point		pos;
 	t_vec		normal;
+	bool		declared;
 }	t_plane;
 
 typedef struct s_cylinder
@@ -103,8 +103,10 @@ typedef struct s_elem_lst
 {
 	size_t		count;
 	size_t		size;
-	size_t		frame_amount;
+	t_plane		**planes;
+	size_t		plane_index;
 	size_t		*frames;
+	size_t		frame_amount;
 	t_camera	*cam;
 	t_ambient	*al;
 	t_light		**lights;
@@ -113,6 +115,7 @@ typedef struct s_elem_lst
 	size_t		texture_amount;
 	t_image		*normals;
 	size_t		normal_amount;
+	t_bvh_node	**bvh;
 	void		*mlx_ptr;
 	uintptr_t	*elem_lst;
 }	t_elem_lst;
@@ -148,7 +151,7 @@ bool		parse_new_frame(t_elem_lst *elements, char **line, int nb);
 double		ft_atof_parse(char *str);
 
 // xpm
-int			try_file(char **line, char *folder, size_t tabsize, int index);
+int			try_file(char **line, char *folder, size_t tabsize, size_t index);
 int			texture_err(int error, int nb, char *type);
 int			normal_err(int error, int nb, char *type);
 t_image		*add_texture(t_elem_lst *elems, char *filename);

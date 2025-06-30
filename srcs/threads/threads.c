@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 17:05:10 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:52:03 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ static bool	new_thread(t_rt *rt, t_display *display, pthread_attr_t *attr)
 
 void	init_threads(t_rt *rt, t_display *display)
 {
-	t_params		*params;
 	pthread_attr_t	attr;
 
 	if (init_mutex(&rt->queue, &attr) == false)

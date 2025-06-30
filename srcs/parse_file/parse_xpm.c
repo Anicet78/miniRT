@@ -6,13 +6,13 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:12:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 17:56:05 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:49:56 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-int	try_file(char **line, char *folder, size_t tabsize, int index)
+int	try_file(char **line, char *folder, size_t tabsize, size_t index)
 {
 	char			*path;
 	char			*filename;
@@ -58,7 +58,7 @@ int	texture_err(int error, int nb, char *type)
 		temp = ft_strdup("Memory allocation failed in ");
 	else if (error == 5)
 		temp = ft_strdup("Texture file name cannot start with a '.' in ");
-	else if (error == 6)
+	else
 		temp = ft_strdup("Texture file must be in the root `textures` \
 directory in ");
 	if (!temp)
@@ -89,7 +89,7 @@ int	normal_err(int error, int nb, char *type)
 		temp = ft_strdup("Memory allocation failed in ");
 		else if (error == 5)
 		temp = ft_strdup("Normal map file name cannot start with a '.' in ");
-	else if (error == 6)
+	else
 		temp = ft_strdup("Normal map file must be in the root `normals` \
 directory in ");
 	if (!temp)

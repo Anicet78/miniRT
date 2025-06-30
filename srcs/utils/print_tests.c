@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 13:52:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 11:34:57 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/10 12:38:56 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_sphere(t_sphere *sphere)
 
 void	print_plane(t_plane *plane)
 {
-	ft_printf("%d | %.2f,%.2f,%.2f | %.2f,%.2f,%.2f | %#x\n", plane->type,
+	ft_printf("%d | %.2f,%.2f,%.2f | %.2f,%.2f,%.2f | %#x\n", PLANE,
 		plane->pos.x, plane->pos.y, plane->pos.z,
 		plane->normal.x, plane->normal.y, plane->normal.z);
 }

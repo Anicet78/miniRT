@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 17:52:17 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/10 14:53:16 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,27 +68,29 @@ bool	add_sphere(t_elem_lst *elems, char **line, int texture, int normal)
 
 bool	add_plane(t_elem_lst *elems, char **line, int texture, int normal)
 {
-	t_plane	pl;
+	t_plane	*pl;
 
-	pl.type = PLANE;
-	pl.pos = get_vec(line[1]);
-	pl.normal = norm(get_vec(line[2]));
-	pl.mat.color = get_color(line[3]);
-	pl.mat.texture = NULL;
-	pl.mat.normal = NULL;
+	if (!elems->planes || !elems->planes[elems->frame_amount])
+		return (false);
+	pl = &elems->planes[elems->frame_amount][elems->plane_index];
+	pl->pos = get_vec(line[1]);
+	pl->normal = norm(get_vec(line[2]));
+	pl->mat.color = get_color(line[3]);
+	pl->mat.texture = NULL;
+	pl->mat.normal = NULL;
 	if (texture)
 	{
-		pl.mat.texture = add_texture(elems, line[4]);
-		if (!pl.mat.texture)
+		pl->mat.texture = add_texture(elems, line[4]);
+		if (!pl->mat.texture)
 			return (print_err("Invalid texture file in `plane`", 0), false);
 	}
 	if (normal)
 	{
-		pl.mat.normal = add_normal(elems, line[4 + texture]);
-		if (!pl.mat.normal)
+		pl->mat.normal = add_normal(elems, line[4 + texture]);
+		if (!pl->mat.normal)
 			return (print_err("Invalid normal map file in `plane`", 0), false);
 	}
-	if (!add_element(elems, &pl, sizeof(t_plane)))
-		return (false);
+	pl->declared = true;
+	elems->plane_index++;
 	return (true);
 }

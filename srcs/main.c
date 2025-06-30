@@ -35,30 +35,6 @@ static int	open_file(int ac, char **av)
 	return (fd);
 }
 
-void	iterate(t_elem_lst *elements)
-{
-	void	*elem;
-	int		type;
-
-	elements->count = 0;
-	elem = get_next_elem(elements);
-	while (elem && elements->count <= elements->frames[0])
-	{
-		type = get_elem_type(elem);
-		if (type == AMBIENT_LIGHTING)
-			print_ambient(elem);
-		else if (type == LIGHT)
-			print_light(elem);
-		else if (type == SPHERE)
-			print_sphere(elem);
-		else if (type == PLANE)
-			print_plane(elem);
-		else if (type == CYLINDER)
-			print_cylinder(elem);
-		elem = get_next_elem(elements);
-	}
-}
-
 int	main(int ac, char **av)
 {
 	t_rt		rt;
@@ -73,16 +49,14 @@ int	main(int ac, char **av)
 	close(fd);
 	if (!map_file)
 		kill_mlx(&rt, EXIT_FAILURE);
+	create_all_bvh(&rt);
 	display = init_all_displays(rt.elements.cam, rt.arena,
 			rt.elements.frame_amount);
 	if (!display)
 		kill_mlx(&rt, EXIT_FAILURE);
 	mlx_start(&rt, display[0].width, display[0].height);
-	// test_earth(&rt.elements, rt.mlx.mlx);
 	init_queue(&rt);
 	init_threads(&rt, display);
-	// render_display(&rt, display);
-	// iterate(&rt.elements);
 	render_thread(&rt);
 	// kill_mlx(&rt, 1);
 	mlx_loop(rt.mlx.mlx);

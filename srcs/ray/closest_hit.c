@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/miniRT.h"
 
 int32_t	background_color(t_ray *r)
@@ -47,14 +46,14 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 	return (vec_to_col(color));
 }
 
-bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
+/* bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 {
 	void	*elem;
 	uint8_t	type;
 	bool	did_hit;
 
 	// ft_memset(hit, 0, sizeof(t_hit));
-	hit->t = 9999999999;
+	hit->t = 9999999999; // INFINITY
 	did_hit = false;
 	elems->count = 0;
 	if (frame > 0)
@@ -71,5 +70,26 @@ bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 			did_hit |= hit_cylinder(elem, r, hit);
 		elem = get_next_elem(elems);
 	}
+	return (did_hit);
+} */
+
+bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
+{
+	size_t	i;
+	bool	did_hit;
+
+	hit->t = INFINITY;
+	did_hit = false;
+	i = 0;
+	while (elems->planes[frame] && elems->planes[frame][i].declared == true)
+	{
+		did_hit |= hit_plane(elems->planes[frame] + i, r, hit);
+		i++;
+	}
+	/* if (elems->bvh[frame][0].is_leaf == true)
+		did_hit |= hit_object(elems->bvh[frame][0].obj, r, hit);
+	else
+		did_hit |= hit_bvh(elems->bvh[frame], r, hit, 0); */
+	did_hit |= hit_bvh(elems->bvh[frame], r, hit);
 	return (did_hit);
 }

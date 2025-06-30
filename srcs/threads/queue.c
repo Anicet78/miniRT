@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:09:34 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/21 12:34:06 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/16 15:50:32 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	init_queue(t_rt *rt)
 	px_start[1] = 0;
 	while (rt->queue.counter < size)
 	{
-		if (px_start[0] + BLOCK_SIZE > rt->mlx.width)
+		if (px_start[0] + BLOCK_SIZE > (uint32_t)rt->mlx.width)
 		{
 			px_start[0] = 0;
 			px_start[1] += BLOCK_SIZE;
