@@ -36,7 +36,7 @@ SRC			=	main.c							\
 				utils/print_utils.c				\
 				ray/closest_hit.c				\
 				ray/hit_cylinder.c				\
-				ray/intersect.c					\
+				ray/hits.c						\
 				ray/phong.c						\
 				ray/texture.c					\
 				ray/display.c					\

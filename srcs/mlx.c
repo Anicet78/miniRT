@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 17:51:17 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/11 15:53:22 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/miniRT.h"
+#include "miniRT.h"
 
 void	put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int color)
 {

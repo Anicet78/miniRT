@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 18:03:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/06/11 16:04:54 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ t_display	*init_all_displays(t_camera *cam, t_arena *arena, size_t frame_amount)
 t_display	init_display(t_camera *cam);
 void		render_display(t_rt *rt, t_display *d);
 t_color		white_color();
+t_color		black_color();
 t_color		surface_color(t_image *texture, double u, double v);
 t_color		ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface);
 t_color		lambertian(t_hit *hit, t_elem_lst *elems, t_color *surface, size_t frame);
