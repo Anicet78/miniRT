@@ -35,7 +35,7 @@ bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit)
 	hit->front = (dot(r->dir, hit->normal) < 0);
 	if (!hit->front)
 		hit->normal = vmul(hit->normal, -1);
-	hit->u = (atan2(hit->normal.z, hit->normal.x) / (2 * PI)) + 0.5;
+	hit->u = 0.5 - (atan2(hit->normal.z, hit->normal.x) / (2 * PI));
 	hit->v =  0.5 - (asin(hit->normal.y) / PI);
 	return (true);
 }
