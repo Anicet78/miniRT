@@ -24,14 +24,28 @@ void	set_ready(t_queue *queue, t_block *block)
 	pthread_mutex_unlock(&queue->lock);
 }
 
-bool	get_next_block(t_block *block, t_queue *queue, t_mlx *mlx)
+void	reset_ready(t_queue *queue, t_elem_lst *elems)
+{
+	size_t	i;
+
+	i = elems->loop - 1;
+	while (i < elems->loop_index)
+		queue->ready[i++] = 0;
+}
+
+bool	get_next_block(t_block *block, t_queue *queue, t_elem_lst *elems)
 {
 	pthread_mutex_lock(&queue->lock);
 	if (queue->counter >= queue->size)
 	{
-		if (queue->render_index + 1 >= mlx->img_amount)
-			return (pthread_mutex_unlock(&queue->lock), false);
 		queue->render_index++;
+		if (queue->render_index == elems->loop_index)
+		{
+			reset_ready(queue, elems);
+			queue->render_index = elems->loop - 1;
+		}
+		else if (queue->render_index >= elems->frame_amount)
+			return (pthread_mutex_unlock(&queue->lock), false);
 		queue->counter = 0;
 	}
 	*block = queue->blocks[queue->counter];

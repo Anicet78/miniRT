@@ -49,7 +49,7 @@ void	*start_routine(void *param)
 	params = param;
 	while (true)
 	{
-		if (!get_next_block(&block, params->queue, params->mlx))
+		if (!get_next_block(&block, params->queue, &params->elements))
 			return (clear_arena(&params->arena), NULL);
 		print_pixels(block, params, params->mlx);
 		set_ready(params->queue, &block);
@@ -67,8 +67,10 @@ void	render_thread(t_rt *rt)
 	rt->queue.counter = 0;
 	rt->queue.render_index = 0;
 	rt->elements.count = 0;
-	while (rt->queue.print_index < rt->mlx.img_amount)
+	while (rt->queue.print_index == rt->elements.loop_index ||
+		rt->queue.print_index < rt->mlx.img_amount)
 	{
+		ft_printf("%d\n", rt->queue.print_index);
 		// before = get_time_now();
 		pthread_cond_wait(&rt->queue.cond, &rt->queue.lock);
 		// sleep for fps (mlx loop at the same time ?)

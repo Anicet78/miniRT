@@ -115,6 +115,8 @@ typedef struct s_elem_lst
 	size_t		texture_amount;
 	t_image		*normals;
 	size_t		normal_amount;
+	size_t		loop;
+	size_t		loop_index;
 	t_bvh_node	**bvh;
 	void		*mlx_ptr;
 	uintptr_t	*elem_lst;
@@ -148,6 +150,7 @@ bool		parse_sphere(t_elem_lst *elements, char **line, int nb);
 bool		parse_plane(t_elem_lst *elements, char **line, int nb);
 bool		parse_cylinder(t_elem_lst *elements, char **line, int nb);
 bool		parse_new_frame(t_elem_lst *elements, char **line, int nb);
+bool		parse_goto(t_elem_lst *elems, char **line, int nb);
 double		ft_atof_parse(char *str);
 
 // xpm

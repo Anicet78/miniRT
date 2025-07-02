@@ -12,7 +12,7 @@
 
 #include "../../includes/miniRT.h"
 
-bool	parse_cylinder(t_elem_lst *elements, char **line, int nb)
+bool	parse_cylinder(t_elem_lst *elems, char **line, int nb)
 {
 	const size_t	tsize = tab_len(line);
 	int				text;
@@ -43,10 +43,10 @@ bool	parse_cylinder(t_elem_lst *elements, char **line, int nb)
 		return (false);
 	if ((tsize > 6 && !normal && !text) || (tsize > 7 && normal + text != 2))
 		return (print_err("Invalid amount of argument in `cylinder`", nb));
-	return (add_cylinder(elements, line, text, normal));
+	return (add_cylinder(elems, line, text, normal));
 }
 
-bool	parse_new_frame(t_elem_lst *elements, char **line, int nb)
+bool	parse_new_frame(t_elem_lst *elems, char **line, int nb)
 {
 	uint32_t	count;
 
@@ -57,8 +57,37 @@ bool	parse_new_frame(t_elem_lst *elements, char **line, int nb)
 		count++;
 	if (line[0][count] && line[0][count] != '=' && line[0][count] != '\n')
 		return (print_err("Invalid argument `new frame`", nb));
-	elements->frames[elements->frame_amount] = elements->count;
-	elements->frame_amount++;
-	elements->light_index = 0;
+	elems->frames[elems->frame_amount] = elems->count;
+	elems->frame_amount++;
+	elems->light_index = 0;
+	return (true);
+}
+
+bool	parse_goto(t_elem_lst *elems, char **line, int nb)
+{
+	size_t	n;
+	int		i;
+
+	n = 0;
+	if (line[1] && line[2])
+		return (print_err("Invalid amount of argument in `goto frame`", nb));
+	i = 0;
+	while (line[0][i] == '^')
+		i++;
+	if (line[0][i] != '\0')
+		return (print_err("Unknown character in `goto frame`", nb));
+	if (line[1])
+		n = ft_atol(line[1]);
+	else
+		n = 1;
+	if (n <= 0 || n > elems->frame_amount + 1)
+		return (print_err("Invalid frame in `goto frame`", nb));
+	i = 0;
+	while (line[1] && ft_isdigit(line[1][i]))
+		i++;
+	if (line[1] && line[1][i] != '\0')
+		return (print_err("Invalid frame in `goto frame`", nb));
+	elems->loop = n;
+	elems->loop_index = elems->frame_amount + 1;
 	return (true);
 }

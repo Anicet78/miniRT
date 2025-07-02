@@ -61,7 +61,7 @@ void	*start_routine(void *param);
 
 // queue
 void	init_queue(t_rt *rt);
-bool	get_next_block(t_block *block, t_queue *queue, t_mlx *mlx);
+bool	get_next_block(t_block *block, t_queue *queue, t_elem_lst *elems);
 void	set_ready(t_queue *queue, t_block *block);
 
 #endif

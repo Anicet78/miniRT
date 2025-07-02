@@ -48,7 +48,7 @@ int	texture_err(int error, int nb, char *type)
 	char *temp;
 	char *err_msg;
 
-	if (error == 0 || error == 1)
+	if (error <= 1)
 		return (error);
 	if (error == 2)
 		temp = ft_strdup("Invalid texture file in ");
@@ -77,10 +77,8 @@ int	normal_err(int error, int nb, char *type)
 	char *temp;
 	char *err_msg;
 
-	if (error == 0)
-		return (0);
-	if (error == 1)
-		return (1);
+	if (error <= 1)
+		return (error);
 	if (error == 2)
 		temp = ft_strdup("Invalid normal map file in ");
 	else if (error == 3)
@@ -95,6 +93,7 @@ directory in ");
 	if (!temp)
 		return (print_err("Memory allocation failed", nb), 2);
 	err_msg = ft_strjoin(temp, type);
+	free(temp);
 	if (!err_msg)
 		return (print_err("Memory allocation failed", nb), 2);
 	print_err(err_msg, nb);

@@ -188,6 +188,8 @@ bool	init_parsing(t_elem_lst *elems, t_arena *arena, int fd)
 	elems->light_index = 0;
 	elems->plane_index = 0;
 	elems->frame_amount = 0;
+	elems->loop = 0;
+	elems->loop_index = 0;
 	return (true);
 }
 
@@ -209,24 +211,28 @@ bool	finish_parsing(t_elem_lst *elems)
 	return (true);
 }
 
-bool	parse_elements(t_elem_lst *elements, char **line, int nb)
+bool	parse_elements(t_elem_lst *elems, char **line, int nb)
 {
+	if (elems->loop)
+		return (print_err("You cannot put a new object after a goto", nb));
 	if (ft_strcmp(line[0], "A") == 0)
-		return (parse_ambient(elements, line, nb));
+		return (parse_ambient(elems, line, nb));
 	else if (ft_strcmp(line[0], "C") == 0)
-		return (parse_camera(elements, line, nb));
+		return (parse_camera(elems, line, nb));
 	else if (ft_strcmp(line[0], "L") == 0)
-		return (parse_light(elements, line, nb));
+		return (parse_light(elems, line, nb));
 	else if (ft_strcmp(line[0], "pl") == 0)
-		return (parse_plane(elements, line, nb));
+		return (parse_plane(elems, line, nb));
 	else if (ft_strcmp(line[0], "sp") == 0)
-		return (parse_sphere(elements, line, nb));
+		return (parse_sphere(elems, line, nb));
 	else if (ft_strcmp(line[0], "cy") == 0)
-		return (parse_cylinder(elements, line, nb));
+		return (parse_cylinder(elems, line, nb));
 	else if (line[0][0] == '=')
-		return (parse_new_frame(elements, line, nb));
+		return (parse_new_frame(elems, line, nb));
+	else if (line[0][0] == '^')
+		return (parse_goto(elems, line, nb));
 	/* else if (ft_strcmp(line[0], "FPS"))
-		return (parse_fps(elements, line, nb)); */
+		return (parse_fps(elems, line, nb)); */
 	return (print_err("Unknown identifier", nb));
 }
 
