@@ -57,7 +57,7 @@ int	main(int ac, char **av)
 	mlx_start(&rt, display[0].width, display[0].height);
 	init_queue(&rt);
 	init_threads(&rt, display);
-	render_thread(&rt);
+	// render_thread(&rt);
 	// kill_mlx(&rt, 1);
 	mlx_loop(rt.mlx.mlx);
 	return (EXIT_FAILURE);

@@ -12,7 +12,7 @@
 
 #include "../../includes/miniRT.h"
 
-void	set_ready(t_queue *queue, t_block *block)
+void	set_ready(t_queue *queue, t_block *block, t_mlx *mlx)
 {
 	pthread_mutex_lock(&queue->lock);
 	queue->ready[block->img_index]++;
@@ -24,24 +24,23 @@ void	set_ready(t_queue *queue, t_block *block)
 	pthread_mutex_unlock(&queue->lock);
 }
 
-void	reset_ready(t_queue *queue, t_elem_lst *elems)
+void	reset_ready(t_queue *queue, t_elem_lst *elems, size_t start)
 {
-	size_t	i;
-
-	i = elems->loop - 1;
-	while (i < elems->loop_index)
-		queue->ready[i++] = 0;
+	while (start < elems->frame_amount)
+		queue->ready[start++] = 0;
 }
 
 bool	get_next_block(t_block *block, t_queue *queue, t_elem_lst *elems)
 {
 	pthread_mutex_lock(&queue->lock);
+	if (queue->stop == true)
+		return (pthread_mutex_unlock(&queue->lock), false);
 	if (queue->counter >= queue->size)
 	{
 		queue->render_index++;
 		if (queue->render_index == elems->loop_index)
 		{
-			reset_ready(queue, elems);
+			reset_ready(queue, elems, elems->loop - 1);
 			queue->render_index = elems->loop - 1;
 		}
 		else if (queue->render_index >= elems->frame_amount)
@@ -79,6 +78,7 @@ void	init_queue(t_rt *rt)
 	rt->queue.render_index = rt->mlx.img_amount;
 	rt->queue.print_index = 0;
 	rt->queue.size = size;
+	rt->queue.stop = false;
 	px_start[0] = 0;
 	px_start[1] = 0;
 	while (rt->queue.counter < size)

@@ -52,32 +52,42 @@ void	*start_routine(void *param)
 		if (!get_next_block(&block, params->queue, &params->elements))
 			return (clear_arena(&params->arena), NULL);
 		print_pixels(block, params, params->mlx);
-		set_ready(params->queue, &block);
+		set_ready(params->queue, &block, params->mlx);
 	}
 	return (NULL);
 }
 
+void	wait_image(t_rt *rt)
+{
+	static size_t	last_frame = 0;
+	static long		time;
+	long			current;
+
+	if (last_frame >= rt->elements.frame_amount && !rt->elements.loop)
+		return ;
+	if (time == 0)
+		time = get_time_now();
+	current = get_time_now();
+	if (current > time)
+	{
+		while (true)
+		{
+			pthread_mutex_lock(&rt->queue.lock);
+			pthread_cond_wait(&rt->queue.cond, &rt->queue.lock);
+			last_frame = rt->queue.print_index;
+			pthread_mutex_unlock(&rt->queue.lock);
+			mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
+				rt->mlx.imgs[last_frame], 0, 0);
+			time = current;
+			break ;
+		}
+	}
+}
+
 void	render_thread(t_rt *rt)
 {
-	double	fps;
-	/* long	before;
-	long	after; */
-
-	fps = 5.0;
 	rt->queue.counter = 0;
 	rt->queue.render_index = 0;
 	rt->elements.count = 0;
-	while (rt->queue.print_index == rt->elements.loop_index ||
-		rt->queue.print_index < rt->mlx.img_amount)
-	{
-		ft_printf("%d\n", rt->queue.print_index);
-		// before = get_time_now();
-		pthread_cond_wait(&rt->queue.cond, &rt->queue.lock);
-		// sleep for fps (mlx loop at the same time ?)
-		// print fps
-		// after = get_time_now();
-		// usleep(100000);
-		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
-			rt->mlx.imgs[rt->queue.print_index++], 0, 0);
-	}
+	pthread_mutex_unlock(&rt->queue.lock);
 }

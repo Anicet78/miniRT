@@ -33,7 +33,7 @@ bool	shadow_ray(t_ray r, t_elem_lst *elems)
 	uint8_t	type;
 	t_hit	hit;
 
-	hit.t = 9999999999;
+	hit.t = 9999999999; // INFINITY
 	elems->count = 0;
 	elem = get_next_elem(elems);
 	while (elem)

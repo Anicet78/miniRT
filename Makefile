@@ -38,6 +38,7 @@ SRC			=	main.c							\
 				utils/err_message.c				\
 				utils/color.c					\
 				utils/print_tests.c				\
+				utils/time.c					\
 				utils/vec_utils.c				\
 				utils/print_utils.c				\
 				ray/closest_hit.c				\

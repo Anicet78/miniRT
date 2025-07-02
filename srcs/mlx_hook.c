@@ -22,6 +22,27 @@ int	key_hook(int keycode, t_rt *rt)
 {
 	if (keycode == ESC_K)
 		kill_mlx(rt, EXIT_SUCCESS);
+	else if (keycode == SPACE_K)
+	{
+		pthread_mutex_lock(&rt->queue.lock);
+		reset_ready(&rt->queue, &rt->elements, 0);
+		render_thread(rt);
+	}
+	return (0);
+}
+
+int	loop_hook(t_rt *rt)
+{
+	static bool		first = true;
+	static size_t	index;
+
+	if (first == true)
+	{
+		first = false;
+		render_thread(rt);
+		return (0);
+	}
+	wait_image(rt);
 	return (0);
 }
 
@@ -55,6 +76,8 @@ void	destroy_threads(t_rt *rt)
 	uint8_t	i;
 
 	i = 0;
+	pthread_mutex_lock(&rt->queue.lock);
+	rt->queue.stop = true;
 	pthread_mutex_unlock(&rt->queue.lock);
 	while (i < rt->thread_amount)
 	{

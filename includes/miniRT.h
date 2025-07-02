@@ -28,6 +28,7 @@
 # define ASPECT_RATIO (16.0 / 9.0)
 
 # define ESC_K 65307
+# define SPACE_K 32
 
 typedef struct s_display
 {
@@ -102,6 +103,7 @@ void		kill_mlx(t_rt *minirt, int exit_code);
 void		put_pixel_to_img(t_mlx *mlx, void *addr, uint32_t coords[2], int col);
 int			destroy_hook(t_rt *rt);
 int			key_hook(int keycode, t_rt *rt);
+int			loop_hook(t_rt *rt);
 
 // tristan
 t_display	*init_all_displays(t_camera *cam, t_arena *arena, size_t frame_amount);

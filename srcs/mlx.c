@@ -67,4 +67,5 @@ void	mlx_start(t_rt *rt, int width, int height)
 		kill_mlx(rt, EXIT_FAILURE);
 	mlx_hook(mlx->mlx_win, 17, 1L << 3, &destroy_hook, mlx);
 	mlx_hook(mlx->mlx_win, 2, 1L << 0, &key_hook, mlx);
+	mlx_loop_hook(mlx->mlx, &loop_hook, rt);
 }
