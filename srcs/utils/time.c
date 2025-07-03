@@ -14,11 +14,21 @@
 
 void	ft_usleep(size_t usec)
 {
-	long	start;
+	struct timeval	start;
+	struct timeval	now;
+	long			start_ms;
+	long			now_ms;
 
-	start = get_time_now() + usec / 1000;
-	while (get_time_now() < start)
-		usleep(10);
+	gettimeofday(&start, NULL);
+	start_ms = get_time(&start) + usec / 1000;
+	while (1)
+	{
+		gettimeofday(&now, NULL);
+		now_ms = get_time(&now);
+		if (now_ms >= start_ms)
+			break;
+		usleep(100);
+	}
 }
 
 long	get_time(struct timeval *timestamp)

@@ -59,7 +59,7 @@ typedef struct s_params
 void	init_threads(t_rt *rt, t_display *display);
 void	render_thread(t_rt *rt);
 void	*start_routine(void *param);
-void	wait_image(t_rt *rt);
+void	next_image(t_rt *rt);
 
 // queue
 void	init_queue(t_rt *rt);

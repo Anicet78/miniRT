@@ -103,6 +103,7 @@ typedef struct s_elem_lst
 {
 	size_t		count;
 	size_t		size;
+	double		fps;
 	t_plane		**planes;
 	size_t		plane_index;
 	size_t		*frames;

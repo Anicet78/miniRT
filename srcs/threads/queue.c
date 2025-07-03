@@ -18,8 +18,8 @@ void	set_ready(t_queue *queue, t_block *block, t_mlx *mlx)
 	queue->ready[block->img_index]++;
 	if (queue->ready[block->img_index] >= queue->size)
 	{
-		queue->print_index = block->img_index;
-		pthread_cond_signal(&queue->cond);
+		queue->print_index = block->img_index + 1;
+		// pthread_cond_signal(&queue->cond);
 	}
 	pthread_mutex_unlock(&queue->lock);
 }
@@ -38,12 +38,7 @@ bool	get_next_block(t_block *block, t_queue *queue, t_elem_lst *elems)
 	if (queue->counter >= queue->size)
 	{
 		queue->render_index++;
-		if (queue->render_index == elems->loop_index)
-		{
-			reset_ready(queue, elems, elems->loop - 1);
-			queue->render_index = elems->loop - 1;
-		}
-		else if (queue->render_index >= elems->frame_amount)
+		if (queue->render_index >= elems->frame_amount)
 			return (pthread_mutex_unlock(&queue->lock), false);
 		queue->counter = 0;
 	}

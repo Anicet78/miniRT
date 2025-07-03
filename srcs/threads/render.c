@@ -50,38 +50,85 @@ void	*start_routine(void *param)
 	while (true)
 	{
 		if (!get_next_block(&block, params->queue, &params->elements))
-			return (clear_arena(&params->arena), NULL);
+		{
+			clear_arena(&params->arena);
+			pthread_cond_signal(&params->queue->cond);
+			return (NULL);
+		}
 		print_pixels(block, params, params->mlx);
 		set_ready(params->queue, &block, params->mlx);
 	}
 	return (NULL);
 }
 
-void	wait_image(t_rt *rt)
+double	wait_framerate(double fps, long last_frame_time)
+{
+	long		now;
+	long		elapsed;
+	double		duration;
+	double		calc_fps;
+
+	if (last_frame_time == 0)
+	{
+		last_frame_time = get_time_now();
+		return (fps);
+	}
+	duration = 1000.0 / fps;
+	now = get_time_now();
+	elapsed = now - last_frame_time;
+	if (elapsed < duration)
+		ft_usleep((duration - elapsed) * 1000);
+	elapsed = get_time_now() - last_frame_time;
+	if (elapsed > 0)
+		calc_fps = 1000.0 / (double)elapsed;
+	else
+		calc_fps = fps;
+	return (calc_fps);
+}
+
+void	realtime_rendering(t_rt *rt, size_t *last_frame, long *last_frame_time)
+{
+	double	fps;
+
+	fps = wait_framerate(rt->elements.fps, *last_frame_time);
+	pthread_mutex_lock(&rt->queue.lock);
+	if (rt->queue.print_index != 0 && *last_frame < rt->queue.print_index)
+	{
+		*last_frame = rt->queue.print_index;
+		ft_printf("frame: %lu -> %.2ffps\n", *last_frame, fps);
+		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
+			rt->mlx.imgs[(*last_frame) - 1], 0, 0);
+		*last_frame_time = get_time_now();
+	}
+	pthread_mutex_unlock(&rt->queue.lock);
+}
+
+void	pre_rendering(t_rt *rt, long *last_frame_time)
+{
+	static size_t	count = 0;
+	double			fps;
+
+	fps = wait_framerate(rt->elements.fps, *last_frame_time);
+	ft_printf("frame: %lu -> %.2ffps\n", count + 1, fps);
+	mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
+		rt->mlx.imgs[count++], 0, 0);
+	if (count >= rt->elements.frame_amount)
+		count = rt->elements.loop - 1;
+	*last_frame_time = get_time_now();
+}
+
+void	next_image(t_rt *rt)
 {
 	static size_t	last_frame = 0;
-	static long		time;
-	long			current;
+	static long		last_frame_time = 0;
+	double			fps;
 
-	if (last_frame >= rt->elements.frame_amount && !rt->elements.loop)
+	if (!rt->elements.loop && last_frame >= rt->elements.frame_amount)
 		return ;
-	if (time == 0)
-		time = get_time_now();
-	current = get_time_now();
-	if (current > time)
-	{
-		while (true)
-		{
-			pthread_mutex_lock(&rt->queue.lock);
-			pthread_cond_wait(&rt->queue.cond, &rt->queue.lock);
-			last_frame = rt->queue.print_index;
-			pthread_mutex_unlock(&rt->queue.lock);
-			mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
-				rt->mlx.imgs[last_frame], 0, 0);
-			time = current;
-			break ;
-		}
-	}
+	else if (rt->elements.loop && last_frame >= rt->elements.frame_amount)
+		pre_rendering(rt, &last_frame_time);
+	else
+		realtime_rendering(rt, &last_frame, &last_frame_time);
 }
 
 void	render_thread(t_rt *rt)

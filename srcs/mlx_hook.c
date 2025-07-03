@@ -38,11 +38,12 @@ int	loop_hook(t_rt *rt)
 
 	if (first == true)
 	{
+		rt->elements.fps = 60;
 		first = false;
 		render_thread(rt);
 		return (0);
 	}
-	wait_image(rt);
+	next_image(rt);
 	return (0);
 }
 
