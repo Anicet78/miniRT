@@ -22,12 +22,6 @@ int	key_hook(int keycode, t_rt *rt)
 {
 	if (keycode == ESC_K)
 		kill_mlx(rt, EXIT_SUCCESS);
-	else if (keycode == SPACE_K)
-	{
-		pthread_mutex_lock(&rt->queue.lock);
-		reset_ready(&rt->queue, &rt->elements, 0);
-		render_thread(rt);
-	}
 	return (0);
 }
 
@@ -38,7 +32,7 @@ int	loop_hook(t_rt *rt)
 
 	if (first == true)
 	{
-		rt->elements.fps = 60;
+		rt->elements.fps = 75;
 		first = false;
 		render_thread(rt);
 		return (0);
