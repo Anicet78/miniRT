@@ -12,6 +12,15 @@
 
 #include "../../includes/miniRT.h"
 
+void	ft_nanosleep(size_t usec)
+{
+	struct timespec	ts;
+
+	ts.tv_sec = usec / 1000000;
+	ts.tv_nsec = (usec % 1000000) * 1000;
+	nanosleep(&ts, NULL);
+}
+
 void	ft_usleep(size_t usec)
 {
 	struct timeval	start;

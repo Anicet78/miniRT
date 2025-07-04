@@ -190,6 +190,7 @@ bool	init_parsing(t_elem_lst *elems, t_arena *arena, int fd)
 	elems->frame_amount = 0;
 	elems->loop = 0;
 	elems->loop_index = 0;
+	elems->fps = 60;
 	return (true);
 }
 
