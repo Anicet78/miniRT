@@ -152,6 +152,7 @@ bool		parse_plane(t_elem_lst *elements, char **line, int nb);
 bool		parse_cylinder(t_elem_lst *elements, char **line, int nb);
 bool		parse_new_frame(t_elem_lst *elements, char **line, int nb);
 bool		parse_goto(t_elem_lst *elems, char **line, int nb);
+bool		parse_fps(t_elem_lst *elems, char **line, int nb);
 double		ft_atof_parse(char *str);
 
 // xpm

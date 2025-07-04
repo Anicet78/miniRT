@@ -74,7 +74,7 @@ bool	parse_goto(t_elem_lst *elems, char **line, int nb)
 	i = 0;
 	while (line[0][i] == '^')
 		i++;
-	if (line[0][i] != '\0')
+	if (line[0][i] != '\0' && line[0][i] != '\n')
 		return (print_err("Unknown character in `goto frame`", nb));
 	if (line[1])
 		n = ft_atol(line[1]);
@@ -85,9 +85,36 @@ bool	parse_goto(t_elem_lst *elems, char **line, int nb)
 	i = 0;
 	while (line[1] && ft_isdigit(line[1][i]))
 		i++;
-	if (line[1] && line[1][i] != '\0')
+	if (line[1] && line[1][i] != '\0' && line[1][i] != '\n')
 		return (print_err("Invalid frame in `goto frame`", nb));
 	elems->loop = n;
 	elems->loop_index = elems->frame_amount + 1;
+	return (true);
+}
+
+bool	parse_fps(t_elem_lst *elems, char **line, int nb)
+{
+	static bool	declared;
+	double		fps;
+	size_t		i;
+
+	if (declared == true)
+		return (print_err("Multiple declaration of `FPS`", nb));
+	declared = true;
+	if (!line[1] || line[2])
+		return (print_err("Invalid amount of argument in `FPS`", nb));
+	fps = ft_atof_parse(line[1]);
+	if (fps <= 0)
+		return (print_err("FPS amount must be positive in `FPS`", nb));
+	if (fps > INT_MAX)
+		return (print_err("Invalid amount of fps in `FPS`", nb));
+	if (fps > 100000)
+		return (print_err("Maximum FPS amount is 100 000 in `FPS`", nb));
+	i = 0;
+	while (ft_isdigit(line[1][i]) || line[1][i] == '.')
+		i++;
+	if (line[1][i] != '\n' && line[1][i])
+		return (false);
+	elems->fps = fps;
 	return (true);
 }

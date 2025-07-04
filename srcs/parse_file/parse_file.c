@@ -231,8 +231,8 @@ bool	parse_elements(t_elem_lst *elems, char **line, int nb)
 		return (parse_new_frame(elems, line, nb));
 	else if (line[0][0] == '^')
 		return (parse_goto(elems, line, nb));
-	/* else if (ft_strcmp(line[0], "FPS"))
-		return (parse_fps(elems, line, nb)); */
+	else if (ft_strcmp(line[0], "FPS") == 0)
+		return (parse_fps(elems, line, nb));
 	return (print_err("Unknown identifier", nb));
 }
 

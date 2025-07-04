@@ -95,7 +95,7 @@ void	realtime_rendering(t_rt *rt, size_t *last_frame, long *last_frame_time)
 	if (rt->queue.print_index != 0 && *last_frame < rt->queue.print_index)
 	{
 		*last_frame = rt->queue.print_index;
-		ft_printf("frame: %lu -> %.2ffps\n", *last_frame, fps);
+		ft_printf("\b\b  \rframe: %lu -> %.2ffps", *last_frame, fps);
 		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
 			rt->mlx.imgs[(*last_frame) - 1], 0, 0);
 		*last_frame_time = get_time_now();
@@ -109,7 +109,7 @@ void	pre_rendering(t_rt *rt, long *last_frame_time)
 	double			fps;
 
 	fps = wait_framerate(rt->elements.fps, *last_frame_time);
-	ft_printf("frame: %lu -> %.2ffps\n", count + 1, fps);
+	ft_printf("\b\b  \rframe: %lu -> %.2ffps", count + 1, fps);
 	mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
 		rt->mlx.imgs[count++], 0, 0);
 	if (count >= rt->elements.frame_amount)

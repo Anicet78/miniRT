@@ -28,11 +28,9 @@ int	key_hook(int keycode, t_rt *rt)
 int	loop_hook(t_rt *rt)
 {
 	static bool		first = true;
-	static size_t	index;
 
 	if (first == true)
 	{
-		rt->elements.fps = 75;
 		first = false;
 		render_thread(rt);
 		return (0);
