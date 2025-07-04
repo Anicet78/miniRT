@@ -38,10 +38,11 @@ SRC			=	main.c							\
 				ray/hit_cylinder.c				\
 				ray/hits.c						\
 				ray/phong.c						\
-				ray/texture.c					\
-				ray/display.c					\
-				ray/vec3op.c					\
-				ray/vec3op2.c					\
+				utils/texture.c					\
+				utils/display.c					\
+				operation/vec3op.c				\
+				operation/vec3op2.c				\
+				operation/vec3op3.c				\
 				mlx_hook.c						\
 				mlx.c
 

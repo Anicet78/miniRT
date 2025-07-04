@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/11 16:04:54 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/03 17:05:09 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ typedef struct s_mlx
 	int		width;
 	int		height;
 }	t_mlx;
+
+uint32_t	get_pixel_from_img(t_image *data, int x, int y);
 
 typedef struct s_miniRT
 {
