@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/17 17:00:20 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/07 12:08:20 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,15 @@ double	wait_framerate(double fps, long last_frame_time)
 	double		calc_fps;
 
 	if (last_frame_time == 0)
-	{
-		last_frame_time = get_time_now();
 		return (fps);
-	}
-	duration = 1000.0 / fps;
-	now = get_time_now();
+	duration = 1000000.0 / fps;
+	now = get_utime_now();
 	elapsed = now - last_frame_time;
 	if (elapsed < duration)
-		ft_usleep((duration - elapsed) * 1000);
-	elapsed = get_time_now() - last_frame_time;
+		ft_usleep(duration - elapsed);
+	elapsed = get_utime_now() - last_frame_time;
 	if (elapsed > 0)
-		calc_fps = 1000.0 / (double)elapsed;
+		calc_fps = 1000000.0 / (double)elapsed;
 	else
 		calc_fps = fps;
 	return (calc_fps);
@@ -91,14 +88,14 @@ void	realtime_rendering(t_rt *rt, size_t *last_frame, long *last_frame_time)
 	double	fps;
 
 	fps = wait_framerate(rt->elements.fps, *last_frame_time);
-	*last_frame_time = get_time_now();
 	pthread_mutex_lock(&rt->queue.lock);
-	if (rt->queue.print_index != 0 && *last_frame < rt->queue.print_index)
+	if (rt->queue.print_index != 0 && *last_frame < rt->queue.print_index)\
 	{
 		*last_frame = rt->queue.print_index;
 		ft_printf("\b\b  \rframe: %lu -> %.2ffps", *last_frame, fps);
 		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
 			rt->mlx.imgs[(*last_frame) - 1], 0, 0);
+		*last_frame_time = get_utime_now();
 	}
 	pthread_mutex_unlock(&rt->queue.lock);
 }
@@ -109,10 +106,10 @@ void	pre_rendering(t_rt *rt, long *last_frame_time)
 	double			fps;
 
 	fps = wait_framerate(rt->elements.fps, *last_frame_time);
-	*last_frame_time = get_time_now();
 	ft_printf("\b\b  \rframe: %lu -> %.2ffps", count + 1, fps);
 	mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
 		rt->mlx.imgs[count++], 0, 0);
+	*last_frame_time = get_utime_now();
 	if (count >= rt->elements.frame_amount)
 		count = rt->elements.loop - 1;
 }

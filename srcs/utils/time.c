@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:31:12 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 13:20:38 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/07 11:45:27 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,15 @@ void	ft_usleep(size_t usec)
 	long			now_ms;
 
 	gettimeofday(&start, NULL);
-	start_ms = get_time(&start) + usec / 1000;
+	start_ms = get_utime(&start) + usec;
 	while (1)
 	{
 		gettimeofday(&now, NULL);
-		now_ms = get_time(&now);
+		now_ms = get_utime(&now);
 		if (now_ms >= start_ms)
 			break;
 		usleep(100);
 	}
-}
-
-long	get_time(struct timeval *timestamp)
-{
-	long	time;
-
-	time = timestamp->tv_sec * 1000 + timestamp->tv_usec / 1000;
-	return (time);
 }
 
 long	get_time_now(void)
@@ -53,5 +45,21 @@ long	get_time_now(void)
 	struct timeval	timestamp;
 
 	gettimeofday(&timestamp, NULL);
-	return (get_time(&timestamp));
+	return (timestamp.tv_sec * 1000 + timestamp.tv_usec / 1000);
+}
+
+long	get_utime(struct timeval *timestamp)
+{
+	long	time;
+
+	time = timestamp->tv_sec * 1000000 + timestamp->tv_usec;
+	return (time);
+}
+
+long	get_utime_now(void)
+{
+	struct timeval	timestamp;
+
+	gettimeofday(&timestamp, NULL);
+	return (get_utime(&timestamp));
 }

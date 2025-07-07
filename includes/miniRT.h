@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/11 16:04:54 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/07 11:45:35 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,9 @@ int			print_err(char *msg, int line);
 int			frame_err(char *msg, int frame);
 void		ft_nanosleep(size_t usec);
 void		ft_usleep(size_t usec);
-long		get_time(struct timeval *timestamp);
 long		get_time_now(void);
+long		get_utime(struct timeval *timestamp);
+long		get_utime_now(void);
 
 // intersects
 bool		hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit);
