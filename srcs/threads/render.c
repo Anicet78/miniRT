@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/07 12:08:20 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/07 13:11:04 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	realtime_rendering(t_rt *rt, size_t *last_frame, long *last_frame_time)
 	if (rt->queue.print_index != 0 && *last_frame < rt->queue.print_index)\
 	{
 		*last_frame = rt->queue.print_index;
-		ft_printf("\b\b  \rframe: %lu -> %.2ffps", *last_frame, fps);
+		ft_printf("\b\b\b\b\b     \rFPS: %.2ffps", fps);
 		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
 			rt->mlx.imgs[(*last_frame) - 1], 0, 0);
 		*last_frame_time = get_utime_now();
@@ -106,7 +106,7 @@ void	pre_rendering(t_rt *rt, long *last_frame_time)
 	double			fps;
 
 	fps = wait_framerate(rt->elements.fps, *last_frame_time);
-	ft_printf("\b\b  \rframe: %lu -> %.2ffps", count + 1, fps);
+	ft_printf("\b\b\b\b\b     \rFPS: %.2ffps", fps);
 	mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
 		rt->mlx.imgs[count++], 0, 0);
 	*last_frame_time = get_utime_now();
