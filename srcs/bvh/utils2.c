@@ -1,44 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec3op.c                                           :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/16 15:51:58 by agruet           ###   ########.fr       */
+/*   Created: 2025/07/16 16:42:37 by agruet            #+#    #+#             */
+/*   Updated: 2025/07/16 16:43:12 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-double	dot(t_vec a, t_vec b)
+size_t	get_bvh_size(size_t elem_amount)
 {
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
+	size_t	pow2;
+	size_t	bvh_node_count;
+
+	if (elem_amount == 1)
+		return (1);
+	bvh_node_count = 2 * elem_amount - 1;
+	pow2 = 1;
+	while (pow2 < bvh_node_count)
+		pow2 *= 2;
+	return (pow2 * 2);
 }
 
-t_vec	vmul(t_vec a, double scalar)
+size_t	get_next(size_t pos)
 {
-	a.x *= scalar;
-	a.y *= scalar;
-	a.z *= scalar;
-	return (a);
-}
+	size_t	i;
 
-t_vec	vadd(t_vec a, t_vec b)
-{
-	a.x += b.x;
-	a.y += b.y;
-	a.z += b.z;
-	return (a);
-}
-
-double	magn(t_vec a)
-{
-	return (sqrt(dot(a, a)));
-}
-
-t_vec	norm(t_vec a)
-{
-	return (vmul(a, q_rsqrt(dot(a, a))));
+	if (pos == 0)
+		return (2);
+	i = pos;
+	while (i != 0 && i % 2 == 0)
+		i = (i - 1) / 2;
+	if (i == 0)
+		return (0);
+	return ((i - 1) / 2 * 2 + 2);
 }

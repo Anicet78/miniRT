@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:12:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 15:49:56 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 16:32:12 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	try_file(char **line, char *folder, size_t tabsize, size_t index)
 {
-	char			*path;
 	char			*filename;
 	const size_t	len = ft_strlen(line[index]);
 
@@ -28,7 +27,7 @@ int	try_file(char **line, char *folder, size_t tabsize, size_t index)
 		return (2);
 	if (ft_strrcmp(line[index], ".xpm"))
 		return (3);
-	path = realpath(line[index], NULL);
+	auto char *path = realpath(line[index], NULL);
 	if (!path)
 		return (4);
 	filename = ft_strrstr(path, folder);
@@ -39,14 +38,13 @@ int	try_file(char **line, char *folder, size_t tabsize, size_t index)
 		return (free(path), 5);
 	if (ft_strchr(filename, '/'))
 		return (free(path), 6);
-	free(path);
-	return (1);
+	return (free(path), 1);
 }
 
 int	texture_err(int error, int nb, char *type)
 {
-	char *temp;
-	char *err_msg;
+	char	*temp;
+	char	*err_msg;
 
 	if (error <= 1)
 		return (error);
@@ -74,8 +72,8 @@ directory in ");
 
 int	normal_err(int error, int nb, char *type)
 {
-	char *temp;
-	char *err_msg;
+	char	*temp;
+	char	*err_msg;
 
 	if (error <= 1)
 		return (error);
@@ -85,7 +83,7 @@ int	normal_err(int error, int nb, char *type)
 		temp = ft_strdup("Invalid normal map file format in ");
 	else if (error == 4)
 		temp = ft_strdup("Memory allocation failed in ");
-		else if (error == 5)
+	else if (error == 5)
 		temp = ft_strdup("Normal map file name cannot start with a '.' in ");
 	else
 		temp = ft_strdup("Normal map file must be in the root `normals` \

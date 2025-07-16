@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hits.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:57:56 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/16 23:21:17 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/16 17:10:56 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit)
 	const double	a = dot(r->dir, r->dir);
 	const double	b = 2 * dot(r->dir, vsub(r->p, sphere->pos));
 	const double	c = dot(vsub(r->p, sphere->pos), vsub(r->p, sphere->pos))
-						- sphere->radius * sphere->radius;
+		- sphere->radius * sphere->radius;
 	const double	delta = b * b - 4 * a * c;
 	double			t;
 
@@ -36,7 +36,7 @@ bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit)
 	if (!hit->front)
 		hit->normal = vmul(hit->normal, -1);
 	hit->u = 0.5 - (atan2(hit->normal.z, hit->normal.x) / (2 * PI));
-	hit->v =  0.5 - (asin(hit->normal.y) / PI);
+	hit->v = 0.5 - (asin(hit->normal.y) / PI);
 	return (true);
 }
 
@@ -44,10 +44,7 @@ bool	hit_plane(t_plane *plane, t_ray *r, t_hit *hit)
 {
 	const double	denom = dot(plane->normal, r->dir);
 	double			t;
-	static int a = 0;
 
-	if (!a++)
-		print_plane(plane);
 	if (fabs(denom) < 0.000001)
 		return (false);
 	t = dot(vsub(plane->pos, r->p), plane->normal) / denom;

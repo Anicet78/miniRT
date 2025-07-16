@@ -6,45 +6,28 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 14:06:26 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 17:02:17 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-size_t	calc_arena_size(int fd)
-{
-	size_t	size;
-	char	*gnl;
-
-	size = 1;
-	gnl = get_next_line(fd);
-	while (gnl)
-	{
-		size++;
-		free(gnl);
-		gnl = get_next_line(fd);
-	}
-	lseek(fd, 0, SEEK_SET);
-	return (size * sizeof(t_cylinder) * 10);
-}
-
 t_elem_lst	*init_minirt(t_rt *rt, int fd)
 {
-	size_t	size;
-
 	rt->thread_amount = 0;
 	rt->mlx.mlx_win = NULL;
 	rt->mlx.imgs = NULL;
 	rt->mlx.addr = NULL;
 	rt->elements.textures = NULL;
 	rt->elements.normals = NULL;
-	size = calc_arena_size(fd);
-	rt->arena = arena_init(size);
+	rt->elements.allocated_size = calc_arena_size(fd);
+	rt->arena = arena_init(rt->elements.allocated_size);
 	if (!rt->arena)
 		return (print_err("Memory allocation failed", 0), NULL);
 	rt->elements.count = 0;
-	rt->elements.elem_lst = arena_calloc(rt->arena, size * 90 / 100);
+	rt->elements.allocated_size = rt->elements.allocated_size * 90 / 100;
+	rt->elements.elem_lst = arena_calloc(rt->arena,
+			rt->elements.allocated_size);
 	if (!rt->elements.elem_lst)
 	{
 		clear_arena(&rt->arena);
@@ -98,7 +81,7 @@ void	*get_next_elem(t_elem_lst *elements)
 
 t_elem_lst	*add_element(t_elem_lst *elements, void *new_elem, size_t size)
 {
-	if (elements->count + size > ELEM_LST_SIZE / 8)
+	if (elements->count + size > elements->allocated_size / 8)
 	{
 		print_err("Memory allocation failed: chunk size too small", 0);
 		return (NULL);

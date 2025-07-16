@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:57:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/18 17:07:03 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 15:26:34 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,6 @@ bool	valid_node(t_bvh_node *node)
 		return (node->obj != NULL);
 	return (true);
 }
-
-
-/* bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit, size_t index)
-{
-	bool			did_hit;
-	const size_t	left = index * 2 + 1;
-	const size_t	right = index * 2 + 2;
-
-	did_hit = false;
-	if (valid_node(&bvh[left]) && hit_aabb(&bvh[left].bbox, r))
-	{
-		if (bvh[left].is_leaf)
-			did_hit |= hit_object(bvh[left].obj, r, hit);
-		else
-			did_hit |= hit_bvh(bvh, r, hit, left);
-	}
-	if (valid_node(&bvh[right]) && hit_aabb(&bvh[right].bbox, r))
-	{
-		if (bvh[right].is_leaf)
-			did_hit |= hit_object(bvh[right].obj, r, hit);
-		else
-			did_hit |= hit_bvh(bvh, r, hit, right);
-	}
-	return (did_hit);
-} */
 
 bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
 {

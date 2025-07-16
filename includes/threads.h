@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:47:21 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/09 12:00:13 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 17:12:21 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	next_image(t_rt *rt);
 // queue
 void	init_queue(t_rt *rt);
 bool	get_next_block(t_block *block, t_queue *queue, t_elem_lst *elems);
-void	set_ready(t_queue *queue, t_block *block, t_mlx *mlx);
+void	set_ready(t_queue *queue, t_block *block);
 void	reset_ready(t_queue *queue, t_elem_lst *elems, size_t start);
 
 #endif

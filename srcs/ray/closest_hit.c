@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   closest_hit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/16 23:20:45 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/16 17:10:37 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int32_t	background_color(t_ray *r)
 {
-	const t_vec	sky_bot = (t_color){0.42, 0.55, 0.84};
-	const t_vec	sky_top = (t_color){0.7, 0.8, 1};
+	const t_vec	sky_bot = (t_color){{0.42, 0.55, 0.84}};
+	const t_vec	sky_top = (t_color){{0.7, 0.8, 1}};
 
 	if (r->dir.y * r->dir.y < 0.02 * 0.02)
 		return (vec_to_col(
-			lerp_vec(
-				sky_bot,
-				sky_top,
-				(r->dir.y + 0.02) / 0.04
-			)
-		));
+				lerp_vec(
+					sky_bot,
+					sky_top,
+					(r->dir.y + 0.02) / 0.04
+				)
+			));
 	else if (r->dir.y < 0)
 		return (vec_to_col(sky_bot));
 	else
@@ -38,40 +38,12 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 	t_color	surface;
 
 	if (!closest_hit(r, elems, &hit, frame))
-		// return (0x0);
 		return (background_color(r));
 	surface = surface_color(hit.mat->texture, hit.u, hit.v);
 	color = ambient_component(&hit, elems, &surface);
 	color = vadd(color, lambertian(&hit, elems, &surface, frame));
 	return (vec_to_col(color));
 }
-
-/* bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
-{
-	void	*elem;
-	uint8_t	type;
-	bool	did_hit;
-
-	// ft_memset(hit, 0, sizeof(t_hit));
-	hit->t = 9999999999; // INFINITY
-	did_hit = false;
-	elems->count = 0;
-	if (frame > 0)
-		elems->count = elems->frames[frame - 1];
-	elem = get_next_elem(elems);
-	while (elem && elems->count <= elems->frames[frame])
-	{
-		type = get_elem_type(elem);
-		if (type == SPHERE)
-			did_hit |= hit_sphere(elem, r, hit);
-		else if (type == PLANE)
-			did_hit |= hit_plane(elem, r, hit);
-		else if (type == CYLINDER)
-			did_hit |= hit_cylinder(elem, r, hit);
-		elem = get_next_elem(elems);
-	}
-	return (did_hit);
-} */
 
 bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 {
@@ -86,10 +58,6 @@ bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 		did_hit |= hit_plane(elems->planes[frame] + i, r, hit);
 		i++;
 	}
-	/* if (elems->bvh[frame][0].is_leaf == true)
-		did_hit |= hit_object(elems->bvh[frame][0].obj, r, hit);
-	else
-		did_hit |= hit_bvh(elems->bvh[frame], r, hit, 0); */
 	did_hit |= hit_bvh(elems->bvh[frame], r, hit);
 	return (did_hit);
 }

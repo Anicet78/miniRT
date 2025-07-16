@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/17 14:08:39 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 17:19:10 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "miniRT.h"
 # include <float.h>
 # include "../mlx/mlx_int.h"
-
-# define ELEM_LST_SIZE (CHUNK_SIZE * 90 / 100)
 
 typedef struct s_image
 {
@@ -103,6 +101,7 @@ typedef struct s_elem_lst
 {
 	size_t		count;
 	size_t		size;
+	size_t		allocated_size;
 	double		fps;
 	t_plane		**planes;
 	size_t		plane_index;
@@ -161,5 +160,15 @@ int			texture_err(int error, int nb, char *type);
 int			normal_err(int error, int nb, char *type);
 t_image		*add_texture(t_elem_lst *elems, char *filename);
 t_image		*add_normal(t_elem_lst *elems, char *filename);
+
+// utils
+bool		init_parsing(t_elem_lst *elems, t_arena *arena, int fd);
+bool		alloc_lights(t_light **lights, t_arena *arena,
+				int fd, size_t frames);
+bool		alloc_planes(t_plane **planes, t_arena *arena,
+				int fd, size_t frames);
+size_t		count_frames(int fd);
+size_t		count_elems(char *dirname);
+char		**ft_arena_split(char const *s, char c, t_arena *arena);
 
 #endif

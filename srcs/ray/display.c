@@ -6,13 +6,14 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/06 18:07:40 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 16:44:01 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-t_display	*init_all_displays(t_camera *cam, t_arena *arena, size_t frame_amount)
+t_display	*init_all_displays(t_camera *cam, t_arena *arena,
+	size_t frame_amount)
 {
 	size_t		count;
 	t_display	*displays;
@@ -51,7 +52,8 @@ t_display	init_display(t_camera *cam)
 	ret.pix_du = vdiv(ret.vp_u, (double)ret.width);
 	ret.pix_dv = vdiv(ret.vp_v, (double)ret.height);
 	ret.vp_upleft = vadd(cam->pos, cam->dir);
-	ret.vp_upleft = vsub(ret.vp_upleft, vadd(vmul(ret.vp_u, 0.5), vmul(ret.vp_v, 0.5)));
+	ret.vp_upleft = vsub(ret.vp_upleft,
+			vadd(vmul(ret.vp_u, 0.5), vmul(ret.vp_v, 0.5)));
 	ret.pixel00 = vadd(ret.vp_upleft, vmul(vadd(ret.pix_du, ret.pix_dv), 0.5));
 	return (ret);
 }
@@ -71,8 +73,9 @@ void	render_display(t_rt *rt, t_display *d)
 					vadd(vmul(d->pix_du, d->i), vmul(d->pix_dv, d->j)));
 			r.dir = norm(vsub(world_pix, rt->elements.cam[0].pos));
 			r.p = rt->elements.cam[0].pos;
-			put_pixel_to_img(&(rt->mlx), rt->mlx.addr[0], (uint32_t[2]){d->i, d->j},
-					ray_to_color(&r, &rt->elements, SIZE_MAX));
+			put_pixel_to_img(&(rt->mlx), rt->mlx.addr[0],
+				(uint32_t[2]){d->i, d->j},
+				ray_to_color(&r, &rt->elements, SIZE_MAX));
 			d->i += 1;
 		}
 		d->j += 1;

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:13:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 15:12:59 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 17:14:32 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ int	key_hook(int keycode, t_rt *rt)
 	return (0);
 }
 
+void	next_image(t_rt *rt)
+{
+	static size_t	last_frame = 0;
+	static long		last_frame_time = 0;
+
+	if (!rt->elements.loop && last_frame >= rt->elements.frame_amount)
+		return ;
+	else if (rt->elements.loop && last_frame >= rt->elements.frame_amount)
+		pre_rendering(rt, &last_frame_time);
+	else
+		realtime_rendering(rt, &last_frame, &last_frame_time);
+}
+
 int	loop_hook(t_rt *rt)
 {
 	static bool	first = true;
@@ -40,48 +53,6 @@ int	loop_hook(t_rt *rt)
 	}
 	next_image(rt);
 	return (0);
-}
-
-void	destroy_mlx(t_rt *rt)
-{
-	size_t	i;
-
-	i = 0;
-	while (rt->elements.textures && i < rt->elements.texture_amount
-		&& rt->elements.textures[i].declared)
-		mlx_destroy_image(rt->mlx.mlx, rt->elements.textures[i++].img);
-	i = 0;
-	while (rt->elements.normals && i < rt->elements.normal_amount
-		&& rt->elements.normals[i].declared)
-		mlx_destroy_image(rt->mlx.mlx, rt->elements.normals[i++].img);
-	i = 0;
-	while (rt->mlx.mlx && rt->mlx.mlx_win
-		&& i < rt->mlx.img_amount && rt->mlx.imgs[i])
-		mlx_destroy_image(rt->mlx.mlx, rt->mlx.imgs[i++]);
-	if (rt->mlx.mlx_win)
-		mlx_destroy_window(rt->mlx.mlx, rt->mlx.mlx_win);
-	if (rt->mlx.mlx)
-	{
-		mlx_destroy_display(rt->mlx.mlx);
-		free(rt->mlx.mlx);
-	}
-}
-
-void	destroy_threads(t_rt *rt)
-{
-	uint8_t	i;
-
-	i = 0;
-	pthread_mutex_lock(&rt->queue.lock);
-	rt->queue.stop = true;
-	pthread_mutex_unlock(&rt->queue.lock);
-	while (i < rt->thread_amount)
-	{
-		pthread_join(rt->threads[i], NULL);
-		i++;
-	}
-	pthread_mutex_destroy(&rt->queue.lock);
-	pthread_cond_destroy(&rt->queue.cond);
 }
 
 void	kill_mlx(t_rt *rt, int exit_code)

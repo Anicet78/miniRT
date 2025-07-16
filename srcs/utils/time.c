@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 15:31:12 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/07 11:45:27 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 15:44:24 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_usleep(size_t usec)
 		gettimeofday(&now, NULL);
 		now_ms = get_utime(&now);
 		if (now_ms >= start_ms)
-			break;
+			break ;
 		usleep(100);
 	}
 }

@@ -6,21 +6,18 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:09:34 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/16 15:50:32 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 17:11:26 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-void	set_ready(t_queue *queue, t_block *block, t_mlx *mlx)
+void	set_ready(t_queue *queue, t_block *block)
 {
 	pthread_mutex_lock(&queue->lock);
 	queue->ready[block->img_index]++;
 	if (queue->ready[block->img_index] >= queue->size)
-	{
 		queue->print_index = block->img_index + 1;
-		// pthread_cond_signal(&queue->cond);
-	}
 	pthread_mutex_unlock(&queue->lock);
 }
 
@@ -66,7 +63,8 @@ void	init_queue(t_rt *rt)
 	uint32_t		px_start[2];
 
 	rt->queue.blocks = arena_alloc(sizeof(t_block) * size, rt->arena);
-	rt->queue.ready = arena_calloc(rt->arena, sizeof(uint32_t) * rt->mlx.img_amount);
+	rt->queue.ready = arena_calloc(rt->arena, sizeof(uint32_t)
+			* rt->mlx.img_amount);
 	if (!rt->queue.blocks || !rt->queue.ready)
 		kill_mlx(rt, 1);
 	rt->queue.counter = 0;

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:24:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/18 12:53:42 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 16:43:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,6 @@ static void	init_info(t_bvh_info *info, t_bvh_info *prev_info, size_t pos)
 	}
 	info->left_size = 0;
 	info->right_size = 0;
-}
-
-size_t	get_next(size_t pos)
-{
-	size_t	i;
-
-	if (pos == 0)
-		return (2);
-	i = pos;
-	while (i != 0 && i % 2 == 0)
-		i = (i - 1) / 2;
-	if (i == 0)
-		return (0);
-	return ((i - 1) / 2 * 2 + 2);
 }
 
 size_t	create_leaf(t_bvh_node *bvh, t_bvh_info *info, size_t pos)

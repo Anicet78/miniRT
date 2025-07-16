@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 15:15:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/18 16:03:04 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 16:42:31 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,18 +110,4 @@ void	get_cut_pos(t_bvh_info *info, t_bin *bins)
 			* (info->centroid_max.data[info->axis]
 				- info->centroid_min.data[info->axis]);
 	}
-}
-
-size_t	get_bvh_size(size_t elem_amount)
-{
-	size_t	pow2;
-	size_t	bvh_node_count;
-
-	if (elem_amount == 1)
-		return (1);
-	bvh_node_count = 2 * elem_amount - 1;
-	pow2 = 1;
-	while (pow2 < bvh_node_count)
-		pow2 *= 2;
-	return (pow2 * 2);
 }

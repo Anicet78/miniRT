@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec3.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:38:50 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/11 16:17:43 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/16 17:04:51 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ typedef union s_vec
 {
 	struct
 	{
-		double x;
-		double y;
-		double z;
+		double	x;
+		double	y;
+		double	z;
 	};
-	double data[3];
+	double	data[3];
 }	t_vec;
 
 typedef struct s_icolor

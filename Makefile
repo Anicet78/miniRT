@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -ggdb -Ofast -flto -ffast-math -march=native -pipe #-Wall -Werror -Wextra
+CFLAGS		= -ggdb -Ofast -flto -ffast-math -march=native -pipe -Wall -Werror -Wextra
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -22,11 +22,14 @@ SRC			=	main.c							\
 				bvh/hit_bvh.c					\
 				bvh/indexs.c					\
 				bvh/utils.c						\
+				bvh/utils2.c					\
 				elements/add_elements.c			\
 				elements/add_elements2.c		\
 				elements/add_xpm.c				\
 				elements/elem_lst.c				\
+				parse_file/alloc_elems.c		\
 				parse_file/check_params.c		\
+				parse_file/init_parsing.c		\
 				parse_file/libc_remaster.c		\
 				parse_file/parse_elements.c		\
 				parse_file/parse_elements2.c	\
@@ -45,11 +48,13 @@ SRC			=	main.c							\
 				threads/queue.c					\
 				threads/render.c				\
 				threads/threads.c				\
+				utils/calc_things.c				\
 				utils/color.c					\
 				utils/err_message.c				\
+				utils/fps.c						\
+				utils/mlx_end.c					\
 				utils/mlx_hook.c				\
 				utils/mlx.c						\
-				utils/print_tests.c				\
 				utils/print_utils.c				\
 				utils/time.c					\
 				utils/vec_utils.c

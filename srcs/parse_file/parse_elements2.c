@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/05/29 17:16:33 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 16:21:23 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,24 @@
 
 bool	parse_cylinder(t_elem_lst *elems, char **line, int nb)
 {
-	const size_t	tsize = tab_len(line);
-	int				text;
-	int				normal;
-	double			height;
-	double			diameter;
-
+	auto size_t tsize = tab_len(line);
 	if (tsize < 6 || tsize > 8)
 		return (print_err("Invalid amount of argument in `cylinder`", nb));
-	if (is_vec(line[1]) == false)
-		return (print_err("Invalid coordinates in `cylinder`", nb));
-	if (is_normalize_vec(line[2]) == false)
-		return (print_err("Invalid axis vector in `cylinder`", nb));
-	diameter = ft_atof_parse(line[3]);
+	if (is_vec(line[1]) == false || is_normalize_vec(line[2]) == false)
+		return (print_err("Invalid vector in `cylinder`", nb));
+	auto double diameter = ft_atof_parse(line[3]);
 	if (diameter < 0 || diameter > INT_MAX)
 		return (print_err("Invalid diameter in `cylinder`", nb));
-	height = ft_atof_parse(line[4]);
+	auto double height = ft_atof_parse(line[4]);
 	if (height < 0 || height > INT_MAX)
 		return (print_err("Invalid height in `cylinder`", nb));
 	if (is_color(line[5]) == false)
 		return (print_err("Invalid color in `cylinder`", nb));
-	text = texture_err(try_file(line, "/textures/", tsize, 6), nb, "`cylinder`");
+	auto int text = texture_err(try_file(line, "/textures/", tsize, 6),
+		nb, "`cylinder`");
 	if (text > 1)
 		return (false);
-	normal = normal_err(try_file(line, "/normals/", tsize, 6 + text),
+	auto int normal = normal_err(try_file(line, "/normals/", tsize, 6 + text),
 		nb, "`cylinder`");
 	if (normal > 1)
 		return (false);
