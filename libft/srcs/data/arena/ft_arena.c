@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:27:24 by tgallet           #+#    #+#             */
-/*   Updated: 2025/05/21 16:12:10 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 13:56:15 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_arena	*arena_init(size_t size)
 {
 	t_arena	*arena;
 
-	if (size == 0)
+	if (size <= 0)
 		return (NULL);
 	arena = malloc(sizeof(t_arena));
 	if (!arena)

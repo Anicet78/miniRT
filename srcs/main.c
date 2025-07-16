@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/11 15:53:12 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/16 13:51:50 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	main(int ac, char **av)
 	bool		map_file;
 
 	fd = open_file(ac, av);
-	if (!init_minirt(&rt))
+	if (!init_minirt(&rt, fd))
 		return (close(fd), EXIT_FAILURE);
 	map_file = read_rtfile(fd, &rt.elements, rt.arena);
 	close(fd);

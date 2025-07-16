@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:47:21 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/17 16:27:45 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/09 12:00:13 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-# define RENDER_THREADS 3
+# define RENDER_THREADS 22
 # define BLOCK_SIZE 32
 
 typedef struct s_mlx		t_mlx;
