@@ -32,15 +32,6 @@ SRC			=	main.c							\
 				parse_file/parse_elements2.c	\
 				parse_file/parse_file.c			\
 				parse_file/parse_xpm.c			\
-				threads/queue.c					\
-				threads/render.c				\
-				threads/threads.c				\
-				utils/err_message.c				\
-				utils/color.c					\
-				utils/print_tests.c				\
-				utils/time.c					\
-				utils/vec_utils.c				\
-				utils/print_utils.c				\
 				ray/closest_hit.c				\
 				ray/display.c					\
 				ray/hit_aabb.c					\
@@ -51,8 +42,17 @@ SRC			=	main.c							\
 				ray/vec3op.c					\
 				ray/vec3op2.c					\
 				ray/vec3op3.c					\
-				mlx_hook.c						\
-				mlx.c
+				threads/queue.c					\
+				threads/render.c				\
+				threads/threads.c				\
+				utils/color.c					\
+				utils/err_message.c				\
+				utils/mlx_hook.c				\
+				utils/mlx.c						\
+				utils/print_tests.c				\
+				utils/print_utils.c				\
+				utils/time.c					\
+				utils/vec_utils.c
 
 OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
 

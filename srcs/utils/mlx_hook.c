@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:13:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/07 13:15:37 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 15:12:59 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	key_hook(int keycode, t_rt *rt)
 
 int	loop_hook(t_rt *rt)
 {
-	static bool		first = true;
+	static bool	first = true;
 
 	if (first == true)
 	{
