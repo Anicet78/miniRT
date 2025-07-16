@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/07 16:10:00 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/16 15:24:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ double	wait_framerate(double fps, long last_frame_time)
 	if (elapsed < duration)
 		ft_usleep(duration - elapsed);
 	elapsed = get_utime_now() - last_frame_time;
+	if (elapsed > 0)
 		return (1000000.0 / (double)elapsed);
 	return (fps);
 }
@@ -126,9 +127,9 @@ void	realtime_rendering(t_rt *rt, size_t *last_frame, long *last_frame_time)
 
 	fps = wait_framerate(rt->elements.fps, *last_frame_time);
 	pthread_mutex_lock(&rt->queue.lock);
-	if (rt->queue.print_index != 0 && *last_frame < rt->queue.print_index)\
+	if (rt->queue.print_index != 0 && *last_frame < rt->queue.print_index)
 	{
-		*last_frame = rt->queue.print_index;
+		(*last_frame)++;
 		// ft_printf("\b\b\b\b\b     \rFPS: %.2f", fps);
 		mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
 			rt->mlx.imgs[(*last_frame) - 1], 0, 0);
