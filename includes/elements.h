@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 17:19:10 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/17 18:56:54 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_material
 {
 	t_color		color;
 	t_image		*texture;
-	t_image		*normal;
+	t_image		*bmap;
 }	t_material;
 
 typedef struct s_ambient

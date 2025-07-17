@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_elements2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 12:18:11 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/17 18:56:54 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	add_cylinder(t_elem_lst *elems, char **line, int texture, int normal)
 	cy.height = ft_atof_parse(line[4]);
 	cy.mat.color = get_color(line[5]);
 	cy.mat.texture = NULL;
-	cy.mat.normal = NULL;
+	cy.mat.bmap = NULL;
 	if (texture)
 	{
 		cy.mat.texture = add_texture(elems, line[6]);
@@ -32,8 +32,8 @@ bool	add_cylinder(t_elem_lst *elems, char **line, int texture, int normal)
 	}
 	if (normal)
 	{
-		cy.mat.normal = add_normal(elems, line[6 + texture]);
-		if (!cy.mat.normal)
+		cy.mat.bmap = add_normal(elems, line[6 + texture]);
+		if (!cy.mat.bmap)
 			return (print_err("Invalid normal map file in `cylinder`", 0),
 				false);
 	}

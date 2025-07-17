@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cyl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 22:38:23 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/16 16:45:19 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/17 22:39:50 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ bool	intersect_cyl_caps(t_cylinder *cylinder, t_ray *r,
 	hit->normal = cylinder->axis;
 	hit->front = (denom < 0);
 	hit->mat = &cylinder->mat;
-	hit->u = fmod(hit->p.x - cap_center.x, 4);
-	hit->v = fmod(hit->p.y - cap_center.y, 4);
+	hit->u = fmod((hit->p.x - cap_center.x) / 2, 1);
+	hit->v = fmod((hit->p.y - cap_center.y) / 2, 1);
 	return (true);
 }
 
