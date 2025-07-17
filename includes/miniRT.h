@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 17:18:54 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/17 18:09:05 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 # define PI 3.14159265358979323846264338
 # define WIDTH 1920
-# define ASPECT_RATIO (16.0 / 9.0)
 
 # define ESC_K 65307
 # define SPACE_K 32
@@ -126,6 +125,7 @@ void		init_builder(t_elem_lst *elems, t_bvh_builder *builder,
 				size_t frame);
 size_t		count_elem_amount(t_elem_lst *elems, size_t frame);
 bool		hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit);
+bool		shadow_hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit);
 bool		hit_object(void *obj, t_ray *r, t_hit *hit);
 bool		hit_aabb(t_aabb *box, t_ray *r);
 
