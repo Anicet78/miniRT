@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:17:32 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/18 23:31:07 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/19 00:23:49 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_vec	bump_gradient(t_image *bmap, double u, double v)
 			- get_grey_pixel(bmap, (x + 1) % bmap->width, y);
 	ret.y = get_grey_pixel(bmap, x, (y - 1) % bmap->height)
 			- get_grey_pixel(bmap, x, (y + 1) % bmap->height);
-	ret = vmul(ret, 1 / 510);
+	ret = vmul(ret, 1.0 / 510.0);
 	return (ret);
 }
 
@@ -73,3 +73,22 @@ void	bump_mapping(t_hit *hit)
 			)
 		);
 }
+
+// int	main(void)
+// {
+// 	t_image	*image = malloc(sizeof(t_image));
+// 	void	*mlx_ptr = mlx_init();
+
+// 	image->img = mlx_xpm_file_to_image(mlx_ptr, "textures/grad.xpm",
+// 		&image->width, &image->height);
+// 	image->addr = mlx_get_data_addr(
+// 		image->img, &image->bits_per_pixel,
+// 		&image->line_length, &image->endian);
+// 	int	x = 0;
+// 	int	y = 0;
+
+// 	for (; y < 50; y++)
+// 	{
+// 		printf("%d\n", get_grey_pixel(image, x, y));
+// 	}
+// }

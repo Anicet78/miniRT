@@ -14,3 +14,7 @@ mlx
 miniRT
 
 *out*
+
+.gitignore
+
+Makefile
