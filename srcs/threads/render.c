@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 17:13:23 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/18 18:56:45 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,11 @@ void	realtime_rendering(t_rt *rt, size_t *last_frame, long *last_frame_time)
 
 void	pre_rendering(t_rt *rt, long *last_frame_time)
 {
-	static size_t	count = 0;
+	static size_t	count = SIZE_MAX;
 	double			fps;
 
+	if (count == SIZE_MAX)
+		count = rt->elements.loop - 1;
 	fps = wait_framerate(rt->elements.fps, *last_frame_time);
 	mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
 		rt->mlx.imgs[count++], 0, 0);
