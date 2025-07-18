@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:17:32 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/17 22:51:34 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/18 23:31:07 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ t_color	surface_color(t_image *texture, double u, double v)
 	return (int_to_tcol(col));
 }
 
-int	greyscale_get_pixel(t_image *data, int x, int y)
+int	get_grey_pixel(t_image *data, int x, int y)
 {
-	return (*(unsigned char *)(data->addr + y * data->line_length
-		+ x * data->bits_per_pixel / 8));
+	return (((*(uint32_t *)(data->addr + y * data->line_length
+		+ x * data->bits_per_pixel / 8)) & 0xFF00) >> 8);
 }
 
 t_vec	bump_gradient(t_image *bmap, double u, double v)
@@ -46,10 +46,10 @@ t_vec	bump_gradient(t_image *bmap, double u, double v)
 	const int	y = ((uint32_t)(v * bmap->height)) % bmap->height;
 	t_vec	ret;
 
-	ret.x = greyscale_get_pixel(bmap, (x - 1) % bmap->width, y)
-			- greyscale_get_pixel(bmap, (x + 1) % bmap->width, y);
-	ret.y = greyscale_get_pixel(bmap, x, (y - 1) % bmap->height)
-			- greyscale_get_pixel(bmap, x, (y + 1) % bmap->height);
+	ret.x = get_grey_pixel(bmap, (x - 1) % bmap->width, y)
+			- get_grey_pixel(bmap, (x + 1) % bmap->width, y);
+	ret.y = get_grey_pixel(bmap, x, (y - 1) % bmap->height)
+			- get_grey_pixel(bmap, x, (y + 1) % bmap->height);
 	ret = vmul(ret, 1 / 510);
 	return (ret);
 }
