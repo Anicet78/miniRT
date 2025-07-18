@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hits.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:57:56 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/16 17:10:56 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/17 19:54:59 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ bool	hit_plane(t_plane *plane, t_ray *r, t_hit *hit)
 		return (false);
 	hit->p = vadd(r->p, vmul(r->dir, t));
 	hit->t = t;
-	hit->u = fmod(hit->p.x - plane->pos.x, 4);
-	hit->v = fmod(hit->p.y - plane->pos.y, 4);
+	hit->u = fmod(hit->p.x - plane->pos.x, 1);
+	hit->v = fmod(hit->p.y - plane->pos.y, 1);
 	hit->front = (denom < 0);
 	hit->mat = &plane->mat;
 	hit->normal = plane->normal;
