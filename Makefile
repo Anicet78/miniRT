@@ -1,5 +1,7 @@
 CC			= cc
-CFLAGS		= -ggdb -Ofast -flto -ffast-math -march=native -pipe -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra
+DEBUGFLAGS	= -ggdb -fsanitize=address,undefined,leak
+FASTFLAGS	= -Ofast -flto -ffast-math -march=native -pipe
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
@@ -12,6 +14,15 @@ SRC_DIR		= srcs/
 OBJ_DIR		= objs/
 
 CFLAGS		+= -I$(INCLUDES)
+
+MODE ?= normal
+
+ifeq ($(MODE), fast)
+	CFLAGS += $(FASTFLAGS)
+endif
+ifeq ($(MODE), debug)
+	CFLAGS += $(DEBUGFLAGS)
+endif
 
 LIBS		= -Lmlx -lmlx -lXext -lX11 -lm
 
