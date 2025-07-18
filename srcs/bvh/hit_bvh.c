@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:57:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/17 18:08:27 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/18 18:45:04 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
 	size_t	index;
 
 	if (bvh[0].is_leaf == true)
-		return (hit_object(bvh[0].obj, r, hit));
+		return (hit_aabb(&bvh[0].bbox, r) && hit_object(bvh[0].obj, r, hit));
 	else if (!hit_aabb(&bvh[0].bbox, r))
 		return (false);
 	did_hit = false;
