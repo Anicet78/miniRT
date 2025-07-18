@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:17:32 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/19 00:23:49 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/19 00:35:51 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ t_vec	bump_gradient(t_image *bmap, double u, double v)
 	const int	y = ((uint32_t)(v * bmap->height)) % bmap->height;
 	t_vec	ret;
 
-	ret.x = get_grey_pixel(bmap, (x - 1) % bmap->width, y)
+	ret.x = get_grey_pixel(bmap, (x - 1 + bmap->width) % bmap->width, y)
 			- get_grey_pixel(bmap, (x + 1) % bmap->width, y);
-	ret.y = get_grey_pixel(bmap, x, (y - 1) % bmap->height)
+	ret.y = get_grey_pixel(bmap, x, (y - 1 + bmap->width) % bmap->height)
 			- get_grey_pixel(bmap, x, (y + 1) % bmap->height);
 	ret = vmul(ret, 1.0 / 510.0);
 	return (ret);
@@ -56,10 +56,14 @@ t_vec	bump_gradient(t_image *bmap, double u, double v)
 
 void	bump_mapping(t_hit *hit)
 {
-	const t_vec	tang = norm(cross_prod(hit->normal, up_v()));
-	const t_vec	bitang = cross_prod(tang, hit->normal);
+	t_vec	tang;
+	t_vec	bitang = cross_prod(tang, hit->normal);
 	const t_vec	grad = bump_gradient(hit->mat->bmap, hit->u, hit->v);
 
+	tang = cross_prod(hit->normal, up_v());
+	if (dot(tang, tang) < 1e-12)
+		tang = right_v();
+	bitang = norm(cross_prod(hit->normal, tang));
 	hit->normal = norm(
 		vsub(
 			hit->normal,
