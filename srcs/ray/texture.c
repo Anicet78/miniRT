@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:17:32 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/17 22:51:34 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/19 00:38:06 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ t_color	surface_color(t_image *texture, double u, double v)
 	return (int_to_tcol(col));
 }
 
-int	greyscale_get_pixel(t_image *data, int x, int y)
+int	get_grey_pixel(t_image *data, int x, int y)
 {
-	return (*(unsigned char *)(data->addr + y * data->line_length
-		+ x * data->bits_per_pixel / 8));
+	return (((*(uint32_t *)(data->addr + y * data->line_length
+		+ x * data->bits_per_pixel / 8)) & 0xFF00) >> 8);
 }
 
 t_vec	bump_gradient(t_image *bmap, double u, double v)
@@ -46,20 +46,24 @@ t_vec	bump_gradient(t_image *bmap, double u, double v)
 	const int	y = ((uint32_t)(v * bmap->height)) % bmap->height;
 	t_vec	ret;
 
-	ret.x = greyscale_get_pixel(bmap, (x - 1) % bmap->width, y)
-			- greyscale_get_pixel(bmap, (x + 1) % bmap->width, y);
-	ret.y = greyscale_get_pixel(bmap, x, (y - 1) % bmap->height)
-			- greyscale_get_pixel(bmap, x, (y + 1) % bmap->height);
-	ret = vmul(ret, 1 / 510);
+	ret.x = get_grey_pixel(bmap, (x - 1 + bmap->width) % bmap->width, y)
+			- get_grey_pixel(bmap, (x + 1) % bmap->width, y);
+	ret.y = get_grey_pixel(bmap, x, (y - 1 + bmap->width) % bmap->height)
+			- get_grey_pixel(bmap, x, (y + 1) % bmap->height);
+	ret = vmul(ret, 1.0 / 510.0);
 	return (ret);
 }
 
 void	bump_mapping(t_hit *hit)
 {
-	const t_vec	tang = norm(cross_prod(hit->normal, up_v()));
-	const t_vec	bitang = cross_prod(tang, hit->normal);
+	t_vec	tang;
+	t_vec	bitang = cross_prod(tang, hit->normal);
 	const t_vec	grad = bump_gradient(hit->mat->bmap, hit->u, hit->v);
 
+	tang = cross_prod(hit->normal, up_v());
+	if (dot(tang, tang) < 1e-12)
+		tang = right_v();
+	bitang = norm(cross_prod(hit->normal, tang));
 	hit->normal = norm(
 		vsub(
 			hit->normal,
@@ -73,3 +77,22 @@ void	bump_mapping(t_hit *hit)
 			)
 		);
 }
+
+// int	main(void)
+// {
+// 	t_image	*image = malloc(sizeof(t_image));
+// 	void	*mlx_ptr = mlx_init();
+
+// 	image->img = mlx_xpm_file_to_image(mlx_ptr, "textures/grad.xpm",
+// 		&image->width, &image->height);
+// 	image->addr = mlx_get_data_addr(
+// 		image->img, &image->bits_per_pixel,
+// 		&image->line_length, &image->endian);
+// 	int	x = 0;
+// 	int	y = 0;
+
+// 	for (; y < 50; y++)
+// 	{
+// 		printf("%d\n", get_grey_pixel(image, x, y));
+// 	}
+// }

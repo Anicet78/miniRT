@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/17 22:47:25 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/19 00:38:32 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ t_color		surface_color(t_image *texture, double u, double v);
 t_color		ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface);
 t_color		lambertian(t_hit *hit, t_elem_lst *elems,
 				t_color *surface, size_t frame);
+void		bump_mapping(t_hit *hit);
 
 // bvh
 void		create_all_bvh(t_rt *rt);
