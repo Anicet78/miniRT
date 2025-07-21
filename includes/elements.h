@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/17 18:56:54 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/21 12:21:27 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ typedef struct s_elem_lst
 	size_t		light_index;
 	t_image		*textures;
 	size_t		texture_amount;
-	t_image		*normals;
-	size_t		normal_amount;
+	t_image		*bmaps;
+	size_t		bmaps_amount;
 	size_t		loop;
 	size_t		loop_index;
 	t_bvh_node	**bvh;
@@ -157,9 +157,9 @@ double		ft_atof_parse(char *str);
 // xpm
 int			try_file(char **line, char *folder, size_t tabsize, size_t index);
 int			texture_err(int error, int nb, char *type);
-int			normal_err(int error, int nb, char *type);
+int			bmap_err(int error, int nb, char *type);
 t_image		*add_texture(t_elem_lst *elems, char *filename);
-t_image		*add_normal(t_elem_lst *elems, char *filename);
+t_image		*add_bmap(t_elem_lst *elems, char *filename);
 
 // utils
 bool		init_parsing(t_elem_lst *elems, t_arena *arena, int fd);

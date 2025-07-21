@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 16:21:23 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/21 12:06:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ bool	parse_cylinder(t_elem_lst *elems, char **line, int nb)
 		nb, "`cylinder`");
 	if (text > 1)
 		return (false);
-	auto int normal = normal_err(try_file(line, "/normals/", tsize, 6 + text),
+	auto int bmap = bmap_err(try_file(line, "/bumps/", tsize, 6 + text),
 		nb, "`cylinder`");
-	if (normal > 1)
+	if (bmap > 1)
 		return (false);
-	if ((tsize > 6 && !normal && !text) || (tsize > 7 && normal + text != 2))
+	if ((tsize > 6 && !bmap && !text) || (tsize > 7 && bmap + text != 2))
 		return (print_err("Invalid amount of argument in `cylinder`", nb));
-	return (add_cylinder(elems, line, text, normal));
+	return (add_cylinder(elems, line, text, bmap));
 }
 
 bool	parse_new_frame(t_elem_lst *elems, char **line, int nb)

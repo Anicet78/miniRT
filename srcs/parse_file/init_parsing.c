@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:26:41 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 17:17:23 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/21 12:05:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ static bool	alloc_first(t_elem_lst *elems, t_arena *arena, int fd)
 			* elems->texture_amount);
 	if (!elems->textures)
 		return (print_err("Memory allocation failed", 0));
-	elems->normal_amount = count_elems("normals");
-	elems->normals = arena_calloc(arena, sizeof(t_image)
-			* elems->normal_amount);
-	if (!elems->normals)
+	elems->bmaps_amount = count_elems("bump_maps");
+	elems->bmaps = arena_calloc(arena, sizeof(t_image)
+			* elems->bmaps_amount);
+	if (!elems->bmaps)
 		return (print_err("Memory allocation failed", 0));
 	elems->frame_amount = count_frames(fd);
 	if (elems->frame_amount == 0)

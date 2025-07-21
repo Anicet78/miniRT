@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   add_elements2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/17 18:56:54 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/21 12:03:07 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-bool	add_cylinder(t_elem_lst *elems, char **line, int texture, int normal)
+bool	add_cylinder(t_elem_lst *elems, char **line, int texture, int bmap)
 {
 	t_cylinder	cy;
 
@@ -30,11 +30,11 @@ bool	add_cylinder(t_elem_lst *elems, char **line, int texture, int normal)
 		if (!cy.mat.texture)
 			return (print_err("Invalid texture file in `cylinder`", 0), false);
 	}
-	if (normal)
+	if (bmap)
 	{
-		cy.mat.bmap = add_normal(elems, line[6 + texture]);
+		cy.mat.bmap = add_bmap(elems, line[6 + texture]);
 		if (!cy.mat.bmap)
-			return (print_err("Invalid normal map file in `cylinder`", 0),
+			return (print_err("Invalid bmap map file in `cylinder`", 0),
 				false);
 	}
 	return (add_element(elems, &cy, sizeof(t_cylinder)) && true);

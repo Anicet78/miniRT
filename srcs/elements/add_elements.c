@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_elements.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/17 18:56:54 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/21 12:02:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool	add_light(t_elem_lst *elems, t_point pos, float ratio, t_color color)
 	return (true);
 }
 
-bool	add_sphere(t_elem_lst *elems, char **line, int texture, int normal)
+bool	add_sphere(t_elem_lst *elems, char **line, int texture, int bmap)
 {
 	t_sphere	sp;
 
@@ -55,18 +55,18 @@ bool	add_sphere(t_elem_lst *elems, char **line, int texture, int normal)
 		if (!sp.mat.texture)
 			return (print_err("Invalid texture file in `sphere`", 0), false);
 	}
-	if (normal)
+	if (bmap)
 	{
-		sp.mat.bmap = add_normal(elems, line[4 + texture]);
+		sp.mat.bmap = add_bmap(elems, line[4 + texture]);
 		if (!sp.mat.bmap)
-			return (print_err("Invalid normal map file in `sphere`", 0), false);
+			return (print_err("Invalid bump map file in `sphere`", 0), false);
 	}
 	if (!add_element(elems, &sp, sizeof(t_sphere)))
 		return (false);
 	return (true);
 }
 
-bool	add_plane(t_elem_lst *elems, char **line, int texture, int normal)
+bool	add_plane(t_elem_lst *elems, char **line, int texture, int bmap)
 {
 	t_plane	*pl;
 
@@ -84,11 +84,11 @@ bool	add_plane(t_elem_lst *elems, char **line, int texture, int normal)
 		if (!pl->mat.texture)
 			return (print_err("Invalid texture file in `plane`", 0), false);
 	}
-	if (normal)
+	if (bmap)
 	{
-		pl->mat.bmap = add_normal(elems, line[4 + texture]);
+		pl->mat.bmap = add_bmap(elems, line[4 + texture]);
 		if (!pl->mat.bmap)
-			return (print_err("Invalid normal map file in `plane`", 0), false);
+			return (print_err("Invalid bump map file in `plane`", 0), false);
 	}
 	pl->declared = true;
 	elems->plane_index++;

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/06 17:52:24 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/21 12:16:00 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ bool	parse_sphere(t_elem_lst *elements, char **line, int nb)
 	const size_t	tsize = tab_len(line);
 	double			diameter;
 	int				text;
-	int				normal;
+	int				bmap;
 
 	if (tsize < 4 || tsize > 6)
 		return (print_err("Invalid amount of argument in `sphere`", nb));
@@ -105,20 +105,20 @@ bool	parse_sphere(t_elem_lst *elements, char **line, int nb)
 	text = texture_err(try_file(line, "/textures/", tsize, 4), nb, "`sphere`");
 	if (text > 1)
 		return (false);
-	normal = normal_err(try_file(line, "/normals/", tsize, 4 + text),
+	bmap = bmap_err(try_file(line, "/bump_maps/", tsize, 4 + text),
 			nb, "`sphere`");
-	if (normal > 1)
+	if (bmap > 1)
 		return (false);
-	if ((tsize > 4 && !normal && !text) || (tsize > 5 && normal + text != 2))
+	if ((tsize > 4 && !bmap && !text) || (tsize > 5 && bmap + text != 2))
 		return (print_err("Invalid amount of argument in `sphere`", nb));
-	return (add_sphere(elements, line, text, normal));
+	return (add_sphere(elements, line, text, bmap));
 }
 
 bool	parse_plane(t_elem_lst *elements, char **line, int nb)
 {
 	const size_t	tsize = tab_len(line);
 	int				text;
-	int				normal;
+	int				bmap;
 
 	if (tsize < 4 || tsize > 6)
 		return (print_err("Invalid amount of argument in `plane`", nb));
@@ -131,11 +131,11 @@ bool	parse_plane(t_elem_lst *elements, char **line, int nb)
 	text = texture_err(try_file(line, "/textures/", tsize, 4), nb, "`plane`");
 	if (text > 1)
 		return (false);
-	normal = normal_err(try_file(line, "/normals/", tsize, 4 + text),
+	bmap = bmap_err(try_file(line, "/bumps/", tsize, 4 + text),
 			nb, "`plane`");
-	if (normal > 1)
+	if (bmap > 1)
 		return (false);
-	if ((tsize > 4 && !normal && !text) || (tsize > 5 && normal + text != 2))
+	if ((tsize > 4 && !bmap && !text) || (tsize > 5 && bmap + text != 2))
 		return (print_err("Invalid amount of argument in `plane`", nb));
-	return (add_plane(elements, line, text, normal));
+	return (add_plane(elements, line, text, bmap));
 }

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:12:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 16:32:12 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/21 12:07:13 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ directory in ");
 	return (2);
 }
 
-int	normal_err(int error, int nb, char *type)
+int	bmap_err(int error, int nb, char *type)
 {
 	char	*temp;
 	char	*err_msg;
@@ -78,15 +78,15 @@ int	normal_err(int error, int nb, char *type)
 	if (error <= 1)
 		return (error);
 	if (error == 2)
-		temp = ft_strdup("Invalid normal map file in ");
+		temp = ft_strdup("Invalid bump map file in ");
 	else if (error == 3)
-		temp = ft_strdup("Invalid normal map file format in ");
+		temp = ft_strdup("Invalid bump map file format in ");
 	else if (error == 4)
 		temp = ft_strdup("Memory allocation failed in ");
 	else if (error == 5)
-		temp = ft_strdup("Normal map file name cannot start with a '.' in ");
+		temp = ft_strdup("Bump map file name cannot start with a '.' in ");
 	else
-		temp = ft_strdup("Normal map file must be in the root `normals` \
+		temp = ft_strdup("Bump map file must be in the root `bump_maps` \
 directory in ");
 	if (!temp)
 		return (print_err("Memory allocation failed", nb), 2);

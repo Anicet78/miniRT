@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 17:09:09 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 16:27:34 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/21 12:04:49 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_image	*add_texture(t_elem_lst *elems, char *filename)
 		elems->texture_amount, elems->mlx_ptr));
 }
 
-t_image	*add_normal(t_elem_lst *elems, char *filename)
+t_image	*add_bmap(t_elem_lst *elems, char *filename)
 {
 	char	*file;
 
@@ -61,5 +61,5 @@ t_image	*add_normal(t_elem_lst *elems, char *filename)
 		return (NULL);
 	file++;
 	return (add_img((char *[2]){file, filename},
-		elems->normals, elems->normal_amount, elems->mlx_ptr));
+		elems->bmaps, elems->bmaps_amount, elems->mlx_ptr));
 }

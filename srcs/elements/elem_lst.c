@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 17:02:17 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/21 12:09:16 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_elem_lst	*init_minirt(t_rt *rt, int fd)
 	rt->mlx.imgs = NULL;
 	rt->mlx.addr = NULL;
 	rt->elements.textures = NULL;
-	rt->elements.normals = NULL;
+	rt->elements.bmaps = NULL;
 	rt->elements.allocated_size = calc_arena_size(fd);
 	rt->arena = arena_init(rt->elements.allocated_size);
 	if (!rt->arena)
