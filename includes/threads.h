@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 14:47:21 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 17:12:21 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/21 13:37:39 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct s_queue
 {
 	t_block			*blocks;
 	pthread_mutex_t	lock;
-	pthread_cond_t	cond;
 	size_t			render_index;
 	size_t			print_index;
 	uint32_t		counter;

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 16:56:20 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/21 13:39:16 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,14 @@ static bool	init_mutex(t_queue *queue, pthread_attr_t *attr)
 {
 	if (pthread_mutex_init(&queue->lock, NULL))
 		return (false);
-	if (pthread_cond_init(&queue->cond, NULL))
-	{
-		pthread_mutex_destroy(&queue->lock);
-		return (false);
-	}
 	if (pthread_attr_init(attr))
 	{
 		pthread_mutex_destroy(&queue->lock);
-		pthread_cond_destroy(&queue->cond);
 		return (false);
 	}
 	if (pthread_attr_setstacksize(attr, 1048576))
 	{
 		pthread_mutex_destroy(&queue->lock);
-		pthread_cond_destroy(&queue->cond);
 		pthread_attr_destroy(attr);
 		return (false);
 	}

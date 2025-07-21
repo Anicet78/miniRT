@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:36:08 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/21 12:20:27 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/21 13:39:32 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,4 @@ void	destroy_threads(t_rt *rt)
 		i++;
 	}
 	pthread_mutex_destroy(&rt->queue.lock);
-	pthread_cond_destroy(&rt->queue.cond);
 }

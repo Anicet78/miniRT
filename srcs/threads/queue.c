@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 16:09:34 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 17:11:26 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/21 13:41:03 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ bool	get_next_block(t_block *block, t_queue *queue, t_elem_lst *elems)
 static void	fill_block(t_block *block, uint32_t px_start[2], int32_t width,
 			int32_t height)
 {
+	if (px_start[0] + BLOCK_SIZE > (uint32_t)width)
+	{
+		px_start[0] = 0;
+		px_start[1] += BLOCK_SIZE;
+	}
 	block->x_start = px_start[0];
 	block->y_start = px_start[1];
 	block->width = ft_min(BLOCK_SIZE, width - px_start[0]);
@@ -76,11 +81,6 @@ void	init_queue(t_rt *rt)
 	px_start[1] = 0;
 	while (rt->queue.counter < size)
 	{
-		if (px_start[0] + BLOCK_SIZE > (uint32_t)rt->mlx.width)
-		{
-			px_start[0] = 0;
-			px_start[1] += BLOCK_SIZE;
-		}
 		fill_block(&rt->queue.blocks[rt->queue.counter],
 			px_start, rt->mlx.width, rt->mlx.height);
 		rt->queue.counter++;

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 14:21:01 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/18 18:56:45 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/21 13:37:49 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	*start_routine(void *param)
 		if (!get_next_block(&block, params->queue, &params->elements))
 		{
 			clear_arena(&params->arena);
-			pthread_cond_signal(&params->queue->cond);
 			return (NULL);
 		}
 		print_pixels(block, params, params->mlx);
