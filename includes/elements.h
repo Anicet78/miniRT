@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/21 12:21:27 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/22 21:36:30 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ typedef enum elem_type
 	LIGHT,
 	SPHERE,
 	PLANE,
-	CYLINDER
+	CYLINDER,
+	CONE
 }	t_elem_type;
 
 typedef struct s_material
@@ -96,6 +97,8 @@ typedef struct s_cylinder
 	float		radius;
 	float		height;
 }	t_cylinder;
+
+typedef struct s_cylinder t_cone;
 
 typedef struct s_elem_lst
 {
