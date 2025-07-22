@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:19:34 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/22 21:04:35 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/22 21:15:15 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ bool	shadow_ray(t_ray r, t_elem_lst *elems, size_t frame)
 	return (shadow_hit_bvh(elems->bvh[frame], &r, &hit));
 }
 
-t_color	light_color(t_hit *hit, t_elem_lst *elems, t_color *surface, t_light *lux)
+t_color	light_color(t_hit *hit, t_camera *cam, t_color *surface, t_light *lux)
 {
 	const t_vec			l = norm(vsub(lux->pos, hit->p));
 	t_color				res;
 	static const double	shininess = 16;
 
-	res = vadd(vadd(had(vmul(*surface,fmax(0,dot(l,hit->normal)*lux->ratio)),lux->color),black_color()), vmul(lux->color,pow(fmax(0, dot(norm(vsub(vmul(hit->normal, 2 * dot(hit->normal, l)), l)), norm(vsub(elems->cam->pos, hit->p)))), shininess) * lux->ratio));
+	res = vadd(vadd(had(vmul(*surface,fmax(0,dot(l,hit->normal)*lux->ratio)),lux->color),black_color()), vmul(lux->color,pow(fmax(0, dot(norm(vsub(vmul(hit->normal, 2 * dot(hit->normal, l)), l)), norm(vsub(cam->pos, hit->p)))), shininess) * lux->ratio));
 	return (res);
 }
 
@@ -64,7 +64,7 @@ t_color	diffuse_specular(t_hit *hit, t_elem_lst *elems,
 	while (lux->declared == true)
 	{
 		if (!shadow_ray((t_ray){.dir = norm(vsub(lux->pos, hit->p)),.p = (vadd(hit->p, vmul(hit->normal, 0.000001)))}, elems, frame))
-			color = vadd(light_color(hit, elems, surface, lux),color);
+			color = vadd(light_color(hit, elems->cam, surface, lux),color);
 		i++;
 		lux = elems->lights[frame] + i;
 	}
