@@ -1,7 +1,7 @@
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra -ggdb
 DEBUGFLAGS	= -ggdb #-fsanitize=address,undefined,leak
-FASTFLAGS	= -Ofast -flto -ffast-math -march=native -pipe
+#FASTFLAGS	= -Ofast -flto -ffast-math -march=native -pipe
 
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
