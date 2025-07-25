@@ -78,7 +78,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(LIBS) -o $(NAME)
-	@printf "                           \r\e[1;35mMiniRT Compiled\e[0m\n"
+	@printf "\r\e[2K\e[1;35mMiniRT Compiled\e[0m\n"
 
 $(LIBFT):
 	@make -sC $(LIBFT_DIR)
@@ -90,10 +90,13 @@ $(MLX):
 	@make -sC $(MLX_DIR) > /dev/null 2>&1
 	@printf "\r\e[1;31mMinilibX Compiled\e[0m \b\n"
 
+INDEX=0
+TOTAL=$(words $(SRC))
+
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@)
-	@printf "\e[1;35mCompiling %s\e[0m" $(notdir $<)
-	@printf "                                            \r"
+	$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
+	@printf "\r\e[2K\e[1;35mCompiling [%d/%d] %s\e[0m" $(INDEX) $(TOTAL) $(notdir $<)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 bonus: $(NAME)

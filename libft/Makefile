@@ -119,12 +119,15 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(AR) $(NAME) $(OBJ)
-	@printf "                          \r\e[1;32mLibft Compiled\e[0m\n"
+	@printf "\r\e[2K\e[1;32mLibft Compiled\e[0m\n"
+
+INDEX=0
+TOTAL=$(words $(SRC))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@printf "\e[1;32mCompiling %s\e[0m" $(notdir $<)
-	@printf "                                            \r"
 	@mkdir -p $(dir $@)
+	$(eval INDEX=$(shell echo $$(($(INDEX)+1))))
+	@printf "\r\e[2K\e[1;32mCompiling [%d/%d] %s\e[0m" $(INDEX) $(TOTAL) $(notdir $<)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
