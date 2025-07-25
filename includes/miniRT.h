@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/23 01:50:18 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/23 15:26:46 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ t_color		white_color(void);
 t_color		black_color(void);
 t_color		surface_color(t_image *texture, double u, double v);
 t_color		ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface);
-t_color		lambertian(t_hit *hit, t_elem_lst *elems,
+t_color		diffuse_specular(t_hit *hit, t_elem_lst *elems,
 				t_color *surface, size_t frame);
 void		bump_mapping(t_hit *hit);
 

@@ -38,6 +38,8 @@ bool	shadow_ray(t_ray r, t_elem_lst *elems, size_t frame)
 			return (true);
 		i++;
 	}
+	if (!elems->bvh[frame])
+		return (false);
 	return (shadow_hit_bvh(elems->bvh[frame], &r, &hit));
 }
 

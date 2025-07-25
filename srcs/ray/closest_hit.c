@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   closest_hit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/19 00:38:44 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/24 12:37:34 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 		bump_mapping(&hit);
 	surface = surface_color(hit.mat->texture, hit.u, hit.v);
 	color = ambient_component(&hit, elems, &surface);
-	color = vadd(color, lambertian(&hit, elems, &surface, frame));
+	color = vadd(color, diffuse_specular(&hit, elems, &surface, frame));
 	return (vec_to_col(color));
 }
 
@@ -60,6 +60,7 @@ bool	closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame)
 		did_hit |= hit_plane(elems->planes[frame] + i, r, hit);
 		i++;
 	}
-	did_hit |= hit_bvh(elems->bvh[frame], r, hit);
+	if (elems->bvh[frame])
+		did_hit |= hit_bvh(elems->bvh[frame], r, hit);
 	return (did_hit);
 }

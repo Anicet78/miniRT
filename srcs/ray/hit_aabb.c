@@ -6,13 +6,13 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 23:24:46 by tgallet           #+#    #+#             */
-/*   Updated: 2025/06/18 17:25:02 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/24 11:32:14 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-static void	swap_ts(double *t0, double *t1, bool is_neg)
+static inline void	swap_ts(double *t0, double *t1, bool is_neg)
 {
 	double	tmp;
 
@@ -28,18 +28,18 @@ static bool	aabb_xyz(const double boxmin[3], const double boxmax[3],
 	const double p[3], const double dir[3])
 {
 	int		i;
-	double	tmin;
-	double	tmax;
 
-	tmin = -DBL_MAX;
-	tmax = DBL_MAX;
+	auto double tmin = -DBL_MAX;
+	auto double tmax = DBL_MAX;
+	auto double t0;
+	auto double t1;
 	i = 0;
 	while (i < 3)
 	{
 		if (dir[i] != 0.0)
 		{
-			auto double t0 = (boxmin[i] - p[i]) / dir[i];
-			auto double t1 = (boxmax[i] - p[i]) / dir[i];
+			t0 = (boxmin[i] - p[i]) / dir[i];
+			t1 = (boxmax[i] - p[i]) / dir[i];
 			swap_ts(&t0, &t1, dir[i] < 0);
 			tmin = fmax(tmin, t0);
 			tmax = fmin(tmax, t1);
