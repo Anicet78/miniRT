@@ -1,6 +1,6 @@
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra
-DEBUGFLAGS	= -ggdb -fsanitize=address,undefined,leak
+DEBUGFLAGS	= -ggdb #-fsanitize=address,undefined,leak
 FASTFLAGS	= -Ofast -flto -ffast-math -march=native -pipe
 
 LIBFT_DIR	= libft
@@ -49,6 +49,7 @@ SRC			=	main.c							\
 				ray/closest_hit.c				\
 				ray/display.c					\
 				ray/hit_aabb.c					\
+				ray/hit_cone.c					\
 				ray/hit_cyl.c					\
 				ray/hits.c						\
 				ray/phong.c						\

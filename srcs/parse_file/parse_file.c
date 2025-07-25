@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 16:26:47 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/25 12:21:49 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ bool	parse_elements(t_elem_lst *elems, char **line, int nb)
 		return (parse_sphere(elems, line, nb));
 	else if (ft_strcmp(line[0], "cy") == 0)
 		return (parse_cylinder(elems, line, nb));
+	else if (ft_strcmp(line[0], "co") == 0)
+		return (parse_cone(elems, line, nb));
 	else if (line[0][0] == '=')
 		return (parse_new_frame(elems, line, nb));
 	else if (line[0][0] == '^')

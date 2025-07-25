@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/22 21:36:30 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/25 12:23:53 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ bool		add_light(t_elem_lst *elems, t_point p, float ratio, t_color col);
 bool		add_sphere(t_elem_lst *elems, char **line, int texture, int norm);
 bool		add_plane(t_elem_lst *elems, char **line, int texture, int norm);
 bool		add_cylinder(t_elem_lst *elems, char **line, int texture, int norm);
+bool		add_cone(t_elem_lst *elems, char **line, int texture, int norm);
 
 // parsing
 bool		read_rtfile(int fd, t_elem_lst *elements, t_arena *arena);
@@ -152,6 +153,7 @@ bool		parse_light(t_elem_lst *elements, char **line, int nb);
 bool		parse_sphere(t_elem_lst *elements, char **line, int nb);
 bool		parse_plane(t_elem_lst *elements, char **line, int nb);
 bool		parse_cylinder(t_elem_lst *elements, char **line, int nb);
+bool		parse_cone(t_elem_lst *elements, char **line, int nb);
 bool		parse_new_frame(t_elem_lst *elements, char **line, int nb);
 bool		parse_goto(t_elem_lst *elems, char **line, int nb);
 bool		parse_fps(t_elem_lst *elems, char **line, int nb);

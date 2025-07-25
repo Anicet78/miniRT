@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/21 12:06:38 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/25 12:22:33 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,34 @@ bool	parse_cylinder(t_elem_lst *elems, char **line, int nb)
 	if ((tsize > 6 && !bmap && !text) || (tsize > 7 && bmap + text != 2))
 		return (print_err("Invalid amount of argument in `cylinder`", nb));
 	return (add_cylinder(elems, line, text, bmap));
+}
+
+bool	parse_cone(t_elem_lst *elems, char **line, int nb)
+{
+	auto size_t tsize = tab_len(line);
+	if (tsize < 6 || tsize > 8)
+		return (print_err("Invalid amount of argument in `cone`", nb));
+	if (is_vec(line[1]) == false || is_normalize_vec(line[2]) == false)
+		return (print_err("Invalid vector in `cone`", nb));
+	auto double diameter = ft_atof_parse(line[3]);
+	if (diameter < 0 || diameter > INT_MAX)
+		return (print_err("Invalid diameter in `cone`", nb));
+	auto double height = ft_atof_parse(line[4]);
+	if (height < 0 || height > INT_MAX)
+		return (print_err("Invalid height in `cone`", nb));
+	if (is_color(line[5]) == false)
+		return (print_err("Invalid color in `cone`", nb));
+	auto int text = texture_err(try_file(line, "/textures/", tsize, 6),
+		nb, "`cone`");
+	if (text > 1)
+		return (false);
+	auto int bmap = bmap_err(try_file(line, "/bumps/", tsize, 6 + text),
+		nb, "`cone`");
+	if (bmap > 1)
+		return (false);
+	if ((tsize > 6 && !bmap && !text) || (tsize > 7 && bmap + text != 2))
+		return (print_err("Invalid amount of argument in `cone`", nb));
+	return (add_cone(elems, line, text, bmap));
 }
 
 bool	parse_new_frame(t_elem_lst *elems, char **line, int nb)

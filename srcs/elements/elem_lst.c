@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/21 12:09:16 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/25 12:27:04 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,18 @@ size_t	get_elem_size(void *elem)
 	uint8_t	type;
 
 	type = get_elem_type(elem);
-	if (type == AMBIENT_LIGHTING)
-		return (sizeof(t_ambient));
-	if (type == LIGHT)
-		return (sizeof(t_light));
 	if (type == SPHERE)
 		return (sizeof(t_sphere));
-	if (type == PLANE)
-		return (sizeof(t_plane));
 	if (type == CYLINDER)
 		return (sizeof(t_cylinder));
+	if (type == CONE)
+		return (sizeof(t_cylinder));
+	if (type == PLANE)
+		return (sizeof(t_plane));
+	if (type == AMBIENT_LIGHTING)
+	return (sizeof(t_ambient));
+	if (type == LIGHT)
+		return (sizeof(t_light));
 	return (0);
 }
 

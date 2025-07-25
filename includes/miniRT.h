@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/25 11:51:16 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/25 12:25:36 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ size_t		calc_arena_size(int fd);
 bool		hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit);
 bool		hit_plane(t_plane *plane, t_ray *r, t_hit *hit);
 bool		hit_cylinder(t_cylinder *c, t_ray *r, t_hit *hit);
+bool		hit_cone(t_cone *cone, t_ray *r, t_hit *hit);
 bool		closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame);
 int32_t		ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame);
 

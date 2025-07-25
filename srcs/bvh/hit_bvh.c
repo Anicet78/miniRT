@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:57:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/18 18:45:04 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/25 12:27:33 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ bool	hit_object(void *obj, t_ray *r, t_hit *hit)
 		return (hit_sphere(obj, r, hit));
 	if (type == CYLINDER)
 		return (hit_cylinder(obj, r, hit));
+	if (type == CONE)
+		return (hit_cone(obj, r, hit));
 	return (false);
 }
 
