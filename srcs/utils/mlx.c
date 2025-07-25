@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:35:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/11 15:53:22 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/23 14:40:30 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	mlx_start(t_rt *rt, int width, int height)
 	mlx = &rt->mlx;
 	mlx->width = width;
 	mlx->height = height;
-	mlx->mlx_win = mlx_new_window(mlx->mlx, width, height, "miniRT");
+	mlx->mlx_win = mlx_new_window(mlx->mlx, width, height, "mimiRT");
 	if (!mlx->mlx_win)
 		kill_mlx(rt, EXIT_FAILURE);
 	if (create_images(&rt->mlx, rt->arena, rt->elements.frame_amount) == false)

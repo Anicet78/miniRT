@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:17:32 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/19 00:38:06 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/07/25 11:16:54 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_vec	bump_gradient(t_image *bmap, double u, double v)
 {
 	const int	x = ((uint32_t)(u * bmap->width)) % bmap->width;
 	const int	y = ((uint32_t)(v * bmap->height)) % bmap->height;
-	t_vec	ret;
+	t_vec		ret;
 
 	ret.x = get_grey_pixel(bmap, (x - 1 + bmap->width) % bmap->width, y)
 			- get_grey_pixel(bmap, (x + 1) % bmap->width, y);
@@ -57,7 +57,7 @@ t_vec	bump_gradient(t_image *bmap, double u, double v)
 void	bump_mapping(t_hit *hit)
 {
 	t_vec	tang;
-	t_vec	bitang = cross_prod(tang, hit->normal);
+	t_vec	bitang;
 	const t_vec	grad = bump_gradient(hit->mat->bmap, hit->u, hit->v);
 
 	tang = cross_prod(hit->normal, up_v());
