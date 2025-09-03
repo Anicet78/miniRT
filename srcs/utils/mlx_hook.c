@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:13:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 17:14:32 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/03 15:14:13 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	next_image(t_rt *rt)
 	static long		last_frame_time = 0;
 
 	if (!rt->elements.loop && last_frame >= rt->elements.frame_amount)
+	{
+		usleep(10000);
 		return ;
+	}
 	else if (rt->elements.loop && last_frame >= rt->elements.frame_amount)
 		pre_rendering(rt, &last_frame_time);
 	else
@@ -49,7 +52,6 @@ int	loop_hook(t_rt *rt)
 	{
 		first = false;
 		render_thread(rt);
-		return (0);
 	}
 	next_image(rt);
 	return (0);
