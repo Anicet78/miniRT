@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cone.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 21:31:32 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/22 21:54:04 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/09/03 14:37:15 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ bool	hit_cone(t_cone *cone, t_ray *r, t_hit *hit)
 	center_to_hit = vsub(hit->p, cone->pos);
 	hit->normal = norm(vsub(center_to_hit,
 		vmul(cone->axis, dot(center_to_hit, cone->axis) / dot(cone->axis, cone->axis))));
+	hit->mat = &cone->mat;
 	hit->u = 0.5 + atan2(center_to_hit.z, center_to_hit.x) / (2 * PI);
 	hit->v = dot(center_to_hit, cone->axis) / cone->height;
 	hit->front = (dot(r->dir, hit->normal) < 0);
