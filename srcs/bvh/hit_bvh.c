@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:57:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/05 16:01:46 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/05 16:40:30 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
 	else if (!hit_aabb(&bvh[0].bbox, r))
 		return (false);
 	did_hit = false;
-	index = 1;
+	index = bvh[0].left;
 	while (index != 0 && valid_node(&bvh[index]))
 	{
 		if (hit_aabb(&bvh[index].bbox, r))
