@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/05 16:44:36 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/09/05 18:04:05 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,17 @@ typedef struct s_elem_lst
 	void		*mlx_ptr;
 	uintptr_t	*elem_lst;
 }	t_elem_lst;
+
+typedef struct s_mandlst
+{
+	t_camera	cam;
+	t_plane		*pl;
+	t_ambient	amb;
+	t_light		light;
+	t_bvh_node	*bvh;
+	void		*mlx_ptr;
+	uintptr_t	*elem_lst;
+}	t_mandlst;
 
 // element list
 t_elem_lst	*add_element(t_elem_lst *elements, void *new_elem, size_t size);
