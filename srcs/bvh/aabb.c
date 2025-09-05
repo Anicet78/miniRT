@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 12:58:38 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/25 12:24:58 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/05 16:49:58 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static t_aabb	get_cylinder_aabb(t_cylinder *cylinder)
 	const t_point	tmp = {{cylinder->radius, cylinder->radius,
 		cylinder->radius}};
 
-	return ((t_aabb){.min = vsub(vsub(vmin(a, b), tmp), vmul(cylinder->axis, cylinder->height / 2)),
+	return ((t_aabb){.min = vsub(vsub(vmin(a, b), tmp),
+			vmul(cylinder->axis, cylinder->height / 2)),
 		.max = vadd(vmax(a, b), tmp)});
 }
 

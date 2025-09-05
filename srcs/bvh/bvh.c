@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:24:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/05 16:47:26 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/05 16:50:18 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ size_t	build_bvh(t_bvh_node *bvh, t_bvh_info *prev_info,
 	if (bvh[pos].left == 0 || bvh[pos].right == 0)
 		return (0);
 	bvh[pos].next = parent_next;
-	bvh[pos].bbox = union_aabb(bvh[bvh[pos].left].bbox, bvh[bvh[pos].right].bbox);
+	bvh[pos].bbox = union_aabb(bvh[bvh[pos].left].bbox,
+			bvh[bvh[pos].right].bbox);
 	return (pos | (pos == 0));
 }
 
