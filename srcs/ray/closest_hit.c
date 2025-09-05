@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   closest_hit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/25 11:51:12 by agruet           ###   ########.fr       */
+/*   Updated: 2025/07/25 21:34:53 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 
 	if (!closest_hit(r, elems, &hit, frame))
 		return (background_color(r));
-	if (hit.mat->bmap != NULL)
+	if (hit.mat && hit.mat->bmap != NULL)
 		bump_mapping(&hit);
 	surface = surface_color(hit.mat->texture, hit.u, hit.v);
 	color = ambient_component(&hit, elems, &surface);
