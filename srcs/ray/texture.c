@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:17:32 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/25 11:16:54 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/05 16:50:50 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_color	surface_color(t_image *texture, double u, double v)
 int	get_grey_pixel(t_image *data, int x, int y)
 {
 	return (((*(uint32_t *)(data->addr + y * data->line_length
-		+ x * data->bits_per_pixel / 8)) & 0xFF00) >> 8);
+				+ x * data->bits_per_pixel / 8)) & 0xFF00) >> 8);
 }
 
 t_vec	bump_gradient(t_image *bmap, double u, double v)
@@ -47,17 +47,17 @@ t_vec	bump_gradient(t_image *bmap, double u, double v)
 	t_vec		ret;
 
 	ret.x = get_grey_pixel(bmap, (x - 1 + bmap->width) % bmap->width, y)
-			- get_grey_pixel(bmap, (x + 1) % bmap->width, y);
+		- get_grey_pixel(bmap, (x + 1) % bmap->width, y);
 	ret.y = get_grey_pixel(bmap, x, (y - 1 + bmap->width) % bmap->height)
-			- get_grey_pixel(bmap, x, (y + 1) % bmap->height);
+		- get_grey_pixel(bmap, x, (y + 1) % bmap->height);
 	ret = vmul(ret, 1.0 / 510.0);
 	return (ret);
 }
 
 void	bump_mapping(t_hit *hit)
 {
-	t_vec	tang;
-	t_vec	bitang;
+	t_vec		tang;
+	t_vec		bitang;
 	const t_vec	grad = bump_gradient(hit->mat->bmap, hit->u, hit->v);
 
 	tang = cross_prod(hit->normal, up_v());
@@ -65,17 +65,9 @@ void	bump_mapping(t_hit *hit)
 		tang = right_v();
 	bitang = norm(cross_prod(hit->normal, tang));
 	hit->normal = norm(
-		vsub(
-			hit->normal,
-			vmul(
-				vadd(
-					vmul(tang, grad.x),
-					vmul(bitang, grad.y)
-					),
-				BUMP_POWER
-				)
-			)
-		);
+			vsub(hit->normal,
+				vmul(vadd(vmul(tang, grad.x),
+						vmul(bitang, grad.y)), BUMP_POWER)));
 }
 
 // int	main(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/25 12:23:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/05 16:44:36 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct s_cylinder
 	float		height;
 }	t_cylinder;
 
-typedef struct s_cylinder t_cone;
+typedef struct s_cylinder	t_cone;
 
 typedef struct s_elem_lst
 {
