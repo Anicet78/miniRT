@@ -6,13 +6,13 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 22:38:23 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/25 22:00:26 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/09/05 15:09:26 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-static bool	intersect_cyl_body_part_two(
+static bool	touch_cyl_body_part_two(
 	t_cylinder *cyl, t_ray *r, t_hit *hit, t_vec hit_point)
 {
 	double	height;
@@ -30,7 +30,7 @@ static bool	intersect_cyl_body_part_two(
 	return (true);
 }
 
-bool	intersect_cyl_body(t_cylinder *cyl, t_ray *r, t_hit *hit)
+bool	touch_cyl_body(t_cylinder *cyl, t_ray *r, t_hit *hit)
 {
 	const t_vec		oc = vsub(r->p, cyl->pos);
 	const double	a = dot(r->dir, r->dir) - pow(dot(r->dir, cyl->axis), 2);
@@ -46,44 +46,45 @@ bool	intersect_cyl_body(t_cylinder *cyl, t_ray *r, t_hit *hit)
 	if (t < 0 || hit->t < t)
 		return (false);
 	auto t_vec hit_point = vadd(r->p, vmul(r->dir, t));
-	if (!intersect_cyl_body_part_two(cyl, r, hit, hit_point))
+	if (!touch_cyl_body_part_two(cyl, r, hit, hit_point))
 		return (false);
 	hit->t = t;
 	return (true);
 }
 
-bool	intersect_cyl_caps(t_cylinder *cylinder, t_ray *r,
-	t_hit *hit, t_vec cap_center)
+bool	touch_cyl_caps(t_cylinder *cyl, t_ray *r,
+	t_hit *hit, t_vec cap)
 {
-	const double	denom = dot(cylinder->axis, r->dir);
+	const double	denom = dot(cyl->axis, r->dir);
 	double			t;
 	t_vec			point;
 
 	if (fabs(denom) < 0.000001)
 		return (false);
-	t = dot(vsub(cap_center, r->p), cylinder->axis) / denom;
+	t = dot(vsub(cap, r->p), cyl->axis) / denom;
 	if (t < 0 || hit->t < t)
 		return (false);
 	point = vadd(r->p, vmul(r->dir, t));
-	if (magn(vsub(point, cap_center)) > cylinder->radius)
+	if (magn(vsub(point, cap)) > cyl->radius)
 		return (false);
 	hit->p = point;
 	hit->t = t;
-	hit->normal = cylinder->axis;
+	hit->normal = cyl->axis;
 	hit->front = (denom < 0);
-	hit->mat = &cylinder->mat;
-	hit->u = fmod((hit->p.x - cap_center.x) / 2, 1);
-	hit->v = fmod((hit->p.y - cap_center.y) / 2, 1);
+	hit->mat = &cyl->mat;
+	hit->u = fmod((hit->p.x - cap.x) / 2, 1);
+	hit->v = fmod((hit->p.y - cap.y) / 2, 1);
 	return (true);
 }
 
-bool	hit_cylinder(t_cylinder *cylinder, t_ray *r, t_hit *hit)
+bool	hit_cylinder(t_cylinder *cyl, t_ray *r, t_hit *hit)
 {
-	if (intersect_cyl_body(cylinder, r, hit)
-		|| intersect_cyl_caps(cylinder, r, hit,
-			vadd(cylinder->pos, vmul(cylinder->axis, cylinder->height / 2)))
-		|| intersect_cyl_caps(cylinder, r, hit,
-			vsub(cylinder->pos, vmul(cylinder->axis, cylinder->height / 2))))
-		return (true);
-	return (false);
+	bool		did_hit;
+	const t_vec	to_cap = vmul(cyl->axis, cyl->height / 2);
+
+	did_hit = false;
+	did_hit |= touch_cyl_body(cyl, r, hit);
+	did_hit |= touch_cyl_caps(cyl, r, hit, vadd(cyl->pos, to_cap));
+	did_hit |= touch_cyl_caps(cyl, r, hit, vsub(cyl->pos, to_cap));
+	return (did_hit);
 }
