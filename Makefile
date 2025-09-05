@@ -33,7 +33,6 @@ SRC			=	main.c							\
 				bvh/hit_bvh.c					\
 				bvh/indexs.c					\
 				bvh/utils.c						\
-				bvh/utils2.c					\
 				elements/add_elements.c			\
 				elements/add_elements2.c		\
 				elements/add_xpm.c				\

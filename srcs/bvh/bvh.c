@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:24:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/05 16:34:05 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/05 16:47:26 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static bool	create_bvh(t_rt *rt, t_elem_lst *elems, size_t frame)
 		return (clear_arena(&arena), false);
 	init_builder(elems, builder, frame);
 	elems->bvh[frame] = arena_calloc(rt->arena, sizeof(t_bvh_node)
-			* get_bvh_size(elem_amount));
+			* (2 * elem_amount - 1));
 	if (!elems->bvh[frame])
 		return (clear_arena(&arena), false);
 	next_free = 0;
