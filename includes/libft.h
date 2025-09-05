@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 10:54:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/17 14:04:26 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/05 17:38:24 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@
 # include <limits.h>
 # include <stddef.h>
 # include <stdint.h>
-# include <termios.h>
-# include <signal.h>
 # include <stdbool.h>
 # include <dirent.h>
 # include <errno.h>
@@ -31,23 +29,6 @@
 # define BASE_10 "0123456789"
 # define BASE_16L "0123456789abcdef"
 # define BASE_16U "0123456789ABCDEF"
-
-// Readline keys
-# define READ_FAILED -1
-# define FINISH_READING -2
-# define INVALID_SEQ -3
-# define ESC 27
-# define EOF_K 4
-# define UARROW -12
-# define DARROW -13
-# define RARROW -14
-# define LARROW -15
-# define HOME -16
-# define END -17
-# define DEL -18
-# define CR_ARROW -19
-# define CL_ARROW -20
-# define DEL_K 127
 
 // libc functions
 int		ft_isalpha(int c);
@@ -258,73 +239,6 @@ void	reset_arena(t_arena **arena);
 
 // memory
 void	*ft_print_memory(void *addr, size_t size);
-
-// readline
-typedef enum rl_quit_reason
-{
-	RL_INVALID,
-	RL_SUCCESS,
-	RL_FINISHED,
-	RL_KILLED,
-	RL_ALLOC_FAILED
-}	t_rlqreason;
-
-typedef struct s_rline
-{
-	char			*current_line;
-	size_t			size;
-	size_t			cursor;
-	size_t			end;
-	DIR				*dir;
-	char			searching_dir[512];
-	size_t			tab_index;
-	unsigned char	auto_type;
-	bool			in_auto;
-}	t_rline;
-
-typedef struct s_readline
-{
-	char		*prompt;
-	t_dlist		**history;
-	bool		sigint_nl;
-	bool		autocomplete;
-	t_rlqreason	quit_reason;
-}	t_readline;
-
-char	*ft_readline(t_readline *params);
-void	init_readline_params(t_readline *params);
-int		new_buffer(t_rline *line, t_readline *params);
-int		rl_signal_received(int key, t_rline *line, t_readline *params);
-void	clear_line(t_rline *line, t_dlist **history, bool free_current);
-void	set_raw(void);
-void	set_dfl(void);
-int		read_key(void);
-int		reset_line(t_rline *line);
-void	write_x_times(char *buff, char c, size_t times);
-int		line_too_long(t_rline *line, t_dlist **history);
-int		printkey(int key, t_rline *line, t_readline *params);
-int		eof_received(t_rline *line, t_readline *params);
-void	back_space(t_rline *line);
-int		other_key(int key, t_rline *line, t_readline *params);
-int		up_arrow(t_rline *line, t_dlist **history);
-int		down_arrow(t_rline *line, t_dlist **history);
-void	home_key(t_rline *line);
-void	end_key(t_rline *line);
-void	move_key(t_rline *line, int key);
-void	move_word(t_rline *line, int key);
-char	*history_up(t_dlist **history);
-char	*history_down(t_dlist **history);
-int		cmd_add_history(t_dlist **history, char *cmd);
-int		auto_complete(int key, t_rline *line, t_readline *params);
-void	init_auto_complete(t_rline *line);
-int		expand_current(int key, t_rline *line, t_readline *params);
-void	rl_init_signals(void);
-void	rl_reset_signals(void);
-
-// signals
-void	init_sighandler(struct sigaction *sa, void (*action)(int));
-void	init_sigaction(struct sigaction *sa,
-			void (*action)(int, siginfo_t *, void *));
 
 // readfile
 # ifndef BUFFER_SIZE
