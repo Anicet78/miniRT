@@ -6,18 +6,18 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:24:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 16:43:07 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/05 15:23:29 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 
-static void	init_info(t_bvh_info *info, t_bvh_info *prev_info, size_t pos)
+static void	init_info(t_bvh_info *info, t_bvh_info *prev_info, int way)
 {
 	info->arena = prev_info->arena;
 	info->builder = prev_info->builder;
 	info->fallback = false;
-	if (pos % 2 == 1)
+	if (way == 0)
 	{
 		info->index_tab = prev_info->left;
 		info->size = prev_info->left_size;
@@ -31,7 +31,8 @@ static void	init_info(t_bvh_info *info, t_bvh_info *prev_info, size_t pos)
 	info->right_size = 0;
 }
 
-size_t	create_leaf(t_bvh_node *bvh, t_bvh_info *info, size_t pos)
+size_t	create_leaf(t_bvh_node *bvh, t_bvh_info *info,
+	size_t pos, size_t parent_next)
 {
 	t_bvh_builder	elem;
 
@@ -40,7 +41,7 @@ size_t	create_leaf(t_bvh_node *bvh, t_bvh_info *info, size_t pos)
 	if (info->size < 1)
 		return (pos);
 	elem = info->builder[info->index_tab[0]];
-	bvh[pos].next = get_next(pos);
+	bvh[pos].next = parent_next;
 	bvh[pos].bbox = elem.bbox;
 	bvh[pos].obj = elem.obj;
 	if (pos == 0)
@@ -48,14 +49,16 @@ size_t	create_leaf(t_bvh_node *bvh, t_bvh_info *info, size_t pos)
 	return (pos);
 }
 
-size_t	build_bvh(t_bvh_node *bvh, t_bvh_info *prev_info, size_t pos)
+size_t	build_bvh(t_bvh_node *bvh, t_bvh_info *prev_info,
+	size_t *next_free, size_t parent_next, int way)
 {
-	t_bvh_info	info;
-	t_bin		bins[NBINS];
+	t_bvh_info		info;
+	t_bin			bins[NBINS];
+	const size_t	pos = (*next_free)++;
 
-	init_info(&info, prev_info, pos);
+	init_info(&info, prev_info, way);
 	if (info.size <= 1)
-		return (create_leaf(bvh, &info, pos));
+		return (create_leaf(bvh, &info, pos, parent_next));
 	ft_memset(bins, 0, sizeof(t_bin) * NBINS);
 	calc_centroid(&info);
 	get_axis(&info);
@@ -65,12 +68,12 @@ size_t	build_bvh(t_bvh_node *bvh, t_bvh_info *prev_info, size_t pos)
 	create_index_tab(&info);
 	if (!info.left || !info.right)
 		return (0);
-	bvh[pos].next = get_next(pos);
-	bvh[pos].left = build_bvh(bvh, &info, pos * 2 + 1);
-	bvh[pos].right = build_bvh(bvh, &info, pos * 2 + 2);
+	bvh[pos].right = build_bvh(bvh, &info, next_free, parent_next, 1);
+	bvh[pos].left = build_bvh(bvh, &info, next_free, bvh[pos].right, 0);
 	if (bvh[pos].left == 0 || bvh[pos].right == 0)
 		return (0);
-	bvh[pos].bbox = union_aabb(bvh[pos * 2 + 1].bbox, bvh[pos * 2 + 2].bbox);
+	bvh[pos].next = parent_next;
+	bvh[pos].bbox = union_aabb(bvh[bvh[pos].left].bbox, bvh[bvh[pos].right].bbox);
 	if (pos == 0)
 		return (1);
 	return (pos);
@@ -82,6 +85,7 @@ static bool	create_bvh(t_rt *rt, t_elem_lst *elems, size_t frame)
 	t_bvh_builder	*builder;
 	t_arena			*arena;
 	size_t			bvh;
+	size_t			next_free;
 
 	if (elem_amount == 0)
 		return (true);
@@ -96,12 +100,12 @@ static bool	create_bvh(t_rt *rt, t_elem_lst *elems, size_t frame)
 			* get_bvh_size(elem_amount));
 	if (!elems->bvh[frame])
 		return (clear_arena(&arena), false);
+	next_free = 0;
 	bvh = build_bvh(elems->bvh[frame], &(t_bvh_info){.arena = arena,
 			.builder = builder,
 			.right = create_first_tab(arena, elem_amount),
-			.right_size = elem_amount}, 0);
-	clear_arena(&arena);
-	return (bvh != 0);
+			.right_size = elem_amount}, &next_free, 0, 1);
+	return (clear_arena(&arena), bvh != 0);
 }
 
 void	create_all_bvh(t_rt *rt)

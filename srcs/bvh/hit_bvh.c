@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:57:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/25 12:27:33 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/05 16:01:46 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
 				index = bvh[index].next;
 			}
 			else
-				index = index * 2 + 1;
+				index = bvh[index].left;
 		}
 		else
 			index = bvh[index].next;
@@ -69,7 +69,7 @@ bool	shadow_hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
 	size_t	index;
 
 	if (bvh[0].is_leaf == true)
-		return (hit_object(bvh[0].obj, r, hit));
+		return (hit_aabb(&bvh[0].bbox, r) && hit_object(bvh[0].obj, r, hit));
 	else if (!hit_aabb(&bvh[0].bbox, r))
 		return (false);
 	index = 1;
@@ -84,7 +84,7 @@ bool	shadow_hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
 				index = bvh[index].next;
 			}
 			else
-				index = index * 2 + 1;
+				index = bvh[index].left;
 		}
 		else
 			index = bvh[index].next;
