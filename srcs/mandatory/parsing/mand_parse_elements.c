@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_elements.c                                   :+:      :+:    :+:   */
+/*   mand_parse_elements.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 19:12:11 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/06 19:39:24 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ bool	mand_parse_light(t_mandlst *elements, char **line, int nb)
 	if (is_color(line[3]) == false)
 		return (print_err("Invalid color in `light`", nb));
 	color = get_color(line[3]);
-	return (mand_add_light(elements, pos, ratio, color));
+	mand_add_light(elements, pos, ratio, color);
+	return (true);
 }
 
 bool	mand_parse_sphere(t_mandlst *elements, char **line, int nb)

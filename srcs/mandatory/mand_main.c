@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 19:30:29 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/06 19:50:45 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 static t_mandlst	*init_mandrt(t_mandrt *rt, int fd)
 {
+	rt->mlx.mlx = NULL;
 	rt->mlx.mlx_win = NULL;
 	rt->mlx.img = NULL;
 	rt->mlx.addr = NULL;
+	rt->elements.cam.declared = false;
+	rt->elements.light.declared = false;
+	rt->elements.amb.declared = false;
 	rt->elements.lst_size = 0;
 	rt->elements.lst_count = 0;
 	rt->elements.allocated_size = calc_arena_size(fd);
@@ -43,12 +47,12 @@ int	main(int ac, char **av)
 	bool		map_file;
 
 	fd = open_file(ac, av);
-	if (!init_minirt(&rt, fd))
+	if (!init_mandrt(&rt, fd))
 		return (close(fd), EXIT_FAILURE);
 	map_file = mand_parsing(fd, &rt.elements, rt.arena);
 	close(fd);
 	if (!map_file)
-		kill_mlx(&rt, EXIT_FAILURE);
+		mand_kill_mlx(&rt, EXIT_FAILURE);
 	display = init_display(&rt.elements.cam);
 	mand_mlx_start(&rt, display.width, display.height);
 	// render

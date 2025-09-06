@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 11:27:26 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 19:31:46 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/06 19:39:09 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ bool		mand_parse_light(t_mandlst *elements, char **line, int nb);
 bool		mand_parse_sphere(t_mandlst *elements, char **line, int nb);
 bool		mand_parse_plane(t_mandlst *elements, char **line, int nb);
 bool		mand_parse_cylinder(t_mandlst *elements, char **line, int nb);
+void		mand_add_ambient_lighting(t_mandlst *elems, float ratio, t_color col);
+void		mand_add_camera(t_mandlst *elems, t_point p, t_vec axis, uint32_t fov);
+void		mand_add_light(t_mandlst *elems, t_point p, float ratio, t_color col);
+bool		mand_add_sphere(t_mandlst *elems, char **line);
+bool		mand_add_plane(t_mandlst *elems, char **line);
+bool		mand_add_cylinder(t_mandlst *elems, char **line);
 
 // mlx
 void		mand_mlx_start(t_mandrt *rt, int width, int height);

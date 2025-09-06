@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_elements.c                                     :+:      :+:    :+:   */
+/*   mand_add_elements.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 19:22:31 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/06 19:39:03 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ void	mand_add_camera(t_mandlst *elems, t_point pos, t_vec axis, uint32_t fov)
 	elems->cam.declared = true;
 }
 
-bool	mand_add_light(t_mandlst *elems, t_point pos, float ratio, t_color color)
+void	mand_add_light(t_mandlst *elems, t_point pos, float ratio, t_color color)
 {
 	elems->light.ratio = ratio;
 	elems->light.pos = pos;
 	elems->light.color = color;
 	elems->light.declared = true;
-	return (true);
 }
 
 bool	mand_add_sphere(t_mandlst *elems, char **line)

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 19:26:38 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/06 19:48:16 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	finish_mand_parsing(t_mandlst *elems)
 	if (elems->amb.declared == false)
 		return (print_err("Ambient Lighting missing", 0));
 	if (elems->light.declared == false)
-		return (print_err("Ambient Lighting missing", 0));
+		return (print_err("Lighting missing", 0));
 	return (true);
 }
 
@@ -62,5 +62,5 @@ bool	mand_parsing(int fd, t_mandlst *elements, t_arena *arena)
 		i++;
 		line = get_next_line(fd);
 	}
-	return (finish_parsing(elements));
+	return (finish_mand_parsing(elements));
 }

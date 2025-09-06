@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 11:47:42 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 18:51:59 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/06 19:35:53 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	mand_kill_mlx(t_mandrt *rt, int exit_code)
 
 int	mand_destroy_hook(t_mandrt *rt)
 {
-	kill_mlx(rt, EXIT_SUCCESS);
+	mand_kill_mlx(rt, EXIT_SUCCESS);
 	return (0);
 }
 
 int	mand_key_hook(int keycode, t_mandrt *rt)
 {
 	if (keycode == ESC_K)
-		kill_mlx(rt, EXIT_SUCCESS);
+		mand_kill_mlx(rt, EXIT_SUCCESS);
 	return (0);
 }
