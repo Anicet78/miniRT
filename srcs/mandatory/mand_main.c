@@ -6,33 +6,33 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 12:00:49 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/06 19:30:29 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mandatory.h"
 
-static int	open_file(int ac, char **av)
+static t_mandlst	*init_mandrt(t_mandrt *rt, int fd)
 {
-	int	fd;
-
-	if (ac != 2)
+	rt->mlx.mlx_win = NULL;
+	rt->mlx.img = NULL;
+	rt->mlx.addr = NULL;
+	rt->elements.lst_size = 0;
+	rt->elements.lst_count = 0;
+	rt->elements.allocated_size = calc_arena_size(fd);
+	rt->arena = arena_init(rt->elements.allocated_size);
+	if (!rt->arena)
+		return (print_err("Memory allocation failed", 0), NULL);
+	rt->elements.allocated_size = rt->elements.allocated_size * 90 / 100;
+	rt->elements.elem_lst = arena_calloc(rt->arena,
+			rt->elements.allocated_size);
+	if (!rt->elements.elem_lst)
 	{
-		print_err("Invalid number of arguments !", 0);
-		exit(EXIT_FAILURE);
+		clear_arena(&rt->arena);
+		print_err("Memory allocation failed", 0);
+		return (NULL);
 	}
-	if (ft_strrcmp(av[1], ".rt") != 0)
-	{
-		print_err("Invalid format !", 0);
-		exit(EXIT_FAILURE);
-	}
-	fd = open(av[1], O_RDONLY);
-	if (fd == -1)
-	{
-		print_err(strerror(errno), 0);
-		exit(EXIT_FAILURE);
-	}
-	return (fd);
+	return (&rt->elements);
 }
 
 int	main(int ac, char **av)
@@ -45,7 +45,7 @@ int	main(int ac, char **av)
 	fd = open_file(ac, av);
 	if (!init_minirt(&rt, fd))
 		return (close(fd), EXIT_FAILURE);
-	map_file = read_rtfile(fd, &rt.elements, rt.arena);
+	map_file = mand_parsing(fd, &rt.elements, rt.arena);
 	close(fd);
 	if (!map_file)
 		kill_mlx(&rt, EXIT_FAILURE);

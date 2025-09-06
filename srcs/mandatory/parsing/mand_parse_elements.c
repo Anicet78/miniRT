@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/05 18:09:14 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/09/06 19:12:11 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
+#include "mandatory.h"
 
-bool	parse_ambient(t_elem_lst *elements, char **line, int nb)
+bool	mand_parse_ambient(t_mandlst *elements, char **line, int nb)
 {
 	float			ratio;
 	t_color			color;
@@ -29,11 +29,11 @@ bool	parse_ambient(t_elem_lst *elements, char **line, int nb)
 	if (is_color(line[2]) == false)
 		return (print_err("Invalid color in `ambient light`", nb));
 	color = get_color(line[2]);
-	add_ambient_lighting(elements, ratio, color);
+	mand_add_ambient_lighting(elements, ratio, color);
 	return (true);
 }
 
-bool	parse_camera(t_elem_lst *elements, char **line, int nb)
+bool	mand_parse_camera(t_mandlst *elements, char **line, int nb)
 {
 	t_point			pos;
 	t_vec			axis;
@@ -54,16 +54,20 @@ bool	parse_camera(t_elem_lst *elements, char **line, int nb)
 	fov = ft_atol(line[3]);
 	if (fov < 0 || fov > 180)
 		return (print_err("Invalid FOV in `camera`", nb));
-	add_camera(elements, pos, axis, fov);
+	mand_add_camera(elements, pos, axis, fov);
 	return (true);
 }
 
-bool	parse_light(t_elem_lst *elements, char **line, int nb)
+bool	mand_parse_light(t_mandlst *elements, char **line, int nb)
 {
-	t_point	pos;
-	double	ratio;
-	t_color	color;
+	t_point		pos;
+	double		ratio;
+	t_color		color;
+	static bool	declared;
 
+	if (declared)
+		return (print_err("Multiple declaration of `light`", nb));
+	declared = true;
 	if (tab_len(line) != 4)
 		return (print_err("Invalid amount of argument in `light`", nb));
 	if (is_vec(line[1]) == false)
@@ -75,17 +79,15 @@ bool	parse_light(t_elem_lst *elements, char **line, int nb)
 	if (is_color(line[3]) == false)
 		return (print_err("Invalid color in `light`", nb));
 	color = get_color(line[3]);
-	return (add_light(elements, pos, ratio, color));
+	return (mand_add_light(elements, pos, ratio, color));
 }
 
-bool	parse_sphere(t_elem_lst *elements, char **line, int nb)
+bool	mand_parse_sphere(t_mandlst *elements, char **line, int nb)
 {
 	const size_t	tsize = tab_len(line);
 	double			diameter;
-	int				text;
-	int				bmap;
 
-	if (tsize < 4 || tsize > 6)
+	if (tsize != 4)
 		return (print_err("Invalid amount of argument in `sphere`", nb));
 	if (is_vec(line[1]) == false)
 		return (print_err("Invalid coordinates in `sphere`", nb));
@@ -94,25 +96,12 @@ bool	parse_sphere(t_elem_lst *elements, char **line, int nb)
 		return (print_err("Invalid diameter in `sphere`", nb));
 	if (is_color(line[3]) == false)
 		return (print_err("Invalid color in `sphere`", nb));
-	text = texture_err(try_file(line, "/textures/", tsize, 4), nb, "`sphere`");
-	if (text > 1)
-		return (false);
-	bmap = bmap_err(try_file(line, "/bump_maps/", tsize, 4 + text),
-			nb, "`sphere`");
-	if (bmap > 1)
-		return (false);
-	if ((tsize > 4 && !bmap && !text) || (tsize > 5 && bmap + text != 2))
-		return (print_err("Invalid amount of argument in `sphere`", nb));
-	return (add_sphere(elements, line, text, bmap));
+	return (mand_add_sphere(elements, line));
 }
 
-bool	parse_plane(t_elem_lst *elements, char **line, int nb)
+bool	mand_parse_plane(t_mandlst *elements, char **line, int nb)
 {
-	const size_t	tsize = tab_len(line);
-	int				text;
-	int				bmap;
-
-	if (tsize < 4 || tsize > 6)
+	if (tab_len(line) != 4)
 		return (print_err("Invalid amount of argument in `plane`", nb));
 	if (is_vec(line[1]) == false)
 		return (print_err("Invalid coordinates in `plane`", nb));
@@ -120,14 +109,5 @@ bool	parse_plane(t_elem_lst *elements, char **line, int nb)
 		return (print_err("Invalid normal vector in `plane`", nb));
 	if (is_color(line[3]) == false)
 		return (print_err("Invalid color in `plane`", nb));
-	text = texture_err(try_file(line, "/textures/", tsize, 4), nb, "`plane`");
-	if (text > 1)
-		return (false);
-	bmap = bmap_err(try_file(line, "/bumps/", tsize, 4 + text),
-			nb, "`plane`");
-	if (bmap > 1)
-		return (false);
-	if ((tsize > 4 && !bmap && !text) || (tsize > 5 && bmap + text != 2))
-		return (print_err("Invalid amount of argument in `plane`", nb));
-	return (add_plane(elements, line, text, bmap));
+	return (mand_add_plane(elements, line));
 }

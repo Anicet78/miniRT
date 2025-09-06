@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:13:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/03 15:14:13 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/06 18:52:15 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ int	destroy_hook(t_rt *rt)
 int	key_hook(int keycode, t_rt *rt)
 {
 	if (keycode == ESC_K)
-	{
-		write(1, "\n", 1);
 		kill_mlx(rt, EXIT_SUCCESS);
-	}
 	return (0);
 }
 

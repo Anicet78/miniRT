@@ -1,55 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_file.c                                       :+:      :+:    :+:   */
+/*   mand_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/05 18:18:59 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/09/06 19:26:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
+#include "mandatory.h"
 
-static int	count_plane(int fd);
-
-bool	init_mandparsing(t_mandlst *elems, t_arena *arena, const char *file)
+static bool	finish_mand_parsing(t_mandlst *elems)
 {
-	const int	nb_plane = count_plane(fd);
-
-	elems->pl = arena_calloc(arena, sizeof(t_plane)
-			* nb_plane);
-	if (!elems->pl)
-		return (print_err("Memory allocation failed", 0));
+	if (elems->cam.declared == false)
+		return (print_err("Camera missing", 0));
+	if (elems->amb.declared == false)
+		return (print_err("Ambient Lighting missing", 0));
+	if (elems->light.declared == false)
+		return (print_err("Ambient Lighting missing", 0));
 	return (true);
 }
 
-bool	parse_elements(t_mandlst *elems, char **line, int nb)
+static bool	mand_parse_elements(t_mandlst *elems, char **line, int nb)
 {
 	if (ft_strcmp(line[0], "A") == 0)
-		return (parse_ambient(elems, line, nb));
+		return (mand_parse_ambient(elems, line, nb));
 	else if (ft_strcmp(line[0], "C") == 0)
-		return (parse_camera(elems, line, nb));
+		return (mand_parse_camera(elems, line, nb));
 	else if (ft_strcmp(line[0], "L") == 0)
-		return (parse_light(elems, line, nb));
+		return (mand_parse_light(elems, line, nb));
 	else if (ft_strcmp(line[0], "pl") == 0)
-		return (parse_plane(elems, line, nb));
+		return (mand_parse_plane(elems, line, nb));
 	else if (ft_strcmp(line[0], "sp") == 0)
-		return (parse_sphere(elems, line, nb));
+		return (mand_parse_sphere(elems, line, nb));
 	else if (ft_strcmp(line[0], "cy") == 0)
-		return (parse_cylinder(elems, line, nb));
+		return (mand_parse_cylinder(elems, line, nb));
 	return (print_err("Unknown identifier", nb));
 }
 
-bool	mand_parsing(const char *file, t_mandlst *elements, t_arena *arena)
+bool	mand_parsing(int fd, t_mandlst *elements, t_arena *arena)
 {
 	char	*line;
 	char	**split;
 	int		i;
 
-	if (!init_mandparsing(file, elements, arena))
-		return (false);
 	i = 1;
 	line = get_next_line(fd);
 	while (line)
@@ -60,11 +56,11 @@ bool	mand_parsing(const char *file, t_mandlst *elements, t_arena *arena)
 			return (print_err("Memory allocation failed", 0));
 		if (split[0] && split[0][0] && split[0][0] != '\n')
 		{
-			if (parse_elements(elements, split, i) == false)
+			if (mand_parse_elements(elements, split, i) == false)
 				return (false);
 		}
 		i++;
 		line = get_next_line(fd);
 	}
-	return (true);
+	return (finish_parsing(elements));
 }

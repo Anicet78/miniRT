@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 11:31:44 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/06 19:22:50 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
+	uint8_t		type;
 	t_material	mat;
 	t_point		pos;
 	t_vec		normal;

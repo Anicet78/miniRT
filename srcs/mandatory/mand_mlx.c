@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 11:41:26 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 11:59:41 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/06 18:48:28 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	mand_mlx_start(t_mandrt *rt, int width, int height)
 	mlx = &rt->mlx;
 	mlx->width = width;
 	mlx->height = height;
-	mlx->img = NULL;
-	mlx->addr = NULL;
+	mlx->mlx = mlx_init();
+	if (!mlx->mlx)
+		kill_mlx(rt, EXIT_FAILURE);
+	rt->elements.mlx_ptr = mlx->mlx;
 	mlx->mlx_win = mlx_new_window(mlx->mlx, width, height, "mimiRT");
 	if (!mlx->mlx_win)
 		kill_mlx(rt, EXIT_FAILURE);
