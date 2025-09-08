@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:29:24 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/16 15:56:50 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 14:18:25 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
+#include "miniRT.h"
 
 char	**ft_arena_split(char const *s, char c, t_arena *arena)
 {

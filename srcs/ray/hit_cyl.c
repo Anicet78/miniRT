@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cyl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 22:38:23 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/05 15:09:26 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/09/08 14:18:25 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
+#include "miniRT.h"
 
 static bool	touch_cyl_body_part_two(
 	t_cylinder *cyl, t_ray *r, t_hit *hit, t_vec hit_point)

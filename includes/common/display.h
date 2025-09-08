@@ -1,27 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   display.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/16 16:42:37 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 14:18:25 by agruet           ###   ########.fr       */
+/*   Created: 2025/09/08 13:41:17 by agruet            #+#    #+#             */
+/*   Updated: 2025/09/08 13:41:48 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#ifndef DISPLAY_H
+# define DISPLAY_H
 
-size_t	get_bvh_size(size_t elem_amount)
+#include "vec3.h"
+
+typedef struct s_display
 {
-	size_t	pow2;
-	size_t	bvh_node_count;
+	int			width;
+	int			height;
+	double		vp_width;
+	double		vp_height;
+	float		focal_len;
+	t_vec		vp_u;
+	t_vec		vp_v;
+	t_vec		pix_du;
+	t_vec		pix_dv;
+	t_point		vp_upleft;
+	t_point		pixel00;
+	int			i;
+	int			j;
+}	t_display;
 
-	if (elem_amount == 1)
-		return (1);
-	bvh_node_count = 2 * elem_amount - 1;
-	pow2 = 1;
-	while (pow2 < bvh_node_count)
-		pow2 *= 2;
-	return (pow2 * 2);
-}
+typedef struct s_ray
+{
+	t_point	p;
+	t_vec	dir;
+}	t_ray;
+
+#endif

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:31:23 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/11 16:03:04 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/09/08 14:18:25 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
+#include "miniRT.h"
 
 uint32_t	rgb_to_hex(uint8_t r, uint8_t g, uint8_t b)
 {

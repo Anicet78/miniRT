@@ -6,13 +6,13 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 19:39:24 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 13:32:31 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mandatory.h"
 
-bool	mand_parse_ambient(t_mandlst *elements, char **line, int nb)
+bool	parse_ambient(t_elem_lst *elements, char **line, int nb)
 {
 	float			ratio;
 	t_color			color;
@@ -29,11 +29,11 @@ bool	mand_parse_ambient(t_mandlst *elements, char **line, int nb)
 	if (is_color(line[2]) == false)
 		return (print_err("Invalid color in `ambient light`", nb));
 	color = get_color(line[2]);
-	mand_add_ambient_lighting(elements, ratio, color);
+	add_ambient_lighting(elements, ratio, color);
 	return (true);
 }
 
-bool	mand_parse_camera(t_mandlst *elements, char **line, int nb)
+bool	parse_camera(t_elem_lst *elements, char **line, int nb)
 {
 	t_point			pos;
 	t_vec			axis;
@@ -54,11 +54,11 @@ bool	mand_parse_camera(t_mandlst *elements, char **line, int nb)
 	fov = ft_atol(line[3]);
 	if (fov < 0 || fov > 180)
 		return (print_err("Invalid FOV in `camera`", nb));
-	mand_add_camera(elements, pos, axis, fov);
+	add_camera(elements, pos, axis, fov);
 	return (true);
 }
 
-bool	mand_parse_light(t_mandlst *elements, char **line, int nb)
+bool	parse_light(t_elem_lst *elements, char **line, int nb)
 {
 	t_point		pos;
 	double		ratio;
@@ -79,11 +79,11 @@ bool	mand_parse_light(t_mandlst *elements, char **line, int nb)
 	if (is_color(line[3]) == false)
 		return (print_err("Invalid color in `light`", nb));
 	color = get_color(line[3]);
-	mand_add_light(elements, pos, ratio, color);
+	add_light(elements, pos, ratio, color);
 	return (true);
 }
 
-bool	mand_parse_sphere(t_mandlst *elements, char **line, int nb)
+bool	parse_sphere(t_elem_lst *elements, char **line, int nb)
 {
 	const size_t	tsize = tab_len(line);
 	double			diameter;
@@ -97,10 +97,10 @@ bool	mand_parse_sphere(t_mandlst *elements, char **line, int nb)
 		return (print_err("Invalid diameter in `sphere`", nb));
 	if (is_color(line[3]) == false)
 		return (print_err("Invalid color in `sphere`", nb));
-	return (mand_add_sphere(elements, line));
+	return (add_sphere(elements, line));
 }
 
-bool	mand_parse_plane(t_mandlst *elements, char **line, int nb)
+bool	parse_plane(t_elem_lst *elements, char **line, int nb)
 {
 	if (tab_len(line) != 4)
 		return (print_err("Invalid amount of argument in `plane`", nb));
@@ -110,5 +110,5 @@ bool	mand_parse_plane(t_mandlst *elements, char **line, int nb)
 		return (print_err("Invalid normal vector in `plane`", nb));
 	if (is_color(line[3]) == false)
 		return (print_err("Invalid color in `plane`", nb));
-	return (mand_add_plane(elements, line));
+	return (add_plane(elements, line));
 }

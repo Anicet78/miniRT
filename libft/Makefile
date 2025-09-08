@@ -2,7 +2,7 @@ AR			= ar rcs
 CC			= cc
 CFLAGS		= -ggdb -Wall -Werror -Wextra
 
-INLCUDES	= includes/
+INLCUDES	= includes/common
 SRC_DIR		= srcs/
 OBJ_DIR		= objs/
 

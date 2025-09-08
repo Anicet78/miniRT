@@ -6,13 +6,13 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 19:48:16 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 13:35:39 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mandatory.h"
 
-static bool	finish_mand_parsing(t_mandlst *elems)
+static bool	finish_mand_parsing(t_elem_lst *elems)
 {
 	if (elems->cam.declared == false)
 		return (print_err("Camera missing", 0));
@@ -23,24 +23,24 @@ static bool	finish_mand_parsing(t_mandlst *elems)
 	return (true);
 }
 
-static bool	mand_parse_elements(t_mandlst *elems, char **line, int nb)
+static bool	parse_elements(t_elem_lst *elems, char **line, int nb)
 {
 	if (ft_strcmp(line[0], "A") == 0)
-		return (mand_parse_ambient(elems, line, nb));
+		return (parse_ambient(elems, line, nb));
 	else if (ft_strcmp(line[0], "C") == 0)
-		return (mand_parse_camera(elems, line, nb));
+		return (parse_camera(elems, line, nb));
 	else if (ft_strcmp(line[0], "L") == 0)
-		return (mand_parse_light(elems, line, nb));
+		return (parse_light(elems, line, nb));
 	else if (ft_strcmp(line[0], "pl") == 0)
-		return (mand_parse_plane(elems, line, nb));
+		return (parse_plane(elems, line, nb));
 	else if (ft_strcmp(line[0], "sp") == 0)
-		return (mand_parse_sphere(elems, line, nb));
+		return (parse_sphere(elems, line, nb));
 	else if (ft_strcmp(line[0], "cy") == 0)
-		return (mand_parse_cylinder(elems, line, nb));
+		return (parse_cylinder(elems, line, nb));
 	return (print_err("Unknown identifier", nb));
 }
 
-bool	mand_parsing(int fd, t_mandlst *elements, t_arena *arena)
+bool	mand_parsing(int fd, t_elem_lst *elements, t_arena *arena)
 {
 	char	*line;
 	char	**split;
@@ -56,7 +56,7 @@ bool	mand_parsing(int fd, t_mandlst *elements, t_arena *arena)
 			return (print_err("Memory allocation failed", 0));
 		if (split[0] && split[0][0] && split[0][0] != '\n')
 		{
-			if (mand_parse_elements(elements, split, i) == false)
+			if (parse_elements(elements, split, i) == false)
 				return (false);
 		}
 		i++;

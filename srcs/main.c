@@ -6,13 +6,13 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 18:50:01 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 14:28:15 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/miniRT.h"
+#include "miniRT.h"
 
-int	open_file(int ac, char **av)
+static int	open_file(int ac, char **av)
 {
 	int	fd;
 

@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:36:08 by agruet            #+#    #+#             */
-/*   Updated: 2025/07/21 13:39:32 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 14:18:25 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
+#include "miniRT.h"
 
 void	destroy_mlx(t_rt *rt)
 {
@@ -51,4 +51,14 @@ void	destroy_threads(t_rt *rt)
 		i++;
 	}
 	pthread_mutex_destroy(&rt->queue.lock);
+}
+
+void	kill_mlx(t_rt *rt, int exit_code)
+{
+	if (rt->thread_amount != 0)
+		destroy_threads(rt);
+	destroy_mlx(rt);
+	if (rt->arena)
+		clear_arena(&rt->arena);
+	exit(exit_code);
 }

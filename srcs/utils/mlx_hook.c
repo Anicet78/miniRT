@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:13:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 18:52:15 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 14:16:20 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/miniRT.h"
+#include "miniRT.h"
 
 int	destroy_hook(t_rt *rt)
 {
@@ -52,14 +52,4 @@ int	loop_hook(t_rt *rt)
 	}
 	next_image(rt);
 	return (0);
-}
-
-void	kill_mlx(t_rt *rt, int exit_code)
-{
-	if (rt->thread_amount != 0)
-		destroy_threads(rt);
-	destroy_mlx(rt);
-	if (rt->arena)
-		clear_arena(&rt->arena);
-	exit(exit_code);
 }

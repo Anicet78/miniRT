@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/28 16:40:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/06/05 13:09:41 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 14:31:54 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
+#include "../../includes/common/libft.h"
 
 int	print_err(char *msg, int line)
 {

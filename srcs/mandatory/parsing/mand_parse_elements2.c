@@ -6,13 +6,13 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/06 19:14:10 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 13:35:06 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mandatory.h"
 
-bool	mand_parse_cylinder(t_mandlst *elems, char **line, int nb)
+bool	parse_cylinder(t_elem_lst *elems, char **line, int nb)
 {
 	double	height;
 	double	diameter;
