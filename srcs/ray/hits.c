@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:57:56 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 14:18:25 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../includes/full/miniRT.h"
 
 bool	hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit)
 {

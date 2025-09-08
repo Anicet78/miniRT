@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 14:29:56 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:02:33 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ELEMENTS_H
 
 # include "miniRT.h"
+# include "parsing.h"
 # include <float.h>
 # include "../../mlx/mlx_int.h"
 
@@ -55,14 +56,6 @@ typedef struct s_ambient
 	t_color	color;
 	bool	declared;
 }	t_ambient;
-
-typedef struct s_camera
-{
-	t_point	pos;
-	t_vec	dir;
-	double	fov;
-	bool	declared;
-}	t_camera;
 
 typedef struct s_light
 {
@@ -142,11 +135,6 @@ bool		add_cone(t_elem_lst *elems, char **line, int texture, int norm);
 
 // parsing
 bool		read_rtfile(int fd, t_elem_lst *elements, t_arena *arena);
-t_color		get_color(char *str);
-bool		is_color(char *str);
-bool		is_vec(char *str);
-bool		is_normalize_vec(char *str);
-t_point		get_vec(char *str);
 bool		parse_ambient(t_elem_lst *elements, char **line, int nb);
 bool		parse_camera(t_elem_lst *elements, char **line, int nb);
 bool		parse_light(t_elem_lst *elements, char **line, int nb);
@@ -157,7 +145,6 @@ bool		parse_cone(t_elem_lst *elements, char **line, int nb);
 bool		parse_new_frame(t_elem_lst *elements, char **line, int nb);
 bool		parse_goto(t_elem_lst *elems, char **line, int nb);
 bool		parse_fps(t_elem_lst *elems, char **line, int nb);
-double		ft_atof_parse(char *str);
 
 // xpm
 int			try_file(char **line, char *folder, size_t tabsize, size_t index);

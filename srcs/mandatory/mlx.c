@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mand_mlx.c                                         :+:      :+:    :+:   */
+/*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 11:41:26 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 14:16:35 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:04:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mandatory.h"
+#include "../../includes/mandatory/mandatory.h"
 
 void	put_pixel_to_img(t_mlx *mlx, int x, int y, int color)
 {

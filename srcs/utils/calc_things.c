@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 15:53:30 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 14:04:58 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../includes/full/miniRT.h"
 
 size_t	calc_arena_size(int fd)
 {

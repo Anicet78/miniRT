@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 00:03:17 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 14:18:25 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 16:48:35 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "vec3.h"
 
 t_vec	up_v(void)
 {

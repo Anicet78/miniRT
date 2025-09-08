@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mand_parse_elements2.c                             :+:      :+:    :+:   */
+/*   parse_elements2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 13:35:06 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:11:19 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mandatory.h"
+#include "../../../includes/mandatory/mandatory.h"
 
 bool	parse_cylinder(t_elem_lst *elems, char **line, int nb)
 {
@@ -29,5 +29,5 @@ bool	parse_cylinder(t_elem_lst *elems, char **line, int nb)
 		return (print_err("Invalid height in `cylinder`", nb));
 	if (is_color(line[5]) == false)
 		return (print_err("Invalid color in `cylinder`", nb));
-	return (mand_add_cylinder(elems, line));
+	return (add_cylinder(elems, line));
 }

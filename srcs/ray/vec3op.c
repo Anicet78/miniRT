@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:33:36 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 14:18:25 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 16:58:30 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "vec3.h"
 
 double	dot(t_vec a, t_vec b)
 {

@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:42:37 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 14:18:25 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../includes/full/miniRT.h"
 
 size_t	get_bvh_size(size_t elem_amount)
 {

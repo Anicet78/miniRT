@@ -9,7 +9,9 @@ LIBFT		= $(LIBFT_DIR)/libft.a
 MLX_DIR		= mlx
 MLX			= $(MLX_DIR)/libmlx.a
 
-INCLUDES	= -Iincludes/common -Iincludes/full
+INCLUDES	= includes/common
+HEADER		= -Iincludes/mandatory
+BONUS_HEADER= -Iincludes/full
 SRC_DIR		= srcs/
 OBJ_DIR		= objs/
 
@@ -26,7 +28,25 @@ endif
 
 LIBS		= -Lmlx -lmlx -lXext -lX11 -lm
 
-SRC			=	main.c							\
+SRC			=	mandatory/main.c					\
+				mandatory/elements/add_elements.c	\
+				mandatory/elements/add_elements2.c	\
+				mandatory/elements/elem_lst.c		\
+				mandatory/parsing/parse_elements.c	\
+				mandatory/parsing/parse_elements2.c	\
+				mandatory/parsing/parse_file.c		\
+				mandatory/render/render.c			\
+				mandatory/mlx.c						\
+				parse_file/check_params.c			\
+				parse_file/libc_remaster.c			\
+				ray/vec3op.c						\
+				ray/vec3op2.c						\
+				ray/vec3op3.c						\
+				ray/display.c						\
+				utils/err_message.c					\
+				utils/vec_utils.c
+
+BONUS_SRC	=	main.c							\
 				bvh/aabb.c						\
 				bvh/bins.c						\
 				bvh/bvh.c						\
@@ -52,6 +72,7 @@ SRC			=	main.c							\
 				ray/hit_cone.c					\
 				ray/hit_cyl.c					\
 				ray/hits.c						\
+				ray/multiple_displays.c			\
 				ray/phong.c						\
 				ray/texture.c					\
 				ray/vec3op.c					\
@@ -72,13 +93,14 @@ SRC			=	main.c							\
 				utils/vec_utils.c
 
 OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
+BONUS_OBJ	= $(patsubst %.c, $(OBJ_DIR)%.o, $(BONUS_SRC))
 
 NAME		= miniRT
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MLX) $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(MLX) $(LIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(HEADER) $(OBJ) $(LIBFT) $(MLX) $(LIBS) -o $(NAME)
 	@printf "\r\e[2K\e[1;35mMiniRT Compiled\e[0m\n"
 
 $(LIBFT):
@@ -100,7 +122,9 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@printf "\r\e[2K\e[1;35mCompiling [%d/%d] %s\e[0m" $(INDEX) $(TOTAL) $(notdir $<)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-bonus: $(NAME)
+bonus: $(LIBFT) $(MLX) $(BONUS_OBJ)
+	@$(CC) $(CFLAGS) $(BONUS_HEADER) $(BONUS_OBJ) $(LIBFT) $(MLX) $(LIBS) -o $(NAME)
+	@printf "\r\e[2K\e[1;35mMiniRT Compiled\e[0m\n"
 
 clean:
 	@printf "\e[1;36mCleaning files\e[0m\n"

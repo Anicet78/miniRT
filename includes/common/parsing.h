@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_utils.c                                      :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 17:49:08 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Created: 2025/09/08 16:53:45 by agruet            #+#    #+#             */
+/*   Updated: 2025/09/08 16:58:39 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/full/miniRT.h"
+#ifndef PARSING_H
+# define PARSING_H
 
-void	print_color(uint32_t col)
-{
-	col &= ~(0xFF << 24);
-	printf("red:	%d\n", col >> 16);
-	printf("green:	%d\n", (col >> 8) & 0xFF);
-	printf("blue:	%d\n", (col) & 0xFF);
-}
+# include "vec3.h"
+
+t_color	get_color(char *str);
+bool	is_color(char *str);
+bool	is_vec(char *str);
+bool	is_normalize_vec(char *str);
+t_point	get_vec(char *str);
+double	ft_atof_parse(char *str);
+
+#endif

@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 17:09:09 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 14:18:25 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../includes/full/miniRT.h"
 
 t_image	*add_img(char *file[2], t_image *list, size_t amount, void *mlx_ptr)
 {

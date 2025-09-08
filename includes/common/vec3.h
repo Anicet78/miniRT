@@ -6,14 +6,16 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:38:50 by tgallet           #+#    #+#             */
-/*   Updated: 2025/07/16 17:04:51 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 16:58:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VEC3_H
 # define VEC3_H
 
+# include "libft.h"
 # include <stdint.h>
+# include <math.h>
 
 typedef union s_vec
 {

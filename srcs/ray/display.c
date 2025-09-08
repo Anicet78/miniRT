@@ -6,29 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 15:13:20 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 14:18:25 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 16:59:33 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-
-t_display	*init_all_displays(t_camera *cam, t_arena *arena,
-	size_t frame_amount)
-{
-	size_t		count;
-	t_display	*displays;
-
-	displays = arena_alloc(sizeof(t_display) * frame_amount, arena);
-	if (!displays)
-		return (NULL);
-	count = 0;
-	while (count < frame_amount)
-	{
-		displays[count] = init_display(&cam[count]);
-		count++;
-	}
-	return (displays);
-}
+#include "display.h"
 
 t_display	init_display(t_camera *cam)
 {
@@ -56,30 +38,4 @@ t_display	init_display(t_camera *cam)
 			vadd(vmul(ret.vp_u, 0.5), vmul(ret.vp_v, 0.5)));
 	ret.pixel00 = vadd(ret.vp_upleft, vmul(vadd(ret.pix_du, ret.pix_dv), 0.5));
 	return (ret);
-}
-
-void	render_display(t_rt *rt, t_display *d)
-{
-	t_ray	r;
-	t_point	world_pix;
-
-	d->j = 0;
-	while (d->j < d->height)
-	{
-		d->i = 0;
-		while (d->i < d->width)
-		{
-			world_pix = vadd(d->pixel00,
-					vadd(vmul(d->pix_du, d->i), vmul(d->pix_dv, d->j)));
-			r.dir = norm(vsub(world_pix, rt->elements.cam[0].pos));
-			r.p = rt->elements.cam[0].pos;
-			put_pixel_to_img(&(rt->mlx), rt->mlx.addr[0],
-				(uint32_t[2]){d->i, d->j},
-				ray_to_color(&r, &rt->elements, SIZE_MAX));
-			d->i += 1;
-		}
-		d->j += 1;
-	}
-	mlx_put_image_to_window(rt->mlx.mlx, rt->mlx.mlx_win,
-		rt->mlx.imgs[0], 0, 0);
 }

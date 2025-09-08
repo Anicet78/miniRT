@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mand_parse_elements.c                              :+:      :+:    :+:   */
+/*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 13:32:31 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:11:19 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mandatory.h"
+#include "../../../includes/mandatory/mandatory.h"
 
 bool	parse_ambient(t_elem_lst *elements, char **line, int nb)
 {

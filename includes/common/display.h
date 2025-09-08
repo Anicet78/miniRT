@@ -6,14 +6,17 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 13:41:17 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 13:41:48 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:02:37 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DISPLAY_H
 # define DISPLAY_H
 
-#include "vec3.h"
+# include "vec3.h"
+
+# define PI 3.14159265358979323846264338
+# define WIDTH 1920
 
 typedef struct s_display
 {
@@ -37,5 +40,13 @@ typedef struct s_ray
 	t_point	p;
 	t_vec	dir;
 }	t_ray;
+
+typedef struct s_camera
+{
+	t_point	pos;
+	t_vec	dir;
+	double	fov;
+	bool	declared;
+}	t_camera;
 
 #endif

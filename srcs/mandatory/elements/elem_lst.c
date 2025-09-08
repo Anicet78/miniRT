@@ -6,40 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:11:19 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/full/miniRT.h"
-
-t_elem_lst	*init_minirt(t_rt *rt, int fd)
-{
-	rt->thread_amount = 0;
-	rt->mlx.mlx_win = NULL;
-	rt->mlx.imgs = NULL;
-	rt->mlx.addr = NULL;
-	rt->elements.textures = NULL;
-	rt->elements.bmaps = NULL;
-	rt->elements.allocated_size = calc_arena_size(fd);
-	rt->arena = arena_init(rt->elements.allocated_size);
-	if (!rt->arena)
-		return (print_err("Memory allocation failed", 0), NULL);
-	rt->elements.count = 0;
-	rt->elements.allocated_size = rt->elements.allocated_size * 90 / 100;
-	rt->elements.elem_lst = arena_calloc(rt->arena,
-			rt->elements.allocated_size);
-	if (!rt->elements.elem_lst)
-	{
-		clear_arena(&rt->arena);
-		print_err("Memory allocation failed", 0);
-		return (NULL);
-	}
-	rt->mlx.mlx = mlx_init();
-	if (!rt->mlx.mlx)
-		kill_mlx(rt, EXIT_FAILURE);
-	rt->elements.mlx_ptr = rt->mlx.mlx;
-	return (&rt->elements);
-}
+#include "../../../includes/mandatory/mandatory.h"
 
 uint8_t	get_elem_type(void *elem)
 {
@@ -54,8 +25,6 @@ size_t	get_elem_size(void *elem)
 	if (type == SPHERE)
 		return (sizeof(t_sphere));
 	if (type == CYLINDER)
-		return (sizeof(t_cylinder));
-	if (type == CONE)
 		return (sizeof(t_cylinder));
 	if (type == PLANE)
 		return (sizeof(t_plane));

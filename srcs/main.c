@@ -6,11 +6,11 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 18:02:59 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 14:28:15 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 16:44:55 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../includes/full/miniRT.h"
 
 static int	open_file(int ac, char **av)
 {

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandatory.h                                        :+:      :+:    :+:   */
+/*   miniRT.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -20,9 +20,6 @@
 # include <math.h>
 # include <stdint.h>
 # include <fcntl.h>
-
-# define PI 3.14159265358979323846264338
-# define WIDTH 1920
 
 # define ESC_K 65307
 
@@ -57,14 +54,6 @@ typedef struct s_ambient
 	t_color	color;
 	bool	declared;
 }	t_ambient;
-
-typedef struct s_camera
-{
-	t_point	pos;
-	t_vec	dir;
-	double	fov;
-	bool	declared;
-}	t_camera;
 
 typedef struct s_light
 {
@@ -162,6 +151,7 @@ bool		add_cylinder(t_elem_lst *elems, char **line);
 
 // render
 t_display	init_display(t_camera *cam);
+void		render(t_rt *rt, t_display *d);
 
 // mlx
 void		mlx_start(t_rt *rt, int width, int height);

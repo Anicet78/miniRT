@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mand_parsing.c                                     :+:      :+:    :+:   */
+/*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 13:35:39 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:11:19 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mandatory.h"
+#include "../../../includes/mandatory/mandatory.h"
 
 static bool	finish_mand_parsing(t_elem_lst *elems)
 {
