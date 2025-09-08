@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:38:50 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 16:58:40 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 18:13:26 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_color		int_to_tcol(uint32_t col);
 t_vec		cross_prod(t_vec a, t_vec b);
 t_vec		up_v(void);
 t_vec		right_v(void);
+t_color		white_color(void);
+t_color		black_color(void);
 t_color		lerp_vec(t_color a, t_color b, double t);
 t_vec		had(t_vec a, t_vec b);
 void		clamp_color(t_color *col);

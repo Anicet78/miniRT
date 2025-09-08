@@ -35,6 +35,10 @@ SRC			=	mandatory/main.c					\
 				mandatory/parsing/parse_elements.c	\
 				mandatory/parsing/parse_elements2.c	\
 				mandatory/parsing/parse_file.c		\
+				mandatory/render/closest_hit.c		\
+				mandatory/render/hit_cyl.c			\
+				mandatory/render/hits.c				\
+				mandatory/render/phong.c			\
 				mandatory/render/render.c			\
 				mandatory/mlx.c						\
 				parse_file/check_params.c			\
@@ -43,6 +47,7 @@ SRC			=	mandatory/main.c					\
 				ray/vec3op2.c						\
 				ray/vec3op3.c						\
 				ray/display.c						\
+				utils/color.c						\
 				utils/err_message.c					\
 				utils/vec_utils.c
 

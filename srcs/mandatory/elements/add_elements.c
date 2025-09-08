@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:11:19 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 18:25:13 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool	add_plane(t_elem_lst *elems, char **line)
 	pl.pos = get_vec(line[1]);
 	pl.normal = norm(get_vec(line[2]));
 	pl.color = get_color(line[3]);
-	if (!add_element(elems, &pl, sizeof(t_sphere)))
+	if (!add_element(elems, &pl, sizeof(t_plane)))
 		return (false);
 	return (true);
 }

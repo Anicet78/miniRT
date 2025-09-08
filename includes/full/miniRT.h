@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 14:28:51 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 18:13:13 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,6 @@ int			loop_hook(t_rt *rt);
 t_display	*init_all_displays(t_camera *cam, t_arena *arena,
 				size_t frame_amount);
 t_display	init_display(t_camera *cam);
-void		render_display(t_rt *rt, t_display *d);
-t_color		white_color(void);
-t_color		black_color(void);
 t_color		surface_color(t_image *texture, double u, double v);
 t_color		ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface);
 t_color		diffuse_specular(t_hit *hit, t_elem_lst *elems,

@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:11:19 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 18:23:51 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static bool	finish_mand_parsing(t_elem_lst *elems)
 		return (print_err("Ambient Lighting missing", 0));
 	if (elems->light.declared == false)
 		return (print_err("Lighting missing", 0));
+	elems->size = elems->count;
 	return (true);
 }
 
