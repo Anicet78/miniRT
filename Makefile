@@ -114,7 +114,7 @@ $(MLX):
 	@printf "\r\e[1;31mMinilibX Compiled\e[0m \b\n"
 
 INDEX=0
-TOTAL=$(words $(SRC))
+TOTAL=$(words $(BONUS_SRC))
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@)
