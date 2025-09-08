@@ -6,18 +6,18 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:24:43 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/08 17:23:48 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/full/miniRT.h"
 
-static void	init_info(t_bvh_info *info, t_bvh_info *prev_info, int way)
+static void	init_info(t_bvh_info *info, t_bvh_info *prev_info)
 {
 	info->arena = prev_info->arena;
 	info->builder = prev_info->builder;
 	info->fallback = false;
-	if (way == 0)
+	if (prev_info->way == 0)
 	{
 		info->index_tab = prev_info->left;
 		info->size = prev_info->left_size;
@@ -29,6 +29,7 @@ static void	init_info(t_bvh_info *info, t_bvh_info *prev_info, int way)
 	}
 	info->left_size = 0;
 	info->right_size = 0;
+	info->way = 1;
 }
 
 size_t	create_leaf(t_bvh_node *bvh, t_bvh_info *info,
@@ -50,13 +51,13 @@ size_t	create_leaf(t_bvh_node *bvh, t_bvh_info *info,
 }
 
 size_t	build_bvh(t_bvh_node *bvh, t_bvh_info *prev_info,
-	size_t *next_free, size_t parent_next, int way)
+	size_t *next_free, size_t parent_next)
 {
 	t_bvh_info		info;
 	t_bin			bins[NBINS];
 	const size_t	pos = (*next_free)++;
 
-	init_info(&info, prev_info, way);
+	init_info(&info, prev_info);
 	if (info.size <= 1)
 		return (create_leaf(bvh, &info, pos, parent_next));
 	ft_memset(bins, 0, sizeof(t_bin) * NBINS);
@@ -68,15 +69,15 @@ size_t	build_bvh(t_bvh_node *bvh, t_bvh_info *prev_info,
 	create_index_tab(&info);
 	if (!info.left || !info.right)
 		return (0);
-	bvh[pos].right = build_bvh(bvh, &info, next_free, parent_next, 1);
-	bvh[pos].left = build_bvh(bvh, &info, next_free, bvh[pos].right, 0);
+	bvh[pos].right = build_bvh(bvh, &info, next_free, parent_next);
+	info.way = 0;
+	bvh[pos].left = build_bvh(bvh, &info, next_free, bvh[pos].right);
 	if (bvh[pos].left == 0 || bvh[pos].right == 0)
 		return (0);
 	bvh[pos].next = parent_next;
-	bvh[pos].bbox = union_aabb(bvh[bvh[pos].left].bbox, bvh[bvh[pos].right].bbox);
-	if (pos == 0)
-		return (1);
-	return (pos);
+	bvh[pos].bbox = union_aabb(bvh[bvh[pos].left].bbox,
+			bvh[bvh[pos].right].bbox);
+	return (pos | (pos == 0));
 }
 
 static bool	create_bvh(t_rt *rt, t_elem_lst *elems, size_t frame)
@@ -97,14 +98,14 @@ static bool	create_bvh(t_rt *rt, t_elem_lst *elems, size_t frame)
 		return (clear_arena(&arena), false);
 	init_builder(elems, builder, frame);
 	elems->bvh[frame] = arena_calloc(rt->arena, sizeof(t_bvh_node)
-			* get_bvh_size(elem_amount));
+			* (2 * elem_amount - 1));
 	if (!elems->bvh[frame])
 		return (clear_arena(&arena), false);
 	next_free = 0;
 	bvh = build_bvh(elems->bvh[frame], &(t_bvh_info){.arena = arena,
 			.builder = builder,
 			.right = create_first_tab(arena, elem_amount),
-			.right_size = elem_amount}, &next_free, 0, 1);
+			.right_size = elem_amount, .way = 1}, &next_free, 0);
 	return (clear_arena(&arena), bvh != 0);
 }
 
