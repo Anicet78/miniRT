@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/09 18:46:48 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ bool	parse_elements(t_elem_lst *elems, char **line, int nb)
 		return (parse_goto(elems, line, nb));
 	else if (ft_strcmp(line[0], "FPS") == 0)
 		return (parse_fps(elems, line, nb));
+	else if (ft_strcmp(line[0], "AA") == 0)
+		return (add_anti_aliasing(elems, line, nb));
 	return (print_err("Unknown identifier", nb));
 }
 

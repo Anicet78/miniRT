@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/09 17:31:40 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/09 18:57:58 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ bool		add_sphere(t_elem_lst *elems, char **line, int texture, int norm);
 bool		add_plane(t_elem_lst *elems, char **line, int texture, int norm);
 bool		add_cylinder(t_elem_lst *elems, char **line, int texture, int norm);
 bool		add_cone(t_elem_lst *elems, char **line, int texture, int norm);
+bool		add_anti_aliasing(t_elem_lst *elems, char **line, int nb);
 
 // parsing
 bool		read_rtfile(int fd, t_elem_lst *elements, t_arena *arena);

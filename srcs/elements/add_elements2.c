@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/09 18:57:38 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,24 @@ bool	add_cone(t_elem_lst *elems, char **line, int texture, int bmap)
 				false);
 	}
 	return (add_element(elems, &cy, sizeof(t_cone)) && true);
+}
+
+bool	add_anti_aliasing(t_elem_lst *elems, char **line, int nb)
+{
+	static bool	declared = false;
+	int64_t		force;
+
+	if (declared == true)
+		return (print_err("Multiple declaration of `anti-aliasing`", nb));
+	declared = true;
+	if (!line[1])
+		return (print_err("Invalid amount of argument in `anti-aliasing`", nb));
+	force = ft_atof_parse(line[1]);
+	if (force < 0 || force > INT_MAX)
+		return (print_err("Invalid force in `anti-aliasing`", nb));
+	if (force > 10000)
+		return (print_err("Force cannot be higher than 10000 in \
+`anti-aliasing`", nb));
+	elems->aliasing = force;
+	return (true);
 }
