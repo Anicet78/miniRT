@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 11:41:26 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 18:16:59 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/09 19:10:45 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	mlx_start(t_rt *rt, int width, int height)
 	if (!mlx->img)
 		kill_mlx(rt, EXIT_FAILURE);
 	mlx->addr = mlx_get_data_addr(mlx->img, &mlx->bits_per_pixel,
-				&mlx->line_length, &mlx->endian);
+			&mlx->line_length, &mlx->endian);
 	if (!mlx->addr)
 		kill_mlx(rt, EXIT_FAILURE);
 	mlx_hook(mlx->mlx_win, 17, 1L << 3, &destroy_hook, rt);

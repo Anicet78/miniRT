@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/09 18:04:27 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/09 19:10:22 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ t_color	background_color(t_ray *r)
 
 	if (r->dir.y * r->dir.y < 0.02 * 0.02)
 		return (lerp_vec(
-					sky_bot,
-					sky_top,
-					(r->dir.y + 0.02) / 0.04
+				sky_bot,
+				sky_top,
+				(r->dir.y + 0.02) / 0.04
 			));
 	else if (r->dir.y < 0)
 		return (sky_bot);

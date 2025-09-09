@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 00:16:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/09 19:08:01 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ size_t	get_elem_size(void *elem)
 	if (type == PLANE)
 		return (sizeof(t_plane));
 	if (type == AMBIENT_LIGHTING)
-	return (sizeof(t_ambient));
+		return (sizeof(t_ambient));
 	if (type == LIGHT)
 		return (sizeof(t_light));
 	return (0);

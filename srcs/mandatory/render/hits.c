@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:57:56 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 17:45:36 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/09 19:10:55 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ bool	hit_plane(t_plane *plane, t_ray *r, t_hit *hit)
 	hit->u = fmod(hit->p.x - plane->pos.x, 1);
 	hit->v = fmod(hit->p.y - plane->pos.y, 1);
 	hit->front = (denom < 0);
-	hit->color = &plane->color;;
+	hit->color = &plane->color;
 	hit->normal = plane->normal;
 	if (!hit->front)
 		hit->normal = vmul(hit->normal, -1);
