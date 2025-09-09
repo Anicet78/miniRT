@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 16:26:41 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/09 18:30:01 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ bool	init_parsing(t_elem_lst *elems, t_arena *arena, int fd)
 	elems->loop = 0;
 	elems->loop_index = 0;
 	elems->fps = 60;
+	elems->aliasing = 4;
 	return (true);
 }

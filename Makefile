@@ -70,6 +70,7 @@ BONUS_SRC	=	main.c							\
 				parse_file/parse_elements2.c	\
 				parse_file/parse_file.c			\
 				parse_file/parse_xpm.c			\
+				ray/anti_aliasing.c				\
 				ray/closest_hit.c				\
 				ray/display.c					\
 				ray/hit_aabb.c					\
@@ -142,4 +143,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+r: fclean
+	@$(MAKE) -s bonus MODE=fast
+
+.PHONY: all bonus clean fclean re r

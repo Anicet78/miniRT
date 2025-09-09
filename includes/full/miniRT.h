@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 18:13:13 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/09 18:06:11 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ bool		hit_plane(t_plane *plane, t_ray *r, t_hit *hit);
 bool		hit_cylinder(t_cylinder *c, t_ray *r, t_hit *hit);
 bool		hit_cone(t_cone *cone, t_ray *r, t_hit *hit);
 bool		closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame);
-int32_t		ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame);
+void		create_rays(const t_display *d, uint32_t coords[2], size_t img_index, t_params *p);
+t_color		ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame);
 
 // render
 void		realtime_rendering(t_rt *rt, size_t *last_frame,

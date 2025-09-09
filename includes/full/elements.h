@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:02:33 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/09 17:31:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_elem_lst
 	size_t		size;
 	size_t		allocated_size;
 	double		fps;
+	uint64_t	aliasing;
 	t_plane		**planes;
 	size_t		plane_index;
 	size_t		*frames;
