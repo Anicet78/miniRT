@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 10:52:58 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/10 13:11:29 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,20 @@ static bool	new_thread(t_rt *rt, t_display *display, pthread_attr_t *attr)
 void	init_threads(t_rt *rt, t_display *display)
 {
 	pthread_attr_t	attr;
+	long			nprocs;
 
+	nprocs = sysconf(_SC_NPROCESSORS_ONLN);
+	if (nprocs < 1)
+		nprocs = 22;
+	else if (nprocs > 1)
+		nprocs--;
 	if (init_mutex(&rt->queue, &attr) == false)
 		kill_mlx(rt, 1);
-	rt->threads = arena_alloc(sizeof(pthread_t) * RENDER_THREADS, rt->arena);
+	rt->threads = arena_alloc(sizeof(pthread_t) * nprocs, rt->arena);
 	if (!rt->threads)
 		(pthread_attr_destroy(&attr), kill_mlx(rt, 1));
 	pthread_mutex_lock(&rt->queue.lock);
-	while (rt->thread_amount < RENDER_THREADS)
+	while (rt->thread_amount < nprocs)
 	{
 		if (!new_thread(rt, display, &attr))
 			(pthread_attr_destroy(&attr), kill_mlx(rt, 1));
