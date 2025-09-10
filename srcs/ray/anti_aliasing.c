@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 17:32:19 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/09 19:10:13 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/10 12:57:15 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,13 @@ t_ray	get_ray(const t_display *d, uint32_t coords[2],
 void	create_rays(const t_display *d, uint32_t coords[2],
 	size_t img_index, t_params *p)
 {
-	t_color		pixel_color;
-	uint64_t	sample;
-	t_ray		r;
+	t_color			pixel_color;
+	uint64_t		sample;
+	t_ray			r;
+	static double	ratio = 0;
 
+	if (ratio == 0)
+		ratio = 1.0 / (double)p->elements.aliasing;
 	pixel_color = (t_vec){{0, 0, 0}};
 	sample = 0;
 	while (sample < p->elements.aliasing)
@@ -70,5 +73,5 @@ void	create_rays(const t_display *d, uint32_t coords[2],
 		sample++;
 	}
 	put_pixel_to_img(p->mlx, p->mlx->addr[img_index], coords,
-		vec_to_col(vdiv(pixel_color, sample)));
+		vec_to_col(vmul(pixel_color, ratio)));
 }
