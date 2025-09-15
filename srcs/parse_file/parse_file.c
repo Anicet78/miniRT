@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/09 18:46:48 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/11 14:58:48 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	read_rtfile(int fd, t_elem_lst *elements, t_arena *arena)
 		free(line);
 		if (!split)
 			return (print_err("Memory allocation failed", 0));
-		if (split[0] && split[0][0] && split[0][0] != '\n')
+		if (split[0] && split[0][0] && split[0][0] != '#' && split[0][0] != '\n')
 		{
 			if (parse_elements(elements, split, i) == false)
 				return (false);
