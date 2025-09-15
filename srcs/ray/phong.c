@@ -6,20 +6,21 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:19:34 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/11 14:52:58 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/full/miniRT.h"
 
-t_color	ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface)
+t_color	ambient_component(t_hit *hit, t_elem_lst *elems,
+	t_color *surface, size_t frame)
 {
 	t_color	color;
 
 	color = had(hit->mat->color, *surface);
 	color = had(
-			vmul(elems->al->color,
-				elems->al->ratio),
+			vmul(elems->al[frame].color,
+				elems->al[frame].ratio),
 			color
 			);
 	return (color);
@@ -64,11 +65,9 @@ t_color	diffuse_specular(t_hit *hit, t_elem_lst *elems,
 {
 	t_color	color;
 	t_light	*lux;
-	size_t	i;
 	t_ray	rayman;
 
 	color = black_color();
-	i = 0;
 	lux = elems->lights[frame];
 	while (lux->declared == true)
 	{
@@ -76,8 +75,7 @@ t_color	diffuse_specular(t_hit *hit, t_elem_lst *elems,
 			.p = vadd(hit->p, vmul(hit->normal, 0.000001))};
 		if (!shadow_ray(rayman, elems, frame))
 			color = vadd(light_color(hit, elems->cam, surface, lux), color);
-		i++;
-		lux = elems->lights[frame] + i;
+		lux += 1;
 	}
 	clamp_color(&color);
 	return (color);
