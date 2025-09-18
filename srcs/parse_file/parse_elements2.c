@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/18 11:55:37 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	parse_cylinder(t_elem_lst *elems, char **line, int nb)
 		nb, "`cylinder`");
 	if (text > 1)
 		return (false);
-	auto int bmap = bmap_err(try_file(line, "/bumps/", tsize, 6 + text),
+	auto int bmap = bmap_err(try_file(line, "/bump_maps/", tsize, 6 + text),
 		nb, "`cylinder`");
 	if (bmap > 1)
 		return (false);
@@ -59,7 +59,7 @@ bool	parse_cone(t_elem_lst *elems, char **line, int nb)
 		nb, "`cone`");
 	if (text > 1)
 		return (false);
-	auto int bmap = bmap_err(try_file(line, "/bumps/", tsize, 6 + text),
+	auto int bmap = bmap_err(try_file(line, "/bump_maps/", tsize, 6 + text),
 		nb, "`cone`");
 	if (bmap > 1)
 		return (false);

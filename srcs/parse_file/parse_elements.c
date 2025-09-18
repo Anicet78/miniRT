@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/18 11:55:42 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ bool	parse_plane(t_elem_lst *elements, char **line, int nb)
 	text = texture_err(try_file(line, "/textures/", tsize, 4), nb, "`plane`");
 	if (text > 1)
 		return (false);
-	bmap = bmap_err(try_file(line, "/bumps/", tsize, 4 + text),
+	bmap = bmap_err(try_file(line, "/bump_maps/", tsize, 4 + text),
 			nb, "`plane`");
 	if (bmap > 1)
 		return (false);
