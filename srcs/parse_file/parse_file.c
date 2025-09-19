@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/11 14:58:48 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/19 12:16:31 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,21 @@ bool	finish_parsing(t_elem_lst *elems)
 	return (true);
 }
 
+bool	parse_others(t_elem_lst *elems, char **line, int nb)
+{
+	if (line[0][0] == '=')
+		return (parse_new_frame(elems, line, nb));
+	else if (line[0][0] == '^')
+		return (parse_goto(elems, line, nb));
+	else if (ft_strcmp(line[0], "FPS") == 0)
+		return (parse_fps(elems, line, nb));
+	else if (ft_strcmp(line[0], "AA") == 0)
+		return (add_anti_aliasing(elems, line, nb));
+	else if (ft_strcmp(line[0], "BG") == 0)
+		return (add_background(elems, line, nb));
+	return (print_err("Unknown identifier", nb));
+}
+
 bool	parse_elements(t_elem_lst *elems, char **line, int nb)
 {
 	if (elems->loop)
@@ -48,15 +63,7 @@ bool	parse_elements(t_elem_lst *elems, char **line, int nb)
 		return (parse_cylinder(elems, line, nb));
 	else if (ft_strcmp(line[0], "co") == 0)
 		return (parse_cone(elems, line, nb));
-	else if (line[0][0] == '=')
-		return (parse_new_frame(elems, line, nb));
-	else if (line[0][0] == '^')
-		return (parse_goto(elems, line, nb));
-	else if (ft_strcmp(line[0], "FPS") == 0)
-		return (parse_fps(elems, line, nb));
-	else if (ft_strcmp(line[0], "AA") == 0)
-		return (add_anti_aliasing(elems, line, nb));
-	return (print_err("Unknown identifier", nb));
+	return (parse_others(elems, line, nb));
 }
 
 bool	read_rtfile(int fd, t_elem_lst *elements, t_arena *arena)

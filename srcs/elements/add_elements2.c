@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/09 18:57:38 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/19 12:17:17 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	add_anti_aliasing(t_elem_lst *elems, char **line, int nb)
 	if (declared == true)
 		return (print_err("Multiple declaration of `anti-aliasing`", nb));
 	declared = true;
-	if (!line[1])
+	if (!line[1] || line[2])
 		return (print_err("Invalid amount of argument in `anti-aliasing`", nb));
 	force = ft_atof_parse(line[1]);
 	if (force < 0 || force > INT_MAX)
@@ -85,5 +85,20 @@ bool	add_anti_aliasing(t_elem_lst *elems, char **line, int nb)
 		return (print_err("Force cannot be higher than 10000 in \
 `anti-aliasing`", nb));
 	elems->aliasing = force;
+	return (true);
+}
+
+bool	add_background(t_elem_lst *elems, char **line, int nb)
+{
+	static bool	declared = false;
+
+	if (declared == true)
+		return (print_err("Multiple declaration of `background`", nb));
+	declared = true;
+	if (!line[1] || line[2])
+		return (print_err("Invalid amount of argument in `background`", nb));
+	if ((ft_strncmp(line[1], "OFF", 3) == 0 && line[1][3] == '\n')
+		|| ft_strcmp(line[1], "OFF") == 0)
+		elems->background = false;
 	return (true);
 }
