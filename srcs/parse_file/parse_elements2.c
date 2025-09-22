@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:55:06 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/18 11:55:37 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/22 17:52:24 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ bool	parse_new_frame(t_elem_lst *elems, char **line, int nb)
 	elems->frames[elems->frame_amount] = elems->count;
 	elems->frame_amount++;
 	elems->light_index = 0;
+	elems->plane_index = 0;
 	return (true);
 }
 
