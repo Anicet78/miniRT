@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cyl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 22:38:23 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/24 15:48:47 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ bool	touch_cyl_body(t_cylinder *cyl, t_ray *r, t_hit *hit)
 	return (true);
 }
 
-bool	touch_cyl_caps(t_cylinder *cyl, t_ray *r,
+static bool	up_cap(t_cylinder *cyl, t_ray *r,
 	t_hit *hit, t_vec cap)
 {
 	const double	denom = dot(cyl->axis, r->dir);
@@ -71,6 +71,35 @@ bool	touch_cyl_caps(t_cylinder *cyl, t_ray *r,
 	hit->t = t;
 	hit->normal = cyl->axis;
 	hit->front = (denom < 0);
+	if (!hit->front)
+		hit->normal = vmul(hit->normal, -1);
+	hit->mat = &cyl->mat;
+	hit->u = fmod((hit->p.x - cap.x) / 2, 1);
+	hit->v = fmod((hit->p.y - cap.y) / 2, 1);
+	return (true);
+}
+
+static bool	down_cap(t_cylinder *cyl, t_ray *r,
+	t_hit *hit, t_vec cap)
+{
+	const double	denom = dot(vmul(cyl->axis, -1), r->dir);
+	double			t;
+	t_vec			point;
+
+	if (fabs(denom) < 0.000001)
+		return (false);
+	t = dot(vsub(cap, r->p), cyl->axis) / denom;
+	if (t < 0 || hit->t < t)
+		return (false);
+	point = vadd(r->p, vmul(r->dir, t));
+	if (magn(vsub(point, cap)) > cyl->radius)
+		return (false);
+	hit->p = point;
+	hit->t = t;
+	hit->normal = cyl->axis;
+	hit->front = (denom < 0);
+	if (hit->front)
+		hit->normal = vmul(hit->normal, -1);
 	hit->mat = &cyl->mat;
 	hit->u = fmod((hit->p.x - cap.x) / 2, 1);
 	hit->v = fmod((hit->p.y - cap.y) / 2, 1);
@@ -84,7 +113,7 @@ bool	hit_cylinder(t_cylinder *cyl, t_ray *r, t_hit *hit)
 
 	did_hit = false;
 	did_hit |= touch_cyl_body(cyl, r, hit);
-	did_hit |= touch_cyl_caps(cyl, r, hit, vadd(cyl->pos, to_cap));
-	did_hit |= touch_cyl_caps(cyl, r, hit, vsub(cyl->pos, to_cap));
+	did_hit |= up_cap(cyl, r, hit, vadd(cyl->pos, to_cap));
+	did_hit |= down_cap(cyl, r, hit, vsub(cyl->pos, to_cap));
 	return (did_hit);
 }

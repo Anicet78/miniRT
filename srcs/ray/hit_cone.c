@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cone.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 21:31:32 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/24 15:49:45 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static bool	hit_cone_caps(t_cone *cone, t_ray *r,
 	hit->t = t;
 	hit->normal = cone->axis;
 	hit->front = (denom < 0);
+	if (!hit->front)
+		hit->normal = vmul(hit->normal, -1);
 	hit->mat = &cone->mat;
 	hit->u = fmod((hit->p.x - cap_center.x) / 2, 1);
 	hit->v = fmod((hit->p.y - cap_center.y) / 2, 1);
