@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 11:21:35 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 18:23:51 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/25 17:43:40 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ bool	mand_parsing(int fd, t_elem_lst *elements, t_arena *arena)
 		free(line);
 		if (!split)
 			return (print_err("Memory allocation failed", 0));
-		if (split[0] && split[0][0] && split[0][0] != '\n')
+		if (split[0] && split[0][0] && split[0][0] != '#' && split[0][0] != 10)
 		{
 			if (parse_elements(elements, split, i) == false)
 				return (false);
