@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/11 12:42:31 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/25 17:17:01 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void		init_builder(t_elem_lst *elems, t_bvh_builder *builder,
 				size_t frame);
 size_t		count_elem_amount(t_elem_lst *elems, size_t frame);
 bool		hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit);
-bool		shadow_hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit);
+bool		shadow_hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit, double dist);
 bool		hit_object(void *obj, t_ray *r, t_hit *hit);
 bool		hit_aabb(t_aabb *box, t_ray *r);
 

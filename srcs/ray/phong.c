@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phong.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:19:34 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/25 16:59:08 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/25 17:20:50 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool	shadow_ray(t_ray r, t_elem_lst *elems, size_t frame, double dist)
 	}
 	if (!elems->bvh[frame])
 		return (false);
-	return (shadow_hit_bvh(elems->bvh[frame], &r, &hit));
+	return (shadow_hit_bvh(elems->bvh[frame], &r, &hit, dist));
 }
 
 t_color	light_color(t_hit *hit, t_camera *cam, t_color *surface, t_light *lux)

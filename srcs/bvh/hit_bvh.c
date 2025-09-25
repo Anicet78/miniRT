@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_bvh.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:57:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/25 17:05:01 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/25 17:19:56 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
 	return (did_hit);
 }
 
-bool	shadow_hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
+bool	shadow_hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit, double dist)
 {
 	size_t	index;
 
 	if (bvh[0].is_leaf == true)
-		return (hit_aabb(&bvh[0].bbox, r) && hit_object(bvh[0].obj, r, hit));
+		return (hit_aabb(&bvh[0].bbox, r) && hit_object(bvh[0].obj, r, hit)
+			&& hit->t < dist);
 	else if (!hit_aabb(&bvh[0].bbox, r))
 		return (false);
 	index = bvh[0].left;
@@ -72,7 +73,7 @@ bool	shadow_hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
 		{
 			if (bvh[index].is_leaf)
 			{
-				if (hit_object(bvh[index].obj, r, hit))
+				if (hit_object(bvh[index].obj, r, hit) && hit->t < dist)
 					return (true);
 				index = bvh[index].next;
 			}
