@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:19:34 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/25 15:44:46 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/25 17:10:04 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	shadow_ray(t_ray r, t_elem_lst *elems)
 	hit.t = INFINITY;
 	elems->count = 0;
 	elem = get_next_elem(elems);
-	while (elem && elems->count < elems->size)
+	while (elem)
 	{
 		type = get_elem_type(elem);
 		if (type == SPHERE)
