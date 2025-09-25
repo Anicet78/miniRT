@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:19:34 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/25 17:10:04 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/25 18:01:51 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,29 @@ t_color	ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface)
 	return (color);
 }
 
-bool	shadow_ray(t_ray r, t_elem_lst *elems)
+bool	shadow_ray(t_ray r, t_elem_lst *elems, double dist)
 {
 	t_hit	hit;
 	void	*elem;
 	int		type;
 
 	hit.t = INFINITY;
-	elems->count = 0;
 	elem = get_next_elem(elems);
 	while (elem)
 	{
 		type = get_elem_type(elem);
 		if (type == SPHERE)
 		{
-			if (hit_sphere(elem, &r, &hit))
+			if (hit_sphere(elem, &r, &hit) && hit.t < dist)
 				return (true);
 		}
 		else if (type == PLANE)
 		{
-			if (hit_plane(elem, &r, &hit))
+			if (hit_plane(elem, &r, &hit) && hit.t < dist)
 				return (true);
 		}
-		else if (type == CYLINDER && hit_cylinder(elem, &r, &hit))
+		else if (type == CYLINDER && hit_cylinder(elem, &r, &hit)
+			&& hit.t < dist)
 			return (true);
 		elem = get_next_elem(elems);
 	}
@@ -76,12 +76,15 @@ t_color	diffuse_specular(t_hit *hit, t_elem_lst *elems,
 	t_color	color;
 	t_light	*lux;
 	t_ray	rayman;
+	t_vec	to_lux;
 
+	elems->count = 0;
 	color = black_color();
 	lux = &elems->light;
-	rayman = (t_ray){.dir = norm(vsub(lux->pos, hit->p)),
+	to_lux = vsub(lux->pos, hit->p);
+	rayman = (t_ray){.dir = norm(to_lux),
 		.p = vadd(hit->p, vmul(hit->normal, 0.000001))};
-	if (!shadow_ray(rayman, elems))
+	if (!shadow_ray(rayman, elems, magn(to_lux)))
 		color = vadd(light_color(hit, &elems->cam, surface, lux), color);
 	clamp_color(&color);
 	return (color);
