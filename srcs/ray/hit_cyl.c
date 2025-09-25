@@ -52,7 +52,7 @@ bool	touch_cyl_body(t_cylinder *cyl, t_ray *r, t_hit *hit)
 	return (true);
 }
 
-static bool	up_cap(t_cylinder *cyl, t_ray *r,
+static bool	hit_cap(t_cylinder *cyl, t_ray *r,
 	t_hit *hit, t_vec cap)
 {
 	const double	denom = dot(cyl->axis, r->dir);
@@ -79,33 +79,6 @@ static bool	up_cap(t_cylinder *cyl, t_ray *r,
 	return (true);
 }
 
-static bool	down_cap(t_cylinder *cyl, t_ray *r,
-	t_hit *hit, t_vec cap)
-{
-	const double	denom = dot(vmul(cyl->axis, -1), r->dir);
-	double			t;
-	t_vec			point;
-
-	if (fabs(denom) < 0.000001)
-		return (false);
-	t = dot(vsub(cap, r->p), cyl->axis) / denom;
-	if (t < 0 || hit->t < t)
-		return (false);
-	point = vadd(r->p, vmul(r->dir, t));
-	if (magn(vsub(point, cap)) > cyl->radius)
-		return (false);
-	hit->p = point;
-	hit->t = t;
-	hit->normal = cyl->axis;
-	hit->front = (denom < 0);
-	if (hit->front)
-		hit->normal = vmul(hit->normal, -1);
-	hit->mat = &cyl->mat;
-	hit->u = fmod((hit->p.x - cap.x) / 2, 1);
-	hit->v = fmod((hit->p.y - cap.y) / 2, 1);
-	return (true);
-}
-
 bool	hit_cylinder(t_cylinder *cyl, t_ray *r, t_hit *hit)
 {
 	bool		did_hit;
@@ -113,7 +86,7 @@ bool	hit_cylinder(t_cylinder *cyl, t_ray *r, t_hit *hit)
 
 	did_hit = false;
 	did_hit |= touch_cyl_body(cyl, r, hit);
-	did_hit |= up_cap(cyl, r, hit, vadd(cyl->pos, to_cap));
-	did_hit |= down_cap(cyl, r, hit, vsub(cyl->pos, to_cap));
+	did_hit |= hit_cap(cyl, r, hit, vadd(cyl->pos, to_cap));
+	did_hit |= hit_cap(cyl, r, hit, vsub(cyl->pos, to_cap));
 	return (did_hit);
 }
