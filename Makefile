@@ -101,6 +101,7 @@ OBJ			= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
 BONUS_OBJ	= $(patsubst %.c, $(OBJ_DIR)%.o, $(BONUS_SRC))
 
 NAME		= miniRT
+NAME_BONUS	= miniRT_bonus
 
 all: $(NAME)
 
@@ -127,9 +128,11 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@printf "\r\e[2K\e[1;35mCompiling [%d/%d] %s\e[0m" $(INDEX) $(TOTAL) $(notdir $<)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-bonus: $(LIBFT) $(MLX) $(BONUS_OBJ)
-	@$(CC) $(CFLAGS) $(BONUS_HEADER) $(BONUS_OBJ) $(LIBFT) $(MLX) $(LIBS) -o $(NAME)
+$(NAME_BONUS): $(LIBFT) $(MLX) $(BONUS_OBJ)
+	@$(CC) $(CFLAGS) $(BONUS_HEADER) $(BONUS_OBJ) $(LIBFT) $(MLX) $(LIBS) -o $(NAME_BONUS)
 	@printf "\r\e[2K\e[1;35mMiniRT Compiled\e[0m\n"
+
+bonus: $(NAME_BONUS)
 
 clean:
 	@printf "\e[1;36mCleaning files\e[0m\n"
@@ -138,6 +141,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
+	@rm -rf $(NAME_BONUS)
 	@rm -rf $(MLX_DIR)
 	@make fclean -sC $(LIBFT_DIR)
 
