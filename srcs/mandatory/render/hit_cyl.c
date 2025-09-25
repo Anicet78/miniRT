@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 22:38:23 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 17:46:27 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/25 11:54:42 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ bool	touch_cyl_body(t_cylinder *cyl, t_ray *r, t_hit *hit)
 	return (true);
 }
 
-bool	touch_cyl_caps(t_cylinder *cyl, t_ray *r,
+static bool	hit_cap(t_cylinder *cyl, t_ray *r,
 	t_hit *hit, t_vec cap)
 {
 	const double	denom = dot(cyl->axis, r->dir);
@@ -71,6 +71,8 @@ bool	touch_cyl_caps(t_cylinder *cyl, t_ray *r,
 	hit->t = t;
 	hit->normal = cyl->axis;
 	hit->front = (denom < 0);
+	if (!hit->front)
+		hit->normal = vmul(hit->normal, -1);
 	hit->color = &cyl->color;
 	hit->u = fmod((hit->p.x - cap.x) / 2, 1);
 	hit->v = fmod((hit->p.y - cap.y) / 2, 1);
@@ -84,7 +86,7 @@ bool	hit_cylinder(t_cylinder *cyl, t_ray *r, t_hit *hit)
 
 	did_hit = false;
 	did_hit |= touch_cyl_body(cyl, r, hit);
-	did_hit |= touch_cyl_caps(cyl, r, hit, vadd(cyl->pos, to_cap));
-	did_hit |= touch_cyl_caps(cyl, r, hit, vsub(cyl->pos, to_cap));
+	did_hit |= hit_cap(cyl, r, hit, vadd(cyl->pos, to_cap));
+	did_hit |= hit_cap(cyl, r, hit, vsub(cyl->pos, to_cap));
 	return (did_hit);
 }
