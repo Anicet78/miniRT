@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_bvh.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:57:10 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/24 16:09:02 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/09/25 17:05:01 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,6 @@ bool	hit_object(void *obj, t_ray *r, t_hit *hit)
 	return (false);
 }
 
-bool	valid_node(t_bvh_node *node)
-{
-	if (node->is_leaf)
-		return (node->obj != NULL);
-	return (true);
-}
-
 bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
 {
 	bool	did_hit;
@@ -46,7 +39,7 @@ bool	hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
 		return (false);
 	did_hit = false;
 	index = bvh[0].left;
-	while (index != 0 && valid_node(&bvh[index]))
+	while (index != 0)
 	{
 		if (hit_aabb(&bvh[index].bbox, r))
 		{
@@ -72,8 +65,8 @@ bool	shadow_hit_bvh(t_bvh_node *bvh, t_ray *r, t_hit *hit)
 		return (hit_aabb(&bvh[0].bbox, r) && hit_object(bvh[0].obj, r, hit));
 	else if (!hit_aabb(&bvh[0].bbox, r))
 		return (false);
-	index = 1;
-	while (index != 0 && valid_node(&bvh[index]))
+	index = bvh[0].left;
+	while (index != 0)
 	{
 		if (hit_aabb(&bvh[index].bbox, r))
 		{

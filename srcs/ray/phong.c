@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:19:34 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/11 14:52:58 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/25 16:59:08 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_color	ambient_component(t_hit *hit, t_elem_lst *elems,
 	return (color);
 }
 
-bool	shadow_ray(t_ray r, t_elem_lst *elems, size_t frame)
+bool	shadow_ray(t_ray r, t_elem_lst *elems, size_t frame, double dist)
 {
 	t_hit	hit;
 	size_t	i;
@@ -35,7 +35,7 @@ bool	shadow_ray(t_ray r, t_elem_lst *elems, size_t frame)
 	i = 0;
 	while (elems->planes[frame] && elems->planes[frame][i].declared == true)
 	{
-		if (hit_plane(elems->planes[frame] + i, &r, &hit))
+		if (hit_plane(elems->planes[frame] + i, &r, &hit) && hit.t < dist)
 			return (true);
 		i++;
 	}
@@ -66,14 +66,16 @@ t_color	diffuse_specular(t_hit *hit, t_elem_lst *elems,
 	t_color	color;
 	t_light	*lux;
 	t_ray	rayman;
+	t_vec	to_lux;
 
 	color = black_color();
 	lux = elems->lights[frame];
 	while (lux->declared == true)
 	{
-		rayman = (t_ray){.dir = norm(vsub(lux->pos, hit->p)),
+		to_lux = vsub(lux->pos, hit->p);
+		rayman = (t_ray){.dir = norm(to_lux),
 			.p = vadd(hit->p, vmul(hit->normal, 0.000001))};
-		if (!shadow_ray(rayman, elems, frame))
+		if (!shadow_ray(rayman, elems, frame, magn(to_lux)))
 			color = vadd(light_color(hit, elems->cam, surface, lux), color);
 		lux += 1;
 	}

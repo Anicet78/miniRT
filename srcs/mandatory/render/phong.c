@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:19:34 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 18:16:14 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/25 15:44:46 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,19 @@ bool	shadow_ray(t_ray r, t_elem_lst *elems)
 	hit.t = INFINITY;
 	elems->count = 0;
 	elem = get_next_elem(elems);
-	while (elem)
+	while (elem && elems->count < elems->size)
 	{
 		type = get_elem_type(elem);
-		if (type == SPHERE && hit_sphere(elem, &r, &hit))
-			return (true);
-		else if (type == PLANE && hit_plane(elem, &r, &hit))
-			return (true);
+		if (type == SPHERE)
+		{
+			if (hit_sphere(elem, &r, &hit))
+				return (true);
+		}
+		else if (type == PLANE)
+		{
+			if (hit_plane(elem, &r, &hit))
+				return (true);
+		}
 		else if (type == CYLINDER && hit_cylinder(elem, &r, &hit))
 			return (true);
 		elem = get_next_elem(elems);
