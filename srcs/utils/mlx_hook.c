@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 12:13:00 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:14:53 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/26 22:49:12 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	next_image(t_rt *rt)
 
 	if (!rt->elements.loop && last_frame >= rt->elements.frame_amount)
 	{
+		// kill_mlx(rt, 0);
 		usleep(10000);
 		return ;
 	}

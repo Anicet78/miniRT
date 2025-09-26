@@ -79,6 +79,7 @@ BONUS_SRC	=	main.c							\
 				ray/hits.c						\
 				ray/multiple_displays.c			\
 				ray/phong.c						\
+				ray/rays.c						\
 				ray/texture.c					\
 				ray/vec3op.c					\
 				ray/vec3op2.c					\
