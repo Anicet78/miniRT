@@ -63,7 +63,7 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems)
 
 	if (!closest_hit(r, elems, &hit))
 		return (background_color(r));
-	surface = (t_color){{1.0, 1.0, 1.0}};
+	surface = *hit.color;
 	color = ambient_component(&hit, elems, &surface);
 	color = vadd(color, diffuse_specular(&hit, elems, &surface));
 	return (vec_to_col(color));
