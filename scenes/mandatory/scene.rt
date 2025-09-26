@@ -3,7 +3,7 @@
 # Ambient lighting
 A 0.1 255,255,255
 
-AA 8
+# AA 8
 
 # Camera
 C 0,-1,0 0,0,1 90
