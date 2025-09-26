@@ -39,9 +39,12 @@ t_color	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 
 	if (!closest_hit(r, elems, &hit, frame))
 		return (background_color(elems, r));
-	if (hit.mat && hit.mat->bmap != NULL)
+	if (hit.mat->bmap)
 		bump_mapping(&hit);
-	surface = surface_color(hit.mat->texture, hit.u, hit.v);
+	if (hit.mat->texture)
+		surface = surface_color(hit.mat->texture, hit.u, hit.v);
+	else
+		surface = hit.mat->color;
 	color = ambient_component(&hit, elems, &surface, frame);
 	color = vadd(color, diffuse_specular(&hit, elems, &surface, frame));
 	return (color);

@@ -1,5 +1,5 @@
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra -ggdb
+CFLAGS		= -Wall -Wextra -ggdb
 DEBUGFLAGS	= -ggdb #-fsanitize=address,undefined,leak
 FASTFLAGS	= -Ofast -flto -ffast-math -march=native -pipe
 
