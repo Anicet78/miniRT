@@ -52,7 +52,7 @@ bool	touch_cyl_body(t_cylinder *cyl, t_ray *r, t_hit *hit)
 	return (true);
 }
 
-static bool	hit_cap(t_cylinder *cyl, t_ray *r,
+bool	hit_cap(t_cylinder *cyl, t_ray *r,
 	t_hit *hit, t_vec cap)
 {
 	const double	denom = dot(cyl->axis, r->dir);

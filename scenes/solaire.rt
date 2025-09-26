@@ -1,0 +1,15 @@
+A  0.2  255,255,255
+C  40,12,0  -0.928477,-0.371391,0
+sp  0,0,0  8  255,255,255  texture/sun.xpm
+L  9,0,0  1  255,255,255
+L  -9,0,0  1  255,255,255
+L  0,0,9  1  255,255,255
+L  0,0,-9  1  255,255,255
+sp  17,0,0  0.3  255,255,255  texture/mercury.xpm
+sp  24,0,0  0.9  255,255,255  texture/venus.xpm
+sp  31,0,0  0.93  255,255,255  texture/earth.xpm
+sp  38,0,0  0.45  255,255,255  texture/mars.xpm
+sp  49,0,0  2.8  255,255,255  texture/jupiter.xpm
+sp  59,0,0  2.2  255,255,255  texture/saturn.xpm
+sp  66,0,0  1.7  255,255,255  texture/uranus.xpm
+sp  72,0,0  1.7  255,255,255  texture/neptune.xpm
