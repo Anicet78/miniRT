@@ -49,22 +49,22 @@ static t_aabb	get_cylinder_aabb(t_cylinder *cyl)
 	return (aabb);
 }
 
-static t_aabb get_cone_aabb(t_cone *cone)
+static t_aabb	get_cone_aabb(t_cone *cone)
 {
 	t_aabb			aabb;
-	const t_vec		axis = norm(cone->axis);
-	const t_point	base = vadd(cone->pos, vmul(axis, cone->height));
-	t_vec			d;
+	t_vec			ext;
+	const t_point	tip = cone->pos;
+	const t_point	base = vadd(cone->pos, vmul(cone->axis, cone->height));
 
-	d.x = cone->radius * sqrtf(1.0f - axis.x * axis.x);
-	d.y = cone->radius * sqrtf(1.0f - axis.y * axis.y);
-	d.z = cone->radius * sqrtf(1.0f - axis.z * axis.z);
-	aabb.min.x = fminf(cone->pos.x, base.x - d.x);
-	aabb.max.x = fmaxf(cone->pos.x, base.x + d.x);
-	aabb.min.y = fminf(cone->pos.y, base.y - d.y);
-	aabb.max.y = fmaxf(cone->pos.y, base.y + d.y);
-	aabb.min.z = fminf(cone->pos.z, base.z - d.z);
-	aabb.max.z = fmaxf(cone->pos.z, base.z + d.z);
+	ext.x = cone->radius * sqrtf(1.0f - cone->axis.x * cone->axis.x);
+	ext.y = cone->radius * sqrtf(1.0f - cone->axis.y * cone->axis.y);
+	ext.z = cone->radius * sqrtf(1.0f - cone->axis.z * cone->axis.z);
+	aabb.min.x = fminf(tip.x, base.x - ext.x);
+	aabb.max.x = fmaxf(tip.x, base.x + ext.x);
+	aabb.min.y = fminf(tip.y, base.y - ext.y);
+	aabb.max.y = fmaxf(tip.y, base.y + ext.y);
+	aabb.min.z = fminf(tip.z, base.z - ext.z);
+	aabb.max.z = fmaxf(tip.z, base.z + ext.z);
 	return (aabb);
 }
 
