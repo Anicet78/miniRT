@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 23:03:39 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/27 01:25:22 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/27 15:00:03 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@
 
 # define PI 3.14159265358979323846264338
 # define BUMP_POWER 20
-
-# define AA_EARLY_EXIT 4
-# define AA_THRESHOLD 0.00000025
 
 # define ESC_K 65307
 
@@ -122,8 +119,6 @@ bool		closest_hit(t_ray *r, t_elem_lst *elems, t_hit *hit, size_t frame);
 void		create_rays(const t_display *d, uint32_t coords[2],
 				size_t img_index, t_params *p);
 void		aa_create_rays(const t_display *d, uint32_t coords[2],
-				size_t img_index, t_params *p);
-t_ray		get_ray(const t_display *d, uint64_t infos[4],
 				size_t img_index, t_params *p);
 t_color		ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame);
 

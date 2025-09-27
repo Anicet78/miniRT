@@ -6,60 +6,64 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 17:32:19 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/27 01:30:23 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/27 15:02:10 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/full/miniRT.h"
 
-bool	is_col_far(t_color col1, t_color col2)
+static
+t_vec	sample_square(uint64_t sample_index, uint64_t total_samples)
 {
-	col1 = vsub(col1, col2);
-	return (dot(col1, col1) > AA_THRESHOLD);
+	const uint64_t	n = (uint64_t)ceil(sqrt((double)total_samples));
+	const uint64_t	i = sample_index % n;
+	const uint64_t	j = sample_index / n;
+
+	return (t_vec){{(i + 0.5) / n - 0.5, (j + 0.5) / n - 0.5, 0}};
 }
 
-bool	aa_early_exit(t_color diff[AA_EARLY_EXIT])
+static inline
+t_vec	get_world_pix(const t_display *d, uint64_t infos[4])
 {
-	uint64_t	i;
+	const t_vec	offset = sample_square(infos[2], infos[3]);
 
-	if (AA_EARLY_EXIT <= 1)
-		return (true);
-	i = 0;
-	while (i < (uint64_t)(AA_EARLY_EXIT - 1))
-	{
-		if (is_col_far(diff[i], diff[i + 1]))
-			return (false);
-		i++;
-	}
-	return (true);
+	return (vadd(d->pixel00,
+			vadd(vmul(d->pix_du, offset.x + (double)infos[0]),
+				vmul(d->pix_dv, offset.y + (double)infos[1]))));
+}
+
+t_ray	get_ray(const t_display *d, uint64_t infos[4],
+	size_t img_index, t_params *p)
+{
+	t_point				world_pix;
+	t_ray				r;
+
+	world_pix = get_world_pix(d, infos);
+	r.dir = norm(vsub(world_pix, p->elements.cam[img_index].pos));
+	r.p = p->elements.cam[img_index].pos;
+	return (r);
 }
 
 void	aa_create_rays(const t_display *d, uint32_t coords[2],
 	size_t img_index, t_params *p)
 {
-	t_color			pixel_color;
+	t_color			pixel_col;
 	uint64_t		sample;
 	t_ray			r;
 	static double	ratio = 0;
-	t_color			diff[AA_EARLY_EXIT];
 
-	auto t_color ray_color;
 	if (ratio == 0)
 		ratio = 1.0 / (double)p->elements.aliasing;
-	pixel_color = (t_vec){{0, 0, 0}};
+	pixel_col = (t_vec){{0, 0, 0}};
 	sample = 0;
 	while (sample < p->elements.aliasing)
 	{
-		r = get_ray(d, (uint64_t[4]){coords[0], coords[1], sample, p->elements.aliasing}, img_index, p);
-		ray_color = ray_to_color(&r, &p->elements, img_index);;
-		if (sample < AA_EARLY_EXIT)
-			diff[sample] = ray_color;
-		pixel_color = vadd(pixel_color, ray_color);
+		r = get_ray(d,
+			(uint64_t[4]){coords[0], coords[1], sample, p->elements.aliasing},
+			img_index, p);
+		pixel_col = vadd(pixel_col, ray_to_color(&r, &p->elements, img_index));
 		sample++;
-		if (sample == AA_EARLY_EXIT && aa_early_exit(diff))
-			return ((void)(put_pixel_to_img(p->mlx, p->mlx->addr[img_index],
-				coords, vec_to_col(vdiv(pixel_color, AA_EARLY_EXIT)))));
 	}
 	put_pixel_to_img(p->mlx, p->mlx->addr[img_index], coords,
-		vec_to_col(vmul(pixel_color, ratio)));
+		vec_to_col(vmul(pixel_col, ratio)));
 }
