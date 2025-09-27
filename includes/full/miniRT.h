@@ -64,6 +64,14 @@ typedef struct s_hit
 	bool		front;
 }	t_hit;
 
+typedef struct s_cone_v
+{
+	t_vec	p;
+	t_vec	tip_to_p;
+	double	h;
+	double	t;
+}	t_cone_v;
+
 // init
 t_elem_lst	*init_minirt(t_rt *rt, int fd);
 
@@ -111,6 +119,7 @@ long		get_utime_now(void);
 size_t		calc_arena_size(int fd);
 
 // intersects
+bool		hit_cap(t_cylinder *cyl, t_ray *r, t_hit *hit, t_vec cap);
 bool		hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit);
 bool		hit_plane(t_plane *plane, t_ray *r, t_hit *hit);
 bool		hit_cylinder(t_cylinder *c, t_ray *r, t_hit *hit);

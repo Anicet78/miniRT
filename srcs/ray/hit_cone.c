@@ -12,83 +12,52 @@
 
 #include "../../includes/full/miniRT.h"
 
-static void	swap(double *a, double *b)
-{
-	double	temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
-}
-
-static bool	hit_cone_caps(t_cone *cone, t_ray *r,
-	t_hit *hit, t_vec cap_center)
-{
-	const double	denom = dot(cone->axis, r->dir);
-	double			t;
-	t_vec			point;
-
-	if (fabs(denom) < 0.000001)
-		return (false);
-	t = dot(vsub(cap_center, r->p), cone->axis) / denom;
-	if (t < 0 || hit->t < t)
-		return (false);
-	point = vadd(r->p, vmul(r->dir, t));
-	if (magn(vsub(point, cap_center)) > cone->radius)
-		return (false);
-	hit->p = point;
-	hit->t = t;
-	hit->normal = cone->axis;
-	hit->front = (denom < 0);
-	if (!hit->front)
-		hit->normal = vmul(hit->normal, -1);
-	hit->mat = &cone->mat;
-	hit->u = fmod((hit->p.x - cap_center.x) / 2, 1);
-	hit->v = fmod((hit->p.y - cap_center.y) / 2, 1);
-	return (true);
-}
-
-static bool	cone_math(t_cone *cone, const t_ray *r, double *t0, double *t1)
+static bool	cone_math(t_cone *cone, const t_ray *r, t_cone_v *vs)
 {
 	const t_vec		oc = vsub(r->p, cone->pos);
 	const double	k = pow(cone->radius / cone->height, 2);
+	double			t1;
 	t_vec			math;
 	double			delta;
-	double			idk;
 
 	math.x = dot(r->dir, r->dir) - (1 + k) * pow(dot(r->dir, cone->axis), 2);
+	if (fabs(math.x) < 0.00000001)
+		return (false);
 	math.y = 2 * (dot(r->dir, oc) - (1 + k)
-			* dot(r->dir, cone->axis)
-			* dot(oc, cone->axis));
+			* dot(r->dir, cone->axis) * dot(oc, cone->axis));
 	math.z = dot(oc, oc) - (1 + k) * pow(dot(oc, cone->axis), 2);
 	delta = math.y * math.y - 4 * math.x * math.z;
 	if (delta < 0)
 		return (false);
-	*t0 = (-math.y - sqrt(delta)) / (2 * math.x);
-	*t1 = (-math.y + sqrt(delta)) / (2 * math.x);
-	if (*t0 > *t1 && *t1 > 0)
-		swap(t0, t1);
-	idk = dot(vsub(vadd(r->p, vmul(r->dir, *t0)), cone->pos), cone->axis);
-	return (*t0 > 0 && idk > 0 && idk < cone->height);
+	vs->t = (-math.y - sqrt(delta)) / (2 * math.x);
+	t1 = (-math.y + sqrt(delta)) / (2 * math.x);
+	if (vs->t > t1 && t1 > 0)
+		vs->t = t1;
+	if (vs->t <= 0)
+		return (false);
+	vs->p = vadd(r->p, vmul(r->dir, vs->t));
+	vs->tip_to_p = vsub(vs->p, cone->pos);
+	vs->h = dot(vs->tip_to_p, cone->axis);
+	return (vs->h > 0 && vs->h < cone->height);
 }
 
 static bool	hit_cone_body(t_cone *cone, t_ray *r, t_hit *hit)
 {
-	double		t0;
-	double		t1;
-	t_vec		center_to_hit;
-	double		ratio;
+	double		hyp;
+	double		cos_t;
+	double		sin_t;
+	t_vec		perp;
+	t_cone_v	vs;
 
-	if (!cone_math(cone, r, &t0, &t1))
+	if (!cone_math(cone, r, &vs))
 		return (false);
-	hit->t = t0;
-	hit->p = vadd(r->p, vmul(r->dir, t0));
-	center_to_hit = vsub(hit->p, cone->pos);
-	ratio = dot(center_to_hit, cone->axis) / dot(cone->axis, cone->axis);
-	hit->normal = norm(vsub(center_to_hit, vmul(cone->axis, ratio)));
-	hit->u = 0.5 + atan2(center_to_hit.z, center_to_hit.x) / (2 * PI);
-	hit->v = dot(center_to_hit, cone->axis) / cone->height;
-	hit->front = (dot(r->dir, hit->normal) < 0);
+	hit->t = vs.t;
+	hit->p = vs.p;
+	hyp = sqrt(pow(cone->radius, 2) + pow(cone->height, 2));
+	cos_t = cone->radius / hyp;
+	sin_t = cone->height / hyp;
+	perp = norm(vsub(vs.tip_to_p, vmul(cone->axis, vs.h)));
+	hit->normal = norm(vsub(vmul(perp, cos_t), vmul(cone->axis, sin_t)));
 	hit->mat = &cone->mat;
 	return (true);
 }
@@ -99,7 +68,7 @@ bool	hit_cone(t_cone *cone, t_ray *r, t_hit *hit)
 
 	did_hit = false;
 	did_hit |= hit_cone_body(cone, r, hit);
-	did_hit |= hit_cone_caps(
+	did_hit |= hit_cap(
 			cone,
 			r,
 			hit,
