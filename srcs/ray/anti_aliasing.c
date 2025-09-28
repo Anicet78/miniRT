@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 17:32:19 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/27 15:02:10 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/28 19:21:37 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 static
 t_vec	sample_square(uint64_t sample_index, uint64_t total_samples)
 {
-	const uint64_t	n = (uint64_t)ceil(sqrt((double)total_samples));
-	const uint64_t	i = sample_index % n;
-	const uint64_t	j = sample_index / n;
+	static uint64_t	n = 0;
 
-	return (t_vec){{(i + 0.5) / n - 0.5, (j + 0.5) / n - 0.5, 0}};
+	if (n == 0)
+		n = (uint64_t)ceil(sqrt((double)total_samples));
+	return (t_vec){{((sample_index % n) + 0.5) / n - 0.5,
+				((sample_index / n) + 0.5) / n - 0.5, 0}};
 }
 
 static inline
