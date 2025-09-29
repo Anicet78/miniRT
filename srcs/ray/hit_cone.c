@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 21:31:32 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/24 15:49:45 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/09/29 15:37:33 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	cone_math(t_cone *cone, const t_ray *r, t_cone_v *vs)
 	double			delta;
 
 	math.x = dot(r->dir, r->dir) - (1 + k) * pow(dot(r->dir, cone->axis), 2);
-	if (fabs(math.x) < 0.00000001)
+	if (fabs(math.x) < 0.00001)
 		return (false);
 	math.y = 2 * (dot(r->dir, oc) - (1 + k)
 			* dot(r->dir, cone->axis) * dot(oc, cone->axis));
@@ -33,7 +33,7 @@ static bool	cone_math(t_cone *cone, const t_ray *r, t_cone_v *vs)
 	t1 = (-math.y + sqrt(delta)) / (2 * math.x);
 	if (vs->t > t1 && t1 > 0)
 		vs->t = t1;
-	if (vs->t <= 0)
+	if (vs->t < 0.0001)
 		return (false);
 	vs->p = vadd(r->p, vmul(r->dir, vs->t));
 	vs->tip_to_p = vsub(vs->p, cone->pos);
@@ -50,6 +50,8 @@ static bool	hit_cone_body(t_cone *cone, t_ray *r, t_hit *hit)
 	t_cone_v	vs;
 
 	if (!cone_math(cone, r, &vs))
+		return (false);
+	if (hit->t < vs.t)
 		return (false);
 	hit->t = vs.t;
 	hit->p = vs.p;
