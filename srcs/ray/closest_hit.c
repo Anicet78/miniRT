@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   closest_hit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/19 17:48:28 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/29 16:15:45 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,17 @@ t_color	ray_to_color(t_ray *r, t_elem_lst *elems, size_t frame)
 {
 	t_hit	hit;
 	t_color	color;
-	t_color	surface;
+	t_color	obj_col;
 
 	if (!closest_hit(r, elems, &hit, frame))
 		return (background_color(elems, r));
 	if (hit.mat->bmap)
 		bump_mapping(&hit);
+	obj_col = hit.mat->color;
 	if (hit.mat->texture)
-		surface = surface_color(hit.mat->texture, hit.u, hit.v);
-	else
-		surface = hit.mat->color;
-	color = ambient_component(&hit, elems, &surface, frame);
-	color = vadd(color, diffuse_specular(&hit, elems, &surface, frame));
+		obj_col = had(surface_color(hit.mat->texture, hit.u, hit.v), obj_col);
+	color = ambient_component(elems, &obj_col, frame);
+	color = vadd(color, diffuse_specular(&hit, elems, &obj_col, frame));
 	return (color);
 }
 

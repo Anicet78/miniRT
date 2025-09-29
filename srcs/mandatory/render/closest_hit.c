@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   closest_hit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 02:56:07 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/08 18:20:51 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/29 16:08:02 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,10 @@ int32_t	ray_to_color(t_ray *r, t_elem_lst *elems)
 {
 	t_hit	hit;
 	t_color	color;
-	t_color	surface;
 
 	if (!closest_hit(r, elems, &hit))
 		return (background_color(r));
-	surface = *hit.color;
-	color = ambient_component(&hit, elems, &surface);
-	color = vadd(color, diffuse_specular(&hit, elems, &surface));
+	color = ambient_component(&hit, elems);
+	color = vadd(color, diffuse_specular(&hit, elems, hit.color));
 	return (vec_to_col(color));
 }

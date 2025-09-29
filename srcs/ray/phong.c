@@ -6,22 +6,21 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:19:34 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/25 17:20:50 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/09/29 16:35:21 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/full/miniRT.h"
 
-t_color	ambient_component(t_hit *hit, t_elem_lst *elems,
+t_color	ambient_component(t_elem_lst *elems,
 	t_color *surface, size_t frame)
 {
 	t_color	color;
 
-	color = had(hit->mat->color, *surface);
 	color = had(
 			vmul(elems->al[frame].color,
 				elems->al[frame].ratio),
-			color
+			*surface
 			);
 	return (color);
 }
@@ -48,7 +47,7 @@ t_color	light_color(t_hit *hit, t_camera *cam, t_color *surface, t_light *lux)
 {
 	const t_vec			l = norm(vsub(lux->pos, hit->p));
 	t_color				res;
-	static const double	shininess = 16;
+	static const double	shininess = 128;
 
 	res = vadd(vadd(had(vmul(*surface,
 						fmax(0, dot(l, hit->normal) * lux->ratio)),
@@ -74,7 +73,7 @@ t_color	diffuse_specular(t_hit *hit, t_elem_lst *elems,
 	{
 		to_lux = vsub(lux->pos, hit->p);
 		rayman = (t_ray){.dir = norm(to_lux),
-			.p = vadd(hit->p, vmul(hit->normal, 0.000001))};
+			.p = vadd(hit->p, vmul(hit->normal, 0.0001))};
 		if (!shadow_ray(rayman, elems, frame, magn(to_lux)))
 			color = vadd(light_color(hit, elems->cam, surface, lux), color);
 		lux += 1;

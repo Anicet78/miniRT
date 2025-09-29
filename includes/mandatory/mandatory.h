@@ -153,7 +153,7 @@ bool		add_cylinder(t_elem_lst *elems, char **line);
 t_display	init_display(t_camera *cam);
 void		render(t_rt *rt, t_display *d);
 int32_t		ray_to_color(t_ray *r, t_elem_lst *elems);
-t_color		ambient_component(t_hit *hit, t_elem_lst *elems, t_color *surface);
+t_color		ambient_component(t_hit *hit, t_elem_lst *elems);
 t_color		diffuse_specular(t_hit *hit, t_elem_lst *elems,
 				t_color *surface);
 bool		hit_sphere(t_sphere *sphere, t_ray *r, t_hit *hit);
