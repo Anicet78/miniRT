@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_elements2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/13 12:13:25 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/19 12:17:17 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/29 18:08:23 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ bool	add_cylinder(t_elem_lst *elems, char **line, int texture, int bmap)
 	cy.type = CYLINDER;
 	cy.pos = get_vec(line[1]);
 	cy.axis = norm(get_vec(line[2]));
-	cy.radius = ft_atof_parse(line[3]) / 2;
-	cy.height = ft_atof_parse(line[4]);
+	cy.r = ft_atof_parse(line[3]) / 2;
+	cy.h = ft_atof_parse(line[4]);
 	cy.mat.color = get_color(line[5]);
 	cy.mat.texture = NULL;
 	cy.mat.bmap = NULL;
@@ -47,8 +47,8 @@ bool	add_cone(t_elem_lst *elems, char **line, int texture, int bmap)
 	cy.type = CONE;
 	cy.pos = get_vec(line[1]);
 	cy.axis = norm(get_vec(line[2]));
-	cy.radius = ft_atof_parse(line[3]) / 2;
-	cy.height = ft_atof_parse(line[4]);
+	cy.r = ft_atof_parse(line[3]) / 2;
+	cy.h = ft_atof_parse(line[4]);
 	cy.mat.color = get_color(line[5]);
 	cy.mat.texture = NULL;
 	cy.mat.bmap = NULL;

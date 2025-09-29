@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_cyl.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 22:38:23 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/25 11:54:42 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/29 18:08:23 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	touch_cyl_body_part_two(
 	double	height;
 
 	height = dot(vsub(hit_point, cyl->pos), cyl->axis);
-	if (height < -cyl->height / 2 || height > cyl->height / 2)
+	if (height < -cyl->h / 2 || height > cyl->h / 2)
 		return (false);
 	hit->p = hit_point;
 	hit->normal = norm(vsub(hit_point,
@@ -26,7 +26,7 @@ static bool	touch_cyl_body_part_two(
 	hit->front = (dot(r->dir, hit->normal) < 0);
 	hit->color = &cyl->color;
 	hit->u = atan2(hit->normal.z, hit->normal.x) / (2 * PI);
-	hit->v = (height + cyl->height / 2) / cyl->height;
+	hit->v = (height + cyl->h / 2) / cyl->h;
 	return (true);
 }
 
@@ -37,7 +37,7 @@ bool	touch_cyl_body(t_cylinder *cyl, t_ray *r, t_hit *hit)
 	const double	b = 2 * (dot(r->dir, oc)
 			- dot(r->dir, cyl->axis) * dot(oc, cyl->axis));
 	const double	c = dot(oc, oc)
-		- pow(dot(oc, cyl->axis), 2) - pow(cyl->radius, 2);
+		- pow(dot(oc, cyl->axis), 2) - pow(cyl->r, 2);
 	const double	delta = b * b - 4 * a * c;
 
 	if (delta < 0)
@@ -65,7 +65,7 @@ static bool	hit_cap(t_cylinder *cyl, t_ray *r,
 	if (t < 0 || hit->t < t)
 		return (false);
 	point = vadd(r->p, vmul(r->dir, t));
-	if (magn(vsub(point, cap)) > cyl->radius)
+	if (magn(vsub(point, cap)) > cyl->r)
 		return (false);
 	hit->p = point;
 	hit->t = t;
@@ -82,7 +82,7 @@ static bool	hit_cap(t_cylinder *cyl, t_ray *r,
 bool	hit_cylinder(t_cylinder *cyl, t_ray *r, t_hit *hit)
 {
 	bool		did_hit;
-	const t_vec	to_cap = vmul(cyl->axis, cyl->height / 2);
+	const t_vec	to_cap = vmul(cyl->axis, cyl->h / 2);
 
 	did_hit = false;
 	did_hit |= touch_cyl_body(cyl, r, hit);

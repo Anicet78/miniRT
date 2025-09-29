@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elements.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 23:32:46 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/19 12:12:36 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/29 18:08:23 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ typedef struct s_cylinder
 	t_material	mat;
 	t_point		pos;
 	t_vec		axis;
-	float		radius;
-	float		height;
+	float		r;
+	float		h;
 }	t_cylinder;
 
 typedef struct s_cylinder	t_cone;

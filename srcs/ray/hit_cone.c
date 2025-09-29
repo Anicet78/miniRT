@@ -6,7 +6,7 @@
 /*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 21:31:32 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/29 15:37:33 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/09/29 18:09:27 by tgallet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	cone_math(t_cone *cone, const t_ray *r, t_cone_v *vs)
 {
 	const t_vec		oc = vsub(r->p, cone->pos);
-	const double	k = pow(cone->radius / cone->height, 2);
+	const double	k = pow(cone->r / cone->h, 2);
 	double			t1;
 	t_vec			math;
 	double			delta;
@@ -38,10 +38,10 @@ static bool	cone_math(t_cone *cone, const t_ray *r, t_cone_v *vs)
 	vs->p = vadd(r->p, vmul(r->dir, vs->t));
 	vs->tip_to_p = vsub(vs->p, cone->pos);
 	vs->h = dot(vs->tip_to_p, cone->axis);
-	return (vs->h > 0 && vs->h < cone->height);
+	return (vs->h > 0 && vs->h < cone->h);
 }
 
-static bool	hit_cone_body(t_cone *cone, t_ray *r, t_hit *hit)
+static bool	hit_cone_body(t_cone *co, t_ray *r, t_hit *hit)
 {
 	double		hyp;
 	double		cos_t;
@@ -49,18 +49,24 @@ static bool	hit_cone_body(t_cone *cone, t_ray *r, t_hit *hit)
 	t_vec		perp;
 	t_cone_v	vs;
 
-	if (!cone_math(cone, r, &vs))
+	if (!cone_math(co, r, &vs))
 		return (false);
 	if (hit->t < vs.t)
 		return (false);
 	hit->t = vs.t;
 	hit->p = vs.p;
-	hyp = sqrt(pow(cone->radius, 2) + pow(cone->height, 2));
-	cos_t = cone->radius / hyp;
-	sin_t = cone->height / hyp;
-	perp = norm(vsub(vs.tip_to_p, vmul(cone->axis, vs.h)));
-	hit->normal = norm(vsub(vmul(perp, cos_t), vmul(cone->axis, sin_t)));
-	hit->mat = &cone->mat;
+	hyp = sqrt(co->r * co->r + co->h * co->h);
+	cos_t = co->r / hyp;
+	sin_t = co->h / hyp;
+	perp = norm(vsub(vs.tip_to_p, vmul(co->axis, vs.h)));
+	hit->normal = norm(vsub(vmul(perp, sin_t), vmul(co->axis, cos_t)));
+	hit->front = true;
+	if (dot(hit->normal, r->dir) > 0)
+	{
+		hit->normal = vmul(hit->normal, -1);
+		hit->front = false;
+	}
+	hit->mat = &co->mat;
 	return (true);
 }
 
@@ -74,7 +80,7 @@ bool	hit_cone(t_cone *cone, t_ray *r, t_hit *hit)
 			cone,
 			r,
 			hit,
-			vadd(cone->pos, vmul(cone->axis, cone->height))
+			vadd(cone->pos, vmul(cone->axis, cone->h))
 			);
 	return (did_hit);
 }

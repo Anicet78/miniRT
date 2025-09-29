@@ -85,8 +85,8 @@ typedef struct s_cylinder
 	t_color		color;
 	t_point		pos;
 	t_vec		axis;
-	float		radius;
-	float		height;
+	float		r;
+	float		h;
 }	t_cylinder;
 
 typedef struct s_elem_lst
