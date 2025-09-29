@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 17:32:19 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/28 19:21:37 by agruet           ###   ########.fr       */
+/*   Updated: 2025/09/29 18:34:21 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_vec	sample_square(uint64_t sample_index, uint64_t total_samples)
 
 	if (n == 0)
 		n = (uint64_t)ceil(sqrt((double)total_samples));
-	return (t_vec){{((sample_index % n) + 0.5) / n - 0.5,
-				((sample_index / n) + 0.5) / n - 0.5, 0}};
+	return ((t_vec){{((sample_index % n) + 0.5) / n - 0.5,
+			((sample_index / n) + 0.5) / n - 0.5, 0}});
 }
 
 static inline
@@ -60,8 +60,9 @@ void	aa_create_rays(const t_display *d, uint32_t coords[2],
 	while (sample < p->elements.aliasing)
 	{
 		r = get_ray(d,
-			(uint64_t[4]){coords[0], coords[1], sample, p->elements.aliasing},
-			img_index, p);
+				(uint64_t[4]){coords[0], coords[1],
+				sample, p->elements.aliasing},
+				img_index, p);
 		pixel_col = vadd(pixel_col, ray_to_color(&r, &p->elements, img_index));
 		sample++;
 	}
