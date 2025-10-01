@@ -6,7 +6,7 @@
 /*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 13:41:17 by agruet            #+#    #+#             */
-/*   Updated: 2025/09/08 17:02:37 by agruet           ###   ########.fr       */
+/*   Updated: 2025/10/01 14:49:57 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # define PI 3.14159265358979323846264338
 # define WIDTH 1920
+# define SHININESS 2
 
 typedef struct s_display
 {

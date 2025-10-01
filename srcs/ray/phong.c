@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phong.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgallet <tgallet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: agruet <agruet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:19:34 by tgallet           #+#    #+#             */
-/*   Updated: 2025/09/29 16:35:21 by tgallet          ###   ########.fr       */
+/*   Updated: 2025/10/01 14:12:47 by agruet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,13 @@ t_color	light_color(t_hit *hit, t_camera *cam, t_color *surface, t_light *lux)
 {
 	const t_vec			l = norm(vsub(lux->pos, hit->p));
 	t_color				res;
-	static const double	shininess = 128;
 
 	res = vadd(vadd(had(vmul(*surface,
 						fmax(0, dot(l, hit->normal) * lux->ratio)),
 					lux->color), black_color()), vmul(lux->color,
 				pow(fmax(0, dot(norm(vsub(vmul(hit->normal,
 										2 * dot(hit->normal, l)), l)),
-							norm(vsub(cam->pos, hit->p)))), shininess
+							norm(vsub(cam->pos, hit->p)))), SHININESS
 					) * lux->ratio));
 	return (res);
 }
