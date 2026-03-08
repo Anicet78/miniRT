@@ -257,15 +257,11 @@ The renderer will play back all frames defined in the file at the configured FPS
 
 ### Animated preview (GIF)
 
+![Cinematic preview](preview/earth.gif)
+
+![Cinematic preview](preview/solar.gif)
+
 ![Cinematic preview](preview/supernova.gif)
-
-### Full renders
-
-<video src="preview/earth.mp4" controls width="720"></video>
-
-<video src="preview/solar.mp4" controls width="720"></video>
-
-<video src="preview/supernova.mp4" controls width="720"></video>
 
 ---
 
@@ -536,15 +532,11 @@ Le moteur lira toutes les frames définies dans le fichier au FPS configuré, en
 
 ### Aperçu animé (GIF)
 
+![Aperçu cinématique](preview/earth.gif)
+
+![Aperçu cinématique](preview/solar.gif)
+
 ![Aperçu cinématique](preview/supernova.gif)
-
-### Rendus complets
-
-<video src="preview/earth.mp4" controls width="720"></video>
-
-<video src="preview/solar.mp4" controls width="720"></video>
-
-<video src="preview/supernova.mp4" controls width="720"></video>
 
 ---
 
